@@ -1,4 +1,31 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header.php';
+require_once 'includes/db.php';
+$msg = '';
+$msg_class = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'] ?? '';
+    $subject = $_POST['subject'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $message = $_POST['message'] ?? '';
+
+    if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $subject, $message]);
+            $msg = 'Your message has been sent successfully!';
+            $msg_class = 'success';
+        } catch(PDOException $e) {
+            $msg = 'Failed to send message. Please try again later.';
+            $msg_class = 'error';
+        }
+    } else {
+        $msg = 'Please fill out all required fields.';
+        $msg_class = 'error';
+    }
+}
+ ?>
+
 
 <section class="page-header" style="background-color: var(--primary-color); color: white; text-align: center; padding: 100px 0;">
     <div class="container">
@@ -47,7 +74,12 @@
             </div>
 
             <div class="contact-form-container" style="flex: 1.5; min-width: 300px; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
-                <form action="#" method="POST">
+                <form action="contact.php" method="POST">
+<?php if($msg): ?>
+                <div style="padding: 15px; margin-bottom: 20px; border-radius: 5px; background: <?php echo $msg_class === 'success' ? '#d4edda' : '#f8d7da'; ?>; color: <?php echo $msg_class === 'success' ? '#155724' : '#721c24'; ?>;">
+                    <?php echo htmlspecialchars($msg); ?>
+                </div>
+                <?php endif; ?>
                     <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 200px;">
                             <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Name</label>

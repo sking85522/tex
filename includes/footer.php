@@ -49,3 +49,24 @@
     <script src="assets/js/main.js"></script>
 </body>
 </html>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            <h4><i class="fas fa-robot"></i> Support Bot</h4>
+            <button id="chatbot-close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="chat-message bot">
+                <p>Hello! I am the Tech Elevate X assistant. How can I help you today?</p>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <button class="chatbot-toggle" id="chatbot-toggle-btn">
+        <i class="fas fa-comments"></i>
+    </button>

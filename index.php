@@ -1,4 +1,15 @@
-<?php include 'includes/header.php'; ?>
+<?php
+include 'includes/header.php';
+include 'includes/db.php';
+
+// Fetch only 3 services for the homepage
+try {
+    $stmt = $pdo->query("SELECT * FROM services ORDER BY id ASC LIMIT 3");
+    $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $services = [];
+}
+?>
 
 <!-- Hero Section -->
 <section class="hero" id="home">
@@ -44,21 +55,13 @@
             <p>What we offer to help your business grow</p>
         </div>
         <div class="services-grid">
+            <?php foreach ($services as $service): ?>
             <div class="service-card">
-                <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
-                <h3>Web Development</h3>
-                <p>Responsive, fast, and scalable websites built with modern technologies.</p>
+                <div class="service-icon"><i class="<?php echo htmlspecialchars($service['icon_class']); ?>"></i></div>
+                <h3><?php echo htmlspecialchars($service['title']); ?></h3>
+                <p><?php echo htmlspecialchars($service['description']); ?></p>
             </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>App Development</h3>
-                <p>Native and cross-platform mobile applications for iOS and Android.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-code"></i></div>
-                <h3>Software Development</h3>
-                <p>Custom software solutions tailored to your unique business needs.</p>
-            </div>
+            <?php endforeach; ?>
         </div>
         <div class="text-center mt-2">
             <a href="services.php" class="btn btn-primary">View All Services</a>
