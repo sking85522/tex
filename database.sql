@@ -175,3 +175,12 @@ CREATE TABLE IF NOT EXISTS `chat_messages` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`session_id`) REFERENCES `chat_sessions`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- System migrations tracking table
+CREATE TABLE IF NOT EXISTS `system_migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `migration_file` varchar(255) NOT NULL UNIQUE,
+  `executed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
