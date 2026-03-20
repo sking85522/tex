@@ -15,8 +15,8 @@ try {
 <section class="hero" id="home">
     <div class="container hero-content">
         <div class="hero-text">
-            <h1>Transform Your Business With <span class="highlight">Tech Elevate X</span></h1>
-            <p>We provide world-class web development, software solutions, and IT services to scale your business to new heights.</p>
+            <h1><?php echo htmlspecialchars(get_setting("home_hero_title", "Transform Your Business With Tech Elevate X")); ?></h1>
+            <p><?php echo htmlspecialchars(get_setting("home_hero_subtitle", "We provide world-class web development, software solutions, and IT services to scale your business to new heights.")); ?></p>
             <div class="hero-buttons">
                 <a href="services.php" class="btn btn-primary">Our Services</a>
                 <a href="contact.php" class="btn btn-outline">Contact Us</a>

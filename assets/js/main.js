@@ -89,3 +89,31 @@ document.addEventListener('DOMContentLoaded', () => {
         chatbotBody.scrollTop = chatbotBody.scrollHeight;
     }
 });
+
+
+let lastChatMsgId = 0;
+function pollChat() {
+    const chatBody = document.getElementById('chat-body');
+    if (!chatBody || document.getElementById('chatbot-window').style.display === 'none') return;
+
+    fetch('live_chat_api.php?action=poll&last_id=' + lastChatMsgId)
+    .then(r => r.json())
+    .then(data => {
+        if(data.success && data.messages.length > 0) {
+            data.messages.forEach(m => {
+                if (m.id > lastChatMsgId) lastChatMsgId = m.id;
+                window.chatSessionId = m.session_id;
+
+                // Only show messages from staff
+                if(m.sender_type === 'staff') {
+                    const botBubble = document.createElement('div');
+                    botBubble.style.cssText = 'background: #f1f1f1; padding: 10px; border-radius: 10px 10px 10px 0; margin-bottom: 15px; align-self: flex-start; max-width: 80%; word-wrap: break-word;';
+                    botBubble.textContent = m.message;
+                    chatBody.appendChild(botBubble);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+            });
+        }
+    });
+}
+setInterval(pollChat, 3000);

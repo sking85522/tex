@@ -12,7 +12,7 @@
         <div class="about-content" style="display: flex; gap: 40px; align-items: center; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 300px;">
                 <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--dark-color);">Who We Are</h2>
-                <p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8;">Tech Elevate X is a premier IT solutions provider dedicated to transforming businesses through innovative digital strategies. We specialize in custom web development, mobile applications, and enterprise software solutions.</p>
+                <p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8;"></p>
                 <p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8;">Our team consists of passionate developers, creative designers, and strategic thinkers who collaborate to deliver exceptional results. We don't just build software; we build solutions that elevate your brand and streamline your operations.</p>
 
                 <h3 style="margin-top: 30px; margin-bottom: 10px; color: var(--primary-color);">Our Mission</h3>

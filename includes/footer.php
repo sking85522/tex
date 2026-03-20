@@ -36,9 +36,9 @@
             </div>
             <div class="footer-col">
                 <h4>Contact Info</h4>
-                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, IT Park, City, Country</p>
-                <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
-                <p><i class="fas fa-envelope"></i> info@techelevatex.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars(get_setting("contact_address", "123 Tech Street, IT Park, City")); ?>, Country</p>
+                <p><i class="fas fa-phone"></i> <?php echo htmlspecialchars(get_setting("contact_phone", "+1 234 567 8900")); ?></p>
+                <p><i class="fas fa-envelope"></i> <?php echo htmlspecialchars(get_setting("contact_email", "info@techelevatex.com")); ?></p>
             </div>
         </div>
         <div class="footer-bottom">

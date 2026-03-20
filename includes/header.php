@@ -1,3 +1,7 @@
+<?php
+require_once 'includes/db.php';
+require_once 'includes/site_settings.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +14,15 @@
 </head>
 <body>
 
+    <div id="google_translate_element" style="position:absolute; top:10px; right:120px; z-index:9999;"></div>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
     <!-- Navigation -->
     <header class="navbar">
         <div class="container nav-container">
@@ -21,7 +34,7 @@
                     <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About Us</a></li>
                     <li><a href="services.php">Services</a></li>
-                    <li><a href="portfolio.php">Portfolio</a></li>
+                    <li><a href="portfolio.php">Portfolio</a></li><li><a href="careers.php">Careers</a></li>
                     <li><a href="contact.php">Contact Us</a></li>
                     <li><a href="user/login.php" class="btn btn-outline">Login</a></li>
                 </ul>

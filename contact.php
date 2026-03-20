@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div>
                         <h4 style="margin-bottom: 5px; color: var(--dark-color);">Location</h4>
-                        <p style="color: #666;">123 Tech Street, IT Park, City</p>
+                        <p style="color: #666;"><?php echo htmlspecialchars(get_setting("contact_address", "123 Tech Street, IT Park, City")); ?></p>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div>
                         <h4 style="margin-bottom: 5px; color: var(--dark-color);">Phone</h4>
-                        <p style="color: #666;">+1 234 567 8900</p>
+                        <p style="color: #666;"><?php echo htmlspecialchars(get_setting("contact_phone", "+1 234 567 8900")); ?></p>
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div>
                         <h4 style="margin-bottom: 5px; color: var(--dark-color);">Email</h4>
-                        <p style="color: #666;">info@techelevatex.com</p>
+                        <p style="color: #666;"><?php echo htmlspecialchars(get_setting("contact_email", "info@techelevatex.com")); ?></p>
                     </div>
                 </div>
             </div>
