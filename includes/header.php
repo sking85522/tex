@@ -36,7 +36,7 @@ require_once 'includes/site_settings.php';
                     <li><a href="services.php">Services</a></li>
                     <li><a href="portfolio.php">Portfolio</a></li><li><a href="careers.php">Careers</a></li>
                     <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="user/login.php" class="btn btn-outline">Login</a></li>
+                    <li><a href="user/login.php" class="btn btn-outline">Login</a></li><li><a href="user/register.php" class="btn btn-primary" style="margin-left:10px;">Sign Up</a></li>
                 </ul>
             </nav>
             <div class="hamburger">

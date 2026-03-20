@@ -3,6 +3,12 @@ session_start();
 include '../includes/db.php';
 
 $error = '';
+$success = '';
+
+if (isset($_SESSION['register_success'])) {
+    $success = $_SESSION['register_success'];
+    unset($_SESSION['register_success']);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
@@ -55,6 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="login-container">
         <h2>User Login</h2>
+        <?php if($success): ?>
+            <div style="color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem;"><?php echo htmlspecialchars($success); ?></div>
+        <?php endif; ?>
         <?php if($error): ?>
             <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
@@ -69,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="btn-login">Login</button>
         </form>
+        <p style="margin-top: 20px; font-size: 0.9rem;">Don't have an account? <a href="register.php" style="color: var(--primary-color); text-decoration: none;">Sign up here</a>.</p>
         <a href="../index.php" class="back-link">&larr; Back to Website</a>
     </div>
 </body>
