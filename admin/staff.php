@@ -75,16 +75,7 @@ try {
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-brand"><i class="fas fa-rocket"></i> Admin Panel</div>
-        <div class="sidebar-nav">
-            <a href="index.php"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
-            <a href="settings.php"><i class="fas fa-fw fa-cogs"></i> CMS Settings</a>
-            <a href="portfolio.php"><i class="fas fa-fw fa-briefcase"></i> Portfolio</a>
-            <a href="careers.php"><i class="fas fa-fw fa-user-tie"></i> Careers / HR</a>
-            <a href="staff.php" class="active"><i class="fas fa-fw fa-users-cog"></i> Staff Mgmt</a>
-        </div>
-    </div>
+    <?php include 'includes/sidebar.php'; ?>
     <div class="main-content">
         <div class="topbar">
             <div><i class="fas fa-bars"></i></div>

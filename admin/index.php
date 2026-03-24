@@ -88,18 +88,7 @@ try {
 <body>
 
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-brand">
-            <i class="fas fa-rocket"></i> Tech Elevate X Admin
-        </div>
-        <div class="sidebar-nav">
-            <a href="index.php" class="active"><i class="fas fa-fw fa-tachometer-alt"></i> Dashboard</a>
-            <a href="#"><i class="fas fa-fw fa-users"></i> Users</a>
-            <a href="#"><i class="fas fa-fw fa-cogs"></i> Services</a>
-            <a href="#"><i class="fas fa-fw fa-envelope"></i> Messages</a>
-            <a href="#"><i class="fas fa-fw fa-robot"></i> Chatbot Settings</a>
-        </div>
-    </div>
+    <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="main-content">
