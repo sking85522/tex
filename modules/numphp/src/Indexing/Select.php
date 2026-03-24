@@ -19,7 +19,7 @@ class Select
         if (count($condlist) !== count($choicelist)) {
             throw new \InvalidArgumentException("condlist and choicelist must be of the same length.");
         }
-        
+
         $result = \NumPHP\Creation\ArrayCreate::full($condlist[0]->getShape(), $default);
 
         for ($i = 0; $i < count($condlist); $i++) {

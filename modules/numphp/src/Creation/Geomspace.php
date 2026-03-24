@@ -24,7 +24,7 @@ class Geomspace
 
         $log_start = log($start);
         $log_stop = log($stop);
-        
+
         $step = ($num > 1 && $endpoint) ? (($log_stop - $log_start) / ($num - 1)) : (($log_stop - $log_start) / $num);
 
         $data = [];

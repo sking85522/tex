@@ -49,7 +49,7 @@ class Max
                 return new NDArray($result, $a->dtype());
             }
         }
-        
+
         throw new \Exception("Max currently only supports axis for 1D and 2D arrays.");
     }
 }

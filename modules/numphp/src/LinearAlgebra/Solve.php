@@ -31,7 +31,7 @@ class Solve
         $matA = $a->getData();
         // Handle b being 1D or 2D (column vector)
         $vecB = $b->getData();
-        
+
         // Create augmented matrix
         for ($i = 0; $i < $n; $i++) {
             $matA[$i][] = is_array($vecB) ? (is_array($vecB[$i]) ? $vecB[$i][0] : $vecB[$i]) : $vecB;

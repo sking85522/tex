@@ -22,7 +22,7 @@ class Average
         }
 
         $flatA = Flatten::flatten($a)->getData();
-        
+
         if ($weights instanceof NDArray) {
             $flatW = Flatten::flatten($weights)->getData();
         } else {

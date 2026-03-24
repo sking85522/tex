@@ -49,7 +49,7 @@ class Min
                 return new NDArray($result, $a->dtype());
             }
         }
-        
+
         throw new \Exception("Min currently only supports axis for 1D and 2D arrays.");
     }
 }

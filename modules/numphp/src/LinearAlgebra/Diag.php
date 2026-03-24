@@ -18,7 +18,7 @@ class Diag
     {
         $shape = $v->getShape();
         $data = $v->getData();
-        
+
         if ($k !== 0) {
              throw new \Exception("Diag currently only supports k=0");
         }
@@ -43,7 +43,7 @@ class Diag
             }
             return new NDArray($diag, $v->getDtype());
         }
-        
+
         throw new \InvalidArgumentException("Input must be 1-d or 2-d");
     }
 }

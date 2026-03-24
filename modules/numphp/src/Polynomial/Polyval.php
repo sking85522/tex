@@ -18,7 +18,7 @@ class Polyval
     {
         $coeffs = ($p instanceof NDArray) ? $p->getData() : $p;
         if (!is_array($coeffs)) $coeffs = [$coeffs];
-        
+
         // Horner's method
         $func = function($val) use ($coeffs) {
             $res = 0;

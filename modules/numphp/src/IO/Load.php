@@ -13,7 +13,7 @@ class Load
         }
         $json = file_get_contents($file);
         $data = json_decode($json, true);
-        
+
         return new NDArray($data['data'], $data['dtype']);
     }
 }

@@ -17,13 +17,13 @@ class Argmax
         $data = $flat->getData();
 
         if (!is_array($data) || empty($data)) {
-            return 0; 
+            return 0;
         }
 
         // array_keys with max value gives keys, we take first one
         $maxVal = max($data);
         $keys = array_keys($data, $maxVal);
-        
+
         return $keys[0];
     }
 }

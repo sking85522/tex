@@ -53,7 +53,7 @@ class Buffer
         if (is_array($data)) {
             return array_map([$this, 'castData'], $data);
         }
-        
+
         settype($data, (string) $this->dtype);
         return $data;
     }

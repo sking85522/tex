@@ -22,7 +22,7 @@ class Nanvar
 
         $data = Flatten::flatten($a)->getData();
         $filtered = array_filter($data, function($val) { return !is_nan($val); });
-        
+
         if (count($filtered) < 1) {
             return NAN;
         }

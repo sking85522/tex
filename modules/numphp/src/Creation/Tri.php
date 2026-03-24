@@ -18,7 +18,7 @@ class Tri
     public static function tri(int $N, ?int $M = null, int $k = 0, ?string $dtype = null): NDArray
     {
         if ($M === null) $M = $N;
-        
+
         $data = [];
         for ($i = 0; $i < $N; $i++) {
             $row = [];

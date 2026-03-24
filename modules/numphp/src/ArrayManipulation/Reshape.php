@@ -12,7 +12,7 @@ class Reshape
         // First, flatten the data
         $flatNDArray = Flatten::flatten($a);
         $flatData = $flatNDArray->getData();
-        
+
         $totalElements = count($flatData);
         $expectedElements = array_product($newShape);
 

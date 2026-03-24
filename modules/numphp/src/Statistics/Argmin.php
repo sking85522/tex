@@ -22,7 +22,7 @@ class Argmin
 
         $minVal = min($data);
         $keys = array_keys($data, $minVal);
-        
+
         return $keys[0];
     }
 }

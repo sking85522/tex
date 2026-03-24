@@ -13,7 +13,7 @@ class Split
             if (is_array($item)) return array_map($rec, $item);
             return explode($sep, $item);
         };
-        
+
         // Result will be array of arrays (lists of strings)
         return new NDArray($rec($data));
     }

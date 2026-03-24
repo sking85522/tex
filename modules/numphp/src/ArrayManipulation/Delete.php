@@ -20,11 +20,11 @@ class Delete
         if ($axis === null) {
             $flat = Flatten::flatten($arr)->getData();
             $indices = is_array($obj) ? $obj : [$obj];
-            
+
             foreach ($indices as $idx) {
                 unset($flat[$idx]);
             }
-            
+
             return new NDArray(array_values($flat), $arr->getDtype());
         }
 

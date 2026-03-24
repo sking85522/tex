@@ -11,7 +11,7 @@ class Dstack
         $reshaped = array_map(function($arr) {
             return Atleast3d::atleast_3d($arr);
         }, $tup);
-        
+
         return Concatenate::concatenate($reshaped, 2);
     }
 }

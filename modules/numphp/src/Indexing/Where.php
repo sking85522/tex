@@ -20,7 +20,7 @@ class Where
         // For simplicity v1: Flatten everything and operate 1D
         // This avoids complex broadcasting logic implementation in v1
         $flatCond = Flatten::flatten($condition)->getData();
-        
+
         // Handle X
         if ($x instanceof NDArray) {
             $flatX = Flatten::flatten($x)->getData();

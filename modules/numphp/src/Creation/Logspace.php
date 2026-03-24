@@ -10,13 +10,13 @@ class Logspace
     {
         $y = Linspace::linspace($start, $stop, $num, $endpoint, false, null);
         $data = $y->getData();
-        
+
         $powFunc = function($val) use ($base) {
             return pow($base, $val);
         };
-        
+
         $result = array_map($powFunc, $data);
-        
+
         return new NDArray($result, $dtype);
     }
 }

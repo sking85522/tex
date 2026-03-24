@@ -18,7 +18,7 @@ class Outer
     {
         $d1 = Flatten::flatten($a)->getData();
         $d2 = Flatten::flatten($b)->getData();
-        
+
         $result = [];
         foreach ($d1 as $val1) {
             $row = [];

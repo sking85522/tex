@@ -28,7 +28,7 @@ class Concatenate
         // 1. Implementation for Axis 0 (Stacking rows/elements)
         if ($axis === 0) {
             $resultData = [];
-            
+
             foreach ($arrays as $idx => $arr) {
                 if (!$arr instanceof NDArray) {
                     throw new \InvalidArgumentException("All inputs must be NDArrays");
@@ -66,7 +66,7 @@ class Concatenate
             for ($k = 1; $k < count($arrays); $k++) {
                 $nextArr = $arrays[$k];
                 $nextData = $nextArr->getData();
-                
+
                 for ($i = 0; $i < $rows; $i++) {
                     $resultData[$i] = array_merge($resultData[$i], $nextData[$i]);
                 }

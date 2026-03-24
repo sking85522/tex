@@ -20,7 +20,7 @@ class Vander
         $data = Flatten::flatten($x)->getData();
         $m = count($data);
         if ($N === null) $N = $m;
-        
+
         $result = [];
         foreach ($data as $val) {
             $row = [];
@@ -30,7 +30,7 @@ class Vander
             }
             $result[] = $row;
         }
-        
+
         return new NDArray($result, $x->getDtype());
     }
 }

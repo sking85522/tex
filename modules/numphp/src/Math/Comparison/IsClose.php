@@ -20,13 +20,13 @@ class IsClose
     {
         $dataA = $a->getData();
         $dataB = $b->getData();
-        
+
         $rec = function($itemA, $itemB) use ($rtol, $atol, $equal_nan, &$rec) {
             if (is_array($itemA)) {
                  $itemB_arr = is_array($itemB) ? $itemB : array_fill(0, count($itemA), $itemB);
                  return array_map($rec, $itemA, $itemB_arr);
             }
-            
+
             if (is_nan($itemA) && is_nan($itemB)) return $equal_nan;
             if (is_infinite($itemA) && is_infinite($itemB)) return ($itemA > 0) === ($itemB > 0);
             return abs($itemA - $itemB) <= ($atol + $rtol * abs($itemB));

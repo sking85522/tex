@@ -18,7 +18,7 @@ class Split
     {
         $data = $ary->getData();
         $shape = $ary->getShape();
-        
+
         $rank = count($shape);
         if ($axis < 0 || $axis >= $rank) {
             throw new \InvalidArgumentException("axis out of bounds");

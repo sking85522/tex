@@ -10,7 +10,7 @@ class Choice
     /**
      * Generates a random sample from a given 1-D array.
      *
-     * @param mixed $a If an NDArray, a random sample is generated from its elements. 
+     * @param mixed $a If an NDArray, a random sample is generated from its elements.
      *                 If an int, the random sample is generated as if a were arange(a).
      * @param int|array|null $size Output shape. If the given shape is, e.g., [m, n], then m * n samples are drawn.
      * @param bool $replace Whether the sample is with or without replacement.
@@ -24,7 +24,7 @@ class Choice
         if ($a instanceof NDArray) {
             // Assuming flatten behavior for multidimensional input or strict 1D
             $data = $a->getData();
-            $source = is_array($data) ? $data : [$data]; 
+            $source = is_array($data) ? $data : [$data];
             // Note: Ideally should flatten if multi-dimensional
         } elseif (is_int($a)) {
             $source = range(0, $a - 1);
@@ -41,7 +41,7 @@ class Choice
         // 2. Determine number of samples needed
         $count = 1;
         $shape = [];
-        
+
         if ($size === null) {
             $count = 1;
             $shape = []; // scalar
@@ -55,7 +55,7 @@ class Choice
 
         // 3. Sampling
         $samples = [];
-        
+
         // TODO: Implement probability weights $p
         if ($p !== null) {
             throw new \Exception("Probability weights not yet implemented");
@@ -87,7 +87,7 @@ class Choice
         // we return flat array if shape is 1D, or rely on Reshape logic if we had access.
         // For now, returning 1D array as most common use case or flat NDArray.
         // To strictly support shape, we would need to restructure $samples into $shape.
-        
+
         // Returning flat NDArray for now to be safe, unless simple scalar.
         if ($size === null) {
             return new NDArray($samples[0]);

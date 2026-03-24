@@ -17,7 +17,7 @@ class Nanmedian
     {
         $data = Flatten::flatten($a)->getData();
         $filtered = array_values(array_filter($data, function($val) { return !is_nan($val); }));
-        
+
         if (empty($filtered)) {
             return NAN;
         }

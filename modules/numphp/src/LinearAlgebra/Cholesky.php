@@ -31,7 +31,7 @@ class Cholesky
                 }
             }
         }
-        
+
         return new NDArray($L, $a->getDtype());
     }
 }

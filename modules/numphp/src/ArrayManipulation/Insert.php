@@ -21,9 +21,9 @@ class Insert
             $flat = Flatten::flatten($arr)->getData();
             $val = ($values instanceof NDArray) ? $values->getData() : $values;
             $valArr = is_array($val) ? $val : [$val];
-            
+
             array_splice($flat, $obj, 0, $valArr);
-            
+
             return new NDArray($flat, $arr->getDtype());
         }
 

@@ -50,7 +50,7 @@ class Matmul
 
         if ($shapeA[1] !== $shapeB[0]) {
             throw new \InvalidArgumentException(
-                sprintf("Shapes %s and %s not aligned: %d (dim 1) != %d (dim 0)", 
+                sprintf("Shapes %s and %s not aligned: %d (dim 1) != %d (dim 0)",
                 json_encode($shapeA), json_encode($shapeB), $shapeA[1], $shapeB[0])
             );
         }

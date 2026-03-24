@@ -32,7 +32,7 @@ class Roots
             $b = $coeffs[1];
             $c = $coeffs[2];
             $discriminant = $b * $b - 4 * $a * $c;
-            
+
             $r1 = (-$b + sqrt($discriminant)) / (2 * $a);
             $r2 = (-$b - sqrt($discriminant)) / (2 * $a);
             return new NDArray([$r1, $r2], 'float');

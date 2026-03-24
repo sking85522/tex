@@ -33,7 +33,7 @@ class Pad
 
             $before = array_fill(0, $pad_before, $val);
             $after = array_fill(0, $pad_after, $val);
-            
+
             return new NDArray(array_merge($before, $data, $after));
         }
 

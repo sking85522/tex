@@ -15,7 +15,7 @@ class Covariance
     public static function cov(NDArray $m): NDArray
     {
         $shape = $m->getShape();
-        
+
         // If 1D, treat as a single variable observation
         if (count($shape) === 1) {
             $v = Var_::var($m); // Variance of single variable
@@ -30,7 +30,7 @@ class Covariance
 
         // Subtract mean from each row
         $means = array_map(function($row) use ($cols) { return array_sum($row) / $cols; }, $data);
-        
+
         $cov = [];
         for ($i = 0; $i < $rows; $i++) {
             for ($j = 0; $j < $rows; $j++) {

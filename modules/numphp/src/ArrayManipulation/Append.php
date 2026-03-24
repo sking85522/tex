@@ -22,7 +22,7 @@ class Append
             $flatValues = Flatten::flatten($valuesArr);
             return Concatenate::concatenate([$flatArr, $flatValues], 0);
         }
-        
+
         throw new \Exception("Append with specific axis not yet implemented.");
     }
 }

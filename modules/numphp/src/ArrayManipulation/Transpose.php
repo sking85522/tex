@@ -9,7 +9,7 @@ class Transpose
     public static function transpose(NDArray $a): NDArray
     {
         $shape = $a->getShape();
-        
+
         if (count($shape) !== 2) {
              // For 1D, transpose is the same. For >2D, we need permutation logic.
              // Returning as is for 1D or implementing basic 2D swap

@@ -16,7 +16,7 @@ class Window
     {
         if ($M < 1) return new NDArray([]);
         if ($M == 1) return new NDArray([1.0]);
-        
+
         $res = [];
         for ($n = 0; $n < $M; $n++) {
             $res[] = 0.54 - 0.46 * cos(2 * M_PI * $n / ($M - 1));

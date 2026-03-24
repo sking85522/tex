@@ -19,7 +19,7 @@ class Sum
         if ($axis === null) {
             $flat = Flatten::flatten($a);
             $data = $flat->getData();
-            
+
             if (!is_array($data)) {
                 return (float)$data;
             }

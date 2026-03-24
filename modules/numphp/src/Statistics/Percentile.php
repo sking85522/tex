@@ -29,7 +29,7 @@ class Percentile
         if ($lower == $upper) {
             return $data[(int)$index];
         }
-        
+
         // Linear interpolation
         return $data[(int)$lower] + ($data[(int)$upper] - $data[(int)$lower]) * $fraction;
     }

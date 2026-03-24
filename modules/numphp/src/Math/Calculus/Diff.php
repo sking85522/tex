@@ -10,7 +10,7 @@ class Diff
     public static function diff(NDArray $a, int $n = 1): NDArray
     {
         $data = Flatten::flatten($a)->getData();
-        
+
         for ($i = 0; $i < $n; $i++) {
             $nextData = [];
             $count = count($data);
