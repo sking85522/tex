@@ -1,30 +1,27 @@
 <?php include 'includes/header.php';
 require_once 'includes/db.php';
-$msg = '';
-$msg_class = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'] ?? '';
-    $subject = $_POST['subject'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $message = $_POST['message'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
+    header('Content-Type: application/json');
+    $name = trim($_POST['name'] ?? '');
+    $subject = trim($_POST['subject'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $message = trim($_POST['message'] ?? '');
 
     if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
         try {
             $stmt = $pdo->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
             $stmt->execute([$name, $email, $subject, $message]);
-            $msg = 'Your message has been sent successfully!';
-            $msg_class = 'success';
+            echo json_encode(['success' => true, 'message' => 'Your message has been sent successfully!']);
         } catch(PDOException $e) {
-            $msg = 'Failed to send message. Please try again later.';
-            $msg_class = 'error';
+            echo json_encode(['success' => false, 'message' => 'Failed to send message. Database error.']);
         }
     } else {
-        $msg = 'Please fill out all required fields.';
-        $msg_class = 'error';
+        echo json_encode(['success' => false, 'message' => 'Please fill out all required fields.']);
     }
+    exit();
 }
- ?>
+?>
 
 
 <section class="page-header" style="background-color: var(--primary-color); color: white; text-align: center; padding: 100px 0;">
@@ -73,23 +70,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
+
             <div class="contact-form-container" style="flex: 1.5; min-width: 300px; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
-                <form action="contact.php" method="POST">
-<?php if($msg): ?>
-                <div style="padding: 15px; margin-bottom: 20px; border-radius: 5px; background: <?php echo $msg_class === 'success' ? '#d4edda' : '#f8d7da'; ?>; color: <?php echo $msg_class === 'success' ? '#155724' : '#721c24'; ?>;">
-                    <?php echo htmlspecialchars($msg); ?>
-                </div>
-                <?php endif; ?>
+                <div id="form-msg-box" style="display:none; padding: 15px; margin-bottom: 20px; border-radius: 5px;"></div>
+                <form id="contactForm" onsubmit="submitContactForm(event)">
+                    <input type="hidden" name="ajax_submit" value="1">
                     <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 200px;">
                             <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Name</label>
-                            <input type="text" name="name" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
+                            <input type="text" name="name" id="c_name" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
                         </div>
                         <div style="flex: 1; min-width: 200px;">
                             <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Email</label>
-                            <input type="email" name="email" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
+                            <input type="email" name="email" id="c_email" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
                         </div>
                     </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Subject</label>
+                        <input type="text" name="subject" id="c_subject" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Message</label>
+                        <textarea name="message" id="c_message" rows="5" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" id="c_submit_btn" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">Send Message</button>
+                </form>
+            </div>
+
+            <script>
+            async function submitContactForm(e) {
+                e.preventDefault();
+                const btn = document.getElementById("c_submit_btn");
+                const msgBox = document.getElementById("form-msg-box");
+                btn.disabled = true;
+                btn.innerHTML = "Sending...";
+                msgBox.style.display = "none";
+
+                let formData = new URLSearchParams();
+                formData.append("ajax_submit", "1");
+                formData.append("name", document.getElementById("c_name").value);
+                formData.append("email", document.getElementById("c_email").value);
+                formData.append("subject", document.getElementById("c_subject").value);
+                formData.append("message", document.getElementById("c_message").value);
+
+                try {
+                    const response = await fetch("contact.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: formData.toString()
+                    });
+                    const result = await response.json();
+
+                    msgBox.style.display = "block";
+                    msgBox.innerHTML = result.message;
+                    if(result.success) {
+                        msgBox.style.background = "#d4edda";
+                        msgBox.style.color = "#155724";
+                        document.getElementById("contactForm").reset();
+                    } else {
+                        msgBox.style.background = "#f8d7da";
+                        msgBox.style.color = "#721c24";
+                    }
+                } catch(error) {
+                    msgBox.style.display = "block";
+                    msgBox.style.background = "#f8d7da";
+                    msgBox.style.color = "#721c24";
+                    msgBox.innerHTML = "Failed to send message. Network error.";
+                }
+                btn.disabled = false;
+                btn.innerHTML = "Send Message";
+            }
+            </script>
+
+        </div>
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; margin-bottom: 8px; font-weight: 600;">Subject</label>
                         <input type="text" name="subject" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit;">
