@@ -126,7 +126,25 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 <div class="text-muted small"><?php echo htmlspecialchars($p['client_email']); ?></div>
                             </td>
                             <td>
-                                <div class="fw-bold text-primary mb-1"><?php echo htmlspecialchars($p['project_name']); ?></div>
+
+<?php
+// Calculate Health Indicator
+$now = time();
+$updated = strtotime($p['updated_at']);
+$days_stuck = floor(($now - $updated) / (60 * 60 * 24));
+
+$healthBadge = '<span class="badge bg-success rounded-pill"><i class="bi bi-heart-pulse"></i> Healthy</span>';
+if ($p['progress_percent'] < 100 && $days_stuck > 14) {
+    $healthBadge = '<span class="badge bg-warning text-dark rounded-pill"><i class="bi bi-exclamation-triangle"></i> Stagnant ('.$days_stuck.' days)</span>';
+}
+if ($p['progress_percent'] < 100 && $days_stuck > 30) {
+    $healthBadge = '<span class="badge bg-danger rounded-pill"><i class="bi bi-fire"></i> At Risk! Meeting Needed</span>';
+}
+if ($p['progress_percent'] == 100) {
+    $healthBadge = '<span class="badge bg-secondary rounded-pill"><i class="bi bi-check-all"></i> Delivered</span>';
+}
+?>
+<div class="fw-bold text-primary mb-1"><?php echo htmlspecialchars($p['project_name']); ?> <?php echo $healthBadge; ?></div>
                                 <span class="badge bg-secondary rounded-pill fw-normal"><?php echo htmlspecialchars($p['status_phase']); ?></span>
                             </td>
                             <td class="text-center">
