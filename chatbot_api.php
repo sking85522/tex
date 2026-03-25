@@ -47,6 +47,37 @@ if ($action === 'chat') {
         }
         $_SESSION['chat_history'][] = "Client: " . $userMessage;
 
+
+        // Neural NLP Parameter Extraction
+        $msgLower = strtolower($userMessage);
+
+        // Ensure Neural Engine is active
+        require_once 'includes/neural_engine.php';
+        $neural = new NeuralEngine();
+
+        // 1. Detect Interest (What they want to build)
+        if (strpos($msgLower, 'app') !== false || strpos($msgLower, 'mobile') !== false || strpos($msgLower, 'ios') !== false || strpos($msgLower, 'android') !== false) {
+            $neural->updateProfile('interest', 'app');
+        } elseif (strpos($msgLower, 'ecommerce') !== false || strpos($msgLower, 'store') !== false || strpos($msgLower, 'shop') !== false) {
+            $neural->updateProfile('interest', 'ecommerce');
+        } elseif (strpos($msgLower, 'web') !== false || strpos($msgLower, 'site') !== false) {
+            $neural->updateProfile('interest', 'web');
+        } elseif (strpos($msgLower, 'ai') !== false || strpos($msgLower, 'bot') !== false) {
+            $neural->updateProfile('interest', 'ai');
+        }
+
+        // 2. Detect Budget Constraint
+        if (strpos($msgLower, 'cheap') !== false || strpos($msgLower, 'sasta') !== false || strpos($msgLower, 'low budget') !== false || strpos($msgLower, 'discount') !== false) {
+            $neural->updateProfile('budget', 'low');
+        } elseif (strpos($msgLower, 'premium') !== false || strpos($msgLower, 'best') !== false || strpos($msgLower, 'enterprise') !== false) {
+            $neural->updateProfile('budget', 'high');
+        }
+
+        // 3. Detect Urgency (Fast-tracking)
+        if (strpos($msgLower, 'urgent') !== false || strpos($msgLower, 'fast') !== false || strpos($msgLower, 'jaldi') !== false || strpos($msgLower, 'asap') !== false) {
+            $neural->updateProfile('urgency', 'urgent');
+        }
+
         // Track lead interest & behavior silently
 
             $stmt = $pdo->prepare("INSERT INTO ai_leads (user_ip, detected_language, interest_topic) VALUES (?, ?, ?)");

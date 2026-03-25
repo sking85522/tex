@@ -1,7 +1,15 @@
 <?php
+require_once 'includes/neural_engine.php';
+$neural = new NeuralEngine();
+$adaptations = $neural->getUIAdaptations();
+
+// Defaults if Neural Engine has not learned enough yet
+$hero_title = $adaptations['hero_title'] ? $adaptations['hero_title'] : htmlspecialchars(get_setting("home_hero_title", "Transform Your Business With Tech Elevate X"));
+$hero_subtitle = $adaptations['hero_subtitle'] ? $adaptations['hero_subtitle'] : htmlspecialchars(get_setting("home_hero_subtitle", "We provide world-class web development, software solutions, and IT services to scale your business to new heights."));
+?>
+<?php
 include 'includes/header.php';
 include 'includes/db.php';
-
 // Fetch only 3 services for the homepage
 try {
     $stmt = $pdo->query("SELECT * FROM services ORDER BY id ASC LIMIT 3");
@@ -12,11 +20,23 @@ try {
 ?>
 
 <!-- Hero Section -->
+
+<?php if ($adaptations['urgency_banner']): ?>
+<div style="background-color: #e74a3b; color: white; text-align: center; padding: 10px; font-weight: bold; position: sticky; top: 0; z-index: 1000;">
+    <?php echo $adaptations['urgency_banner']; ?>
+</div>
+<?php endif; ?>
+<?php if ($adaptations['discount_badge']): ?>
+<div style="background-color: #1cc88a; color: white; text-align: center; padding: 10px; font-weight: bold; position: sticky; top: <?php echo $adaptations['urgency_banner'] ? '40px' : '0'; ?>; z-index: 1000;">
+    <?php echo $adaptations['discount_badge']; ?>
+</div>
+<?php endif; ?>
+
 <section class="hero" id="home">
     <div class="container hero-content">
         <div class="hero-text">
-            <h1><?php echo htmlspecialchars(get_setting("home_hero_title", "Transform Your Business With Tech Elevate X")); ?></h1>
-            <p><?php echo htmlspecialchars(get_setting("home_hero_subtitle", "We provide world-class web development, software solutions, and IT services to scale your business to new heights.")); ?></p>
+            <h1><?php echo $hero_title; ?></h1>
+            <p><?php echo $hero_subtitle; ?></p>
             <div class="hero-buttons">
                 <a href="services.php" class="btn btn-primary">Our Services</a>
                 <a href="contact.php" class="btn btn-outline">Contact Us</a>
