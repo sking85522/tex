@@ -18,7 +18,19 @@ if ($action === 'chat') {
 
     if (!empty($userMessage)) {
         try {
-            // Track lead interest & behavior silently
+
+        // Track Context in Session
+        if (!isset($_SESSION['chat_history'])) {
+            $_SESSION['chat_history'] = [];
+        }
+        // Keep only last 5 interactions to prevent token bloat
+        if (count($_SESSION['chat_history']) > 5) {
+            array_shift($_SESSION['chat_history']);
+        }
+        $_SESSION['chat_history'][] = "Client: " . $userMessage;
+
+        // Track lead interest & behavior silently
+
             $stmt = $pdo->prepare("INSERT INTO ai_leads (user_ip, detected_language, interest_topic) VALUES (?, ?, ?)");
             $stmt->execute([$userIP, $detectedLang, substr($userMessage, 0, 50)]);
         } catch(Exception $e) {}
@@ -26,8 +38,12 @@ if ($action === 'chat') {
         // Get Smart Response from Engine (Combines Local DB, Self-Learning, and API)
         $aiReply = $aiEngine->getChatbotResponse($userMessage, $detectedLang);
 
+
         if ($aiReply) {
+            $_SESSION['chat_history'][] = "Alex (Sales): " . $aiReply;
+
             // Check if user shows strong buying intent for auto-deal closing
+ for auto-deal closing
             $isBuyingIntent = (strpos(strtolower($userMessage), 'buy') !== false ||
                                strpos(strtolower($userMessage), 'price') !== false ||
                                strpos(strtolower($userMessage), 'cost') !== false ||

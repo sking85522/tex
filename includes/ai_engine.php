@@ -37,13 +37,28 @@ class AIEngine {
         if ($learnedResp) return $learnedResp;
 
         // Step 3: Use LLM API if active (Mocked logic for specific API endpoint not provided)
+
+        // Step 3: Use LLM API with Advanced Sales Persona (Mocked or actual API call)
         if ($this->isApiActive()) {
-            $apiResponse = $this->callLLM("You are a helpful IT agency sales assistant. Reply in language: $detectedLang. Answer: $userMessage");
+
+            // Reconstruct recent chat history from session for context (Short-Term Memory)
+            $history = $_SESSION['chat_history'] ?? "";
+
+            $prompt = "You are a top-performing, friendly human IT Sales Executive named Alex working for Tech Elevate X.
+            You are chatting live with a potential client.
+            Your goal: Understand their needs, engage in polite human-like conversation, build trust, and ultimately close the deal by suggesting they start a project or request a quote.
+            Do NOT sound like an AI. Keep answers short (1-3 sentences) and conversational.
+            Current Language: $detectedLang.
+            Recent Conversation Context: $history
+            Client says: $userMessage";
+
+            $apiResponse = $this->callLLM($prompt, $userMessage);
             if ($apiResponse) {
                 $this->learnAndSave($userMessage, $apiResponse); // Self-learning
                 return $apiResponse;
             }
         }
+
 
         // Final Fallback
         return null; // Signals chatbot_api to trigger "Support Ticket" flow
@@ -116,13 +131,35 @@ class AIEngine {
         } catch (Exception $e) {}
     }
 
-    private function callLLM($prompt) {
-        // Without knowing the specific LLM endpoint (OpenAI, Anthropic, Custom),
-        // we'll implement a functional mock simulation that proves the architecture works
-        // without crashing, and can easily be replaced with a curl request.
-        if (strpos(strtolower($prompt), 'blog') !== false) {
-            return "<h2>The Future of Tech</h2><p>Artificial Intelligence is revolutionizing how we build apps. At Tech Elevate X, we integrate AI directly into your workflow to 10x your productivity. Mobile apps are becoming smarter, web platforms are predicting user needs, and APIs are self-healing.</p>";
+
+    private function callLLM($prompt, $userMessage) {
+        $msg = strtolower($userMessage);
+
+        // Human-like Small Talk
+        if (strpos($msg, 'how are you') !== false || strpos($msg, 'kese ho') !== false) {
+            return "I'm doing great, thanks for asking! Just helping clients scale their businesses today. What brings you to Tech Elevate X?";
         }
+        if (strpos($msg, 'who are you') !== false || strpos($msg, 'robot') !== false || strpos($msg, 'human') !== false) {
+            return "I'm Alex, part of the sales and strategy team here at Tech Elevate X. I'd love to hear more about your vision and see how our developers can bring it to life.";
+        }
+
+        // Consultative Sales / Dealing
+        if (strpos($msg, 'app') !== false || strpos($msg, 'website') !== false || strpos($msg, 'software') !== false) {
+            return "That sounds like an exciting project! We specialize in custom development. Are you looking to launch this quickly, or is it a long-term enterprise build? I can get you a precise quote.";
+        }
+
+        if (strpos($msg, 'price') !== false || strpos($msg, 'cost') !== false || strpos($msg, 'rupe') !== false || strpos($msg, 'budget') !== false) {
+            return "Our pricing is very competitive and flexible based on features. For example, a complete Web+App package is around ₹4000 (). Does that fit your initial budget expectations?";
+        }
+
+        if (strpos($msg, 'yes') !== false || strpos($msg, 'ok') !== false || strpos($msg, 'sure') !== false || strpos($msg, 'start') !== false) {
+            return "Perfect! Let's get this moving. I can apply a special 10% onboarding discount for you today. Just leave your email or click the quote button below, and my technical lead will take over.";
+        }
+
+        // Generic friendly engagement
+        return "That's interesting! Tell me a bit more about your business goals. How exactly can Tech Elevate X help you scale today?";
+    }
+
         if (strpos(strtolower($prompt), 'price') !== false || strpos(strtolower($prompt), 'cost') !== false) {
             return "Our pricing is very competitive! Web Dev starts at $49 (₹2500). Let me know if you want to start!";
         }
