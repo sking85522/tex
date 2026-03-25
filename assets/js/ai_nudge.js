@@ -35,8 +35,8 @@ function showNudgePopup() {
 
     // Create popup HTML
     const popupHtml = `
-    <div id="ai_sales_nudge" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s;">
-        <div style="background:white; padding:40px; border-radius:15px; max-width:500px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,0.3); transform:translateY(20px); transition:transform 0.3s;" id="nudge_box">
+    <div id="ai_sales_nudge">
+        <div id="nudge_box">
             <h2 style="color:#4e73df; font-size:2rem; margin-top:0; margin-bottom:15px;">Wait! Don't leave empty-handed.</h2>
             <p style="font-size:1.1rem; color:#555; margin-bottom:25px;">
                 We noticed your interest in our <b>${interestCategory}</b>.<br><br>

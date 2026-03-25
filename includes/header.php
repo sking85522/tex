@@ -67,24 +67,7 @@ if ($current_page == 'services.php') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Service Worker Registration for Push Notifications -->
-    <script>
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('sw.js').then(function(registration) {
-                console.log('ServiceWorker registration successful.');
-                // Request Permission (Simulated push sub for demo)
-                Notification.requestPermission().then(function(permission) {
-                    if (permission === 'granted') {
-                        console.log('Notification permission granted.');
-                        // Here you would subscribe to the push manager and send the endpoint to push_subscribe.php
-                    }
-                });
-            }, function(err) {
-                console.log('ServiceWorker registration failed: ', err);
-            });
-        });
-    }
-    </script>
+
 </head>
 
 <body>

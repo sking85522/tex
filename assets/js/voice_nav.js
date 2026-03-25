@@ -125,12 +125,3 @@ function handleVoiceRouting(phrase) {
 }
 
 // Add animation css dynamically
-const style = document.createElement('style');
-style.innerHTML = `
-    @keyframes pulseMic {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 74, 59, 0.7); }
-        70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(231, 74, 59, 0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 74, 59, 0); }
-    }
-`;
-document.head.appendChild(style);

@@ -117,3 +117,22 @@ function pollChat() {
     });
 }
 setInterval(pollChat, 3000);
+
+/* Initialization Logic */
+
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js').then(function(registration) {
+                console.log('ServiceWorker registration successful.');
+                // Request Permission (Simulated push sub for demo)
+                Notification.requestPermission().then(function(permission) {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted.');
+                        // Here you would subscribe to the push manager and send the endpoint to push_subscribe.php
+                    }
+                });
+            }, function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
