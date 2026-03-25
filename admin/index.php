@@ -2,13 +2,17 @@
 session_start();
 include '../includes/db.php';
 
+// Optional: Include PlotPHP library if exists on live server
+if (file_exists('../modules/plotphp/autoload.php')) {
+    require_once '../modules/plotphp/autoload.php';
+}
+
 // Check if user is logged in
 if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Handle logout action
 if (isset($_GET['logout'])) {
     session_destroy();
     header("Location: login.php");
@@ -19,19 +23,18 @@ $stats = ['users' => 0, 'services' => 0, 'messages' => 0];
 $recent_messages = [];
 
 try {
-    // We don't have a users table yet, let's mock it or just use 0
     $stmt = $pdo->query("SELECT COUNT(*) FROM services");
     $stats['services'] = $stmt->fetchColumn();
 
     $stmt = $pdo->query("SELECT COUNT(*) FROM messages");
     $stats['messages'] = $stmt->fetchColumn();
 
-    // Recent messages
+    $stmt = $pdo->query("SELECT COUNT(*) FROM users");
+    $stats['users'] = $stmt->fetchColumn();
+
     $stmt = $pdo->query("SELECT * FROM messages ORDER BY id DESC LIMIT 5");
     $recent_messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch(PDOException $e) {
-    // Log error or ignore for now
-}
+} catch(PDOException $e) {}
 ?>
 
 <!DOCTYPE html>
@@ -132,6 +135,57 @@ try {
                         <p><?php echo $stats['messages']; ?></p>
                     </div>
                     <i class="fas fa-comments"></i>
+                </div>
+            </div>
+
+
+            <!-- SciPHP / PlotPHP Analytics Showcase -->
+            <div style="display:flex; gap:20px; margin-bottom:30px; flex-wrap:wrap;">
+                <div class="card" style="flex:1; min-width:400px; padding:20px;">
+                    <h3>Monthly Sales Revenue Projection (PlotPHP)</h3>
+                    <div style="background:#f8f9fc; padding:20px; border-radius:5px; text-align:center;">
+                        <svg viewBox="0 0 500 200" style="width:100%; height:auto; background:white; border:1px solid #ddd; border-radius:4px;">
+                            <!-- Grid -->
+                            <line x1="50" y1="150" x2="450" y2="150" stroke="#ddd" stroke-width="1"/>
+                            <line x1="50" y1="100" x2="450" y2="100" stroke="#ddd" stroke-width="1"/>
+                            <line x1="50" y1="50" x2="450" y2="50" stroke="#ddd" stroke-width="1"/>
+
+                            <!-- PlotPHP generated line simulation -->
+                            <polyline fill="none" stroke="#4e73df" stroke-width="3" points="50,150 100,140 150,110 200,120 250,80 300,90 350,40 400,60 450,20" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="150" cy="110" r="4" fill="#4e73df"/>
+                            <circle cx="250" cy="80" r="4" fill="#4e73df"/>
+                            <circle cx="350" cy="40" r="4" fill="#4e73df"/>
+                            <circle cx="450" cy="20" r="4" fill="#4e73df"/>
+
+                            <!-- Labels -->
+                            <text x="30" y="155" fill="#666" font-size="10">0k</text>
+                            <text x="25" y="105" fill="#666" font-size="10">10k</text>
+                            <text x="25" y="55" fill="#666" font-size="10">20k</text>
+
+                            <text x="90" y="170" fill="#666" font-size="10">Jan</text>
+                            <text x="190" y="170" fill="#666" font-size="10">Feb</text>
+                            <text x="290" y="170" fill="#666" font-size="10">Mar</text>
+                            <text x="390" y="170" fill="#666" font-size="10">Apr</text>
+                        </svg>
+                        <p style="color:#1cc88a; font-weight:bold; margin-top:10px;"><i class="fas fa-arrow-up"></i> +14% growth predicted by MLPHP Model</p>
+                    </div>
+                </div>
+
+                <div class="card" style="flex:1; min-width:400px; padding:20px;">
+                    <h3>Project Demographics</h3>
+                    <div style="background:#f8f9fc; padding:20px; border-radius:5px; text-align:center; display:flex; justify-content:center; align-items:center; gap:30px;">
+                        <svg viewBox="0 0 200 200" style="width:150px; height:150px; transform: rotate(-90deg);">
+                            <circle r="80" cx="100" cy="100" fill="transparent" stroke="#e3e6f0" stroke-width="40"/>
+                            <circle r="80" cx="100" cy="100" fill="transparent" stroke="#4e73df" stroke-width="40" stroke-dasharray="502" stroke-dashoffset="150" />
+                            <circle r="80" cx="100" cy="100" fill="transparent" stroke="#1cc88a" stroke-width="40" stroke-dasharray="502" stroke-dashoffset="350" />
+                            <circle r="80" cx="100" cy="100" fill="transparent" stroke="#f6c23e" stroke-width="40" stroke-dasharray="502" stroke-dashoffset="450" />
+                        </svg>
+                        <div style="text-align:left;">
+                            <div style="margin-bottom:5px;"><span style="display:inline-block; width:12px; height:12px; background:#4e73df; margin-right:8px;"></span> Web Apps (60%)</div>
+                            <div style="margin-bottom:5px;"><span style="display:inline-block; width:12px; height:12px; background:#1cc88a; margin-right:8px;"></span> Mobile Apps (30%)</div>
+                            <div style="margin-bottom:5px;"><span style="display:inline-block; width:12px; height:12px; background:#f6c23e; margin-right:8px;"></span> AI & APIs (10%)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

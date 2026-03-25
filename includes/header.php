@@ -33,7 +33,7 @@ require_once 'includes/site_settings.php';
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About Us</a></li>
-                    <li><a href="services.php">Services</a></li>
+                    <li><a href="services.php">Services</a></li><li><a href="ai-solutions.php" style="color:var(--primary-color); font-weight:bold;">AI Solutions <i class="fas fa-robot"></i></a></li>
                     <li><a href="portfolio.php">Portfolio</a></li><li><a href="careers.php">Careers</a></li>
                     <li><a href="contact.php">Contact Us</a></li>
                     <li><a href="user/login.php" class="btn btn-outline">Login</a></li><li><a href="user/register.php" class="btn btn-primary" style="margin-left:10px;">Sign Up</a></li>
