@@ -23,6 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("INSERT INTO blogs (title, slug, content, meta_keywords, meta_description, image_url, author, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$_POST['title'], $slug, $_POST['content'], $_POST['meta_keywords'], $_POST['meta_description'], $_POST['image_url'], $_SESSION['admin_username'], $_POST['status']]);
             $msg = "Blog post published successfully.";
+    // Simulate Push Notification payload generation
+    echo '<script>
+        if (Notification.permission === "granted") {
+            new Notification("New Tech Insight Published!", {
+                body: "We just posted a new article on Tech Elevate X.",
+                icon: "../assets/img/logo.png"
+            });
+        }
+    </script>';
+
         } catch (PDOException $e) { $msg = "Error publishing blog: " . $e->getMessage(); }
     } elseif ($_POST['action'] === 'delete') {
         try {

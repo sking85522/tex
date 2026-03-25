@@ -21,6 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("UPDATE client_projects SET status_phase = ?, progress_percent = ?, paid_amount = ? WHERE id = ?");
             $stmt->execute([$_POST['status_phase'], $_POST['progress_percent'], $_POST['paid_amount'], $_POST['project_id']]);
             $msg = "Project progress updated.";
+    // Simulate Push Notification payload generation
+    echo '<script>
+        if (Notification.permission === "granted") {
+            new Notification("Project Status Update", {
+                body: "Your IT project progress has just been updated by the Admin team.",
+                icon: "../assets/img/logo.png"
+            });
+        }
+    </script>';
+
         } catch (PDOException $e) { $msg = "Error updating project."; }
     } elseif ($_POST['action'] === 'delete') {
         try {
