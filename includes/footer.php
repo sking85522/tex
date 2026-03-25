@@ -47,6 +47,17 @@
     </footer>
 
     <script src="assets/js/main.js"></script>
+
+    <!-- Voice Navigation UI -->
+    <div id="voice-nav-wrapper" style="position: fixed; bottom: 90px; right: 25px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end;">
+        <div id="voice-nav-status" style="background: #333; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.3s; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Listening...</div>
+        <button id="voice-nav-btn" style="width: 60px; height: 60px; border-radius: 50%; background: #1cc88a; color: white; border: none; font-size: 1.5rem; cursor: pointer; box-shadow: 0 5px 15px rgba(28, 200, 138, 0.4); display: flex; align-items: center; justify-content: center; transition: 0.3s;" title="Voice Command Navigation">
+            <i class="fas fa-microphone"></i>
+        </button>
+    </div>
+
+    <script src="assets/js/voice_nav.js"></script>
+
 <script src="assets/js/ai_nudge.js"></script>
 </body>
 </html>
