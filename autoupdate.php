@@ -138,21 +138,34 @@ try {
                 $stmt->execute([$file]);
                 $alreadyExecuted = $stmt->fetch();
 
+
+
                 if (!$alreadyExecuted) {
                     logMessage("Running database migration: $file...");
                     $sqlContent = file_get_contents($migrationsDir . $file);
 
-                    if (!empty(trim($sqlContent))) {
-                        // Split multiple statements if necessary, but exec handles most blocks
-                        $pdo->exec($sqlContent);
+                    $statements = explode(";", $sqlContent);
+                    $successCount = 0;
+                    $errorCount = 0;
+
+                    foreach ($statements as $statement) {
+                        $statement = trim($statement);
+                        if (!empty($statement)) {
+                            try {
+                                $pdo->exec($statement);
+                                $successCount++;
+                            } catch (PDOException $e) {
+                                $errorCount++;
+                                @file_put_contents(__DIR__ . "/update_log.txt", "[DB Warning in $file] " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+                            }
+                        }
                     }
 
-                    // Record execution
                     $stmt = $pdo->prepare("INSERT INTO system_migrations (migration_file) VALUES (?)");
                     $stmt->execute([$file]);
-                    logMessage("Migration $file applied successfully.");
+                    logMessage("Migration $file applied (Success: $successCount, Errors Ignored: $errorCount).");
                 }
-            }
+ }
         }
     } else {
         logMessage("No migrations folder found. Skipping DB updates.");

@@ -1,51 +1,81 @@
 <?php
+session_start();
 include 'includes/db.php';
+require_once 'includes/ai_engine.php';
 
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
-    $user_message = strtolower(trim($_POST['message']));
+$action = $_POST['action'] ?? '';
+$response = ['success' => false, 'message' => 'Invalid action'];
 
-    if (empty($user_message)) {
-        echo json_encode(['reply' => 'Please type a message.']);
-        die();
-    }
+// Initialize AI Engine
+$aiEngine = new AIEngine($pdo);
 
-    try {
-        // Fetch FAQs from DB
-        $stmt = $pdo->query("SELECT * FROM chatbot_faqs");
-        $faqs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if ($action === 'chat') {
+    $userMessage = trim($_POST['message'] ?? '');
+    $userIP = $_SERVER['REMOTE_ADDR'];
+    $detectedLang = 'en';
 
-        $best_match = null;
-        $highest_score = 0;
+    if (!empty($userMessage)) {
+        try {
+            // Track lead interest & behavior silently
+            $stmt = $pdo->prepare("INSERT INTO ai_leads (user_ip, detected_language, interest_topic) VALUES (?, ?, ?)");
+            $stmt->execute([$userIP, $detectedLang, substr($userMessage, 0, 50)]);
+        } catch(Exception $e) {}
 
-        foreach ($faqs as $faq) {
-            $keywords = explode(',', strtolower($faq['keywords']));
-            $score = 0;
+        // Get Smart Response from Engine (Combines Local DB, Self-Learning, and API)
+        $aiReply = $aiEngine->getChatbotResponse($userMessage, $detectedLang);
 
-            // Basic keyword matching
-            foreach ($keywords as $keyword) {
-                if (strpos($user_message, trim($keyword)) !== false) {
-                    $score++;
-                }
+        if ($aiReply) {
+            // Check if user shows strong buying intent for auto-deal closing
+            $isBuyingIntent = (strpos(strtolower($userMessage), 'buy') !== false ||
+                               strpos(strtolower($userMessage), 'price') !== false ||
+                               strpos(strtolower($userMessage), 'cost') !== false ||
+                               strpos(strtolower($userMessage), 'start') !== false ||
+                               strpos(strtolower($userMessage), 'hire') !== false);
+
+            if ($isBuyingIntent) {
+                $dealMsg = $aiReply . "<br><br><b>🎯 Special Deal Detected!</b> Because you are interested today, I can offer you a <b>10% instant discount</b> and 3 months of free maintenance if you start your project now. <br><a href='contact.php?offer=10percent' style='color:#1cc88a; font-weight:bold; text-decoration:underline;'>Click here to claim your discount and start!</a>";
+                $response = ['success' => true, 'message' => $dealMsg];
+
+                // Mark lead as "Converted" to a hot lead
+                try {
+                    $stmt = $pdo->prepare("UPDATE ai_leads SET converted = 1 WHERE user_ip = ? ORDER BY id DESC LIMIT 1");
+                    $stmt->execute([$userIP]);
+                } catch(Exception $e) {}
+            } else {
+                $response = ['success' => true, 'message' => $aiReply];
             }
-
-            if ($score > $highest_score) {
-                $highest_score = $score;
-                $best_match = $faq['answer'];
-            }
-        }
-
-        if ($best_match) {
-            echo json_encode(['reply' => $best_match]);
         } else {
-            echo json_encode(['reply' => "I'm sorry, I don't understand that. Please use our contact form for detailed inquiries!"]);
+            // No match found anywhere. Prompt to create a support ticket.
+            $response = [
+                'success' => true,
+                'message' => 'I am still learning and do not understand that yet. Would you like me to create a support ticket for a human to answer? Reply with "ticket: your email" (e.g., ticket: name@email.com).',
+                'action_required' => 'create_ticket',
+                'pending_question' => $userMessage
+            ];
+            $_SESSION['pending_ticket_question'] = $userMessage;
         }
-
-    } catch (PDOException $e) {
-        echo json_encode(['reply' => "Database error occurred."]);
     }
-} else {
-    echo json_encode(['reply' => "Invalid request."]);
+} elseif ($action === 'ticket') {
+    $userMessage = trim($_POST['message'] ?? '');
+    if (strpos(strtolower($userMessage), 'ticket:') === 0) {
+        $email = trim(substr($userMessage, 7));
+        $question = $_SESSION['pending_ticket_question'] ?? 'Unknown question';
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO support_tickets (user_email, question) VALUES (?, ?)");
+                $stmt->execute([$email, $question]);
+                $response = ['success' => true, 'message' => "Support ticket created successfully. Our team will email you at {$email} shortly!"];
+                unset($_SESSION['pending_ticket_question']);
+            } catch(PDOException $e) {
+                $response['message'] = 'Failed to create ticket.';
+            }
+        } else {
+            $response['message'] = 'Invalid email format. Please reply like "ticket: name@email.com".';
+        }
+    }
 }
-?>
+
+echo json_encode($response);
