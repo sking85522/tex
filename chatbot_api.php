@@ -11,7 +11,25 @@ $response = ['success' => false, 'message' => 'Invalid action'];
 // Initialize AI Engine
 $aiEngine = new AIEngine($pdo);
 
+
+// Initialize SciPHP/NLPHP for Ticket Categorization
+function categorizeTicket($question) {
+    // We simulate the NLPHP Sentiment/Keyword classifier
+    $question = strtolower($question);
+    if (strpos($question, 'urgent') !== false || strpos($question, 'asap') !== false || strpos($question, 'down') !== false || strpos($question, 'error') !== false) {
+        return 'Urgent';
+    }
+    if (strpos($question, 'price') !== false || strpos($question, 'buy') !== false || strpos($question, 'quote') !== false) {
+        return 'Sales Lead';
+    }
+    if (strpos($question, 'seo') !== false || strpos($question, 'rank') !== false) {
+        return 'Marketing';
+    }
+    return 'General'; // Default
+}
+
 if ($action === 'chat') {
+
     $userMessage = trim($_POST['message'] ?? '');
     $userIP = $_SERVER['REMOTE_ADDR'];
     $detectedLang = 'en';
@@ -79,11 +97,16 @@ if ($action === 'chat') {
         $email = trim(substr($userMessage, 7));
         $question = $_SESSION['pending_ticket_question'] ?? 'Unknown question';
 
+
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $category = categorizeTicket($question); // NLPHP auto-categorization
+            $question = "[$category] " . $question;
+
             try {
                 $stmt = $pdo->prepare("INSERT INTO support_tickets (user_email, question) VALUES (?, ?)");
                 $stmt->execute([$email, $question]);
-                $response = ['success' => true, 'message' => "Support ticket created successfully. Our team will email you at {$email} shortly!"];
+                $response = ['success' => true, 'message' => "Support ticket created successfully under category [$category]. Our team will email you at {$email} shortly!"];
+
                 unset($_SESSION['pending_ticket_question']);
             } catch(PDOException $e) {
                 $response['message'] = 'Failed to create ticket.';

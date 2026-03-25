@@ -55,9 +55,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <?php include 'includes/header.php'; ?>
 
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold mb-0 text-dark">Live Project Tracker</h2>
+        <a href="export_report.php" class="btn btn-outline-success rounded-pill fw-bold"><i class="bi bi-file-earmark-spreadsheet me-1"></i> Generate PandaPHP Analytics Report (CSV)</a>
     </div>
+
 
     <?php if($msg) echo "<div class='alert alert-info shadow-sm'>$msg</div>"; ?>
 
