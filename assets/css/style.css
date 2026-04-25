@@ -247,3 +247,114 @@ h1, h2, h3, h4, .outfit { font-family: 'Outfit', sans-serif; }
         bottom: 100px;
     }
 }
+
+/* Fix Mobile Nav Menu */
+.nav-links {
+    transition: 0.3s;
+}
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hamburger { display: block; }
+    .nav-links {
+        display: none !important;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-main);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-links.active {
+        display: flex !important;
+    }
+    .nav-links ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .chatbot-window {
+        width: calc(100% - 40px) !important;
+        height: 70vh !important;
+        bottom: 100px !important;
+        right: 20px !important;
+        left: 20px !important;
+    }
+    .chatbot-toggle {
+        bottom: 20px !important;
+        right: 20px !important;
+    }
+}
+.logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Fix Input Visibility for Chatbot on Mobile */
+.chatbot-footer {
+    background: var(--bg-main) !important;
+    z-index: 1000;
+}
+.chatbot-input-area input {
+    background: rgba(255,255,255,0.1) !important;
+}
+.chatbot-footer {
+    position: relative;
+    z-index: 1000;
+}
+.chatbot-input-area {
+    background: var(--bg-main) !important;
+}
+.chatbot-input-area input {
+    color: white !important;
+}
+.chatbot-footer {
+    position: relative;
+    z-index: 1000;
+    padding-bottom: 20px;
+}
+.chatbot-input-area {
+    background: var(--bg-main) !important;
+    position: relative;
+    z-index: 1000;
+}
+.chatbot-input-area input {
+    color: white !important;
+    background-color: var(--bg-card) !important;
+}
+.chatbot-input-area button {
+    position: relative;
+    z-index: 1000;
+}
+.chatbot-footer {
+    position: relative;
+    z-index: 1000;
+    padding-bottom: 20px;
+    background: #0f172a !important;
+}
+.chatbot-input-area {
+    background: #0f172a !important;
+    position: relative;
+    z-index: 1000;
+}
+.chatbot-input-area input {
+    color: white !important;
+    background-color: #1e293b !important;
+}
+.chatbot-input-area button {
+    position: relative;
+    z-index: 1000;
+}
+.chatbot-window {
+    background: #0f172a !important;
+}
+.chatbot-window {
+    background: #0f172a !important;
+}

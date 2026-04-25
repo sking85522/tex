@@ -32,26 +32,27 @@ class SupervisedLearner {
             if (strtolower(trim($entry['question'] ?? '')) === $prompt) return $entry['answer'];
         }
 
-        // 2. Check Massive Knowledge (DISABLED LINEAR SCAN FOR PERFORMANCE)
-        /*
-        if (file_exists($this->massivePath)) {
-            $handle = fopen($this->massivePath, "r");
-            if ($handle) {
-                while (($line = fgets($handle)) !== false) {
-                    $data = json_decode($line, true);
-                    if (!$data) continue;
-                    $storedQ = strtolower(trim($data['q'] ?? ''));
-                    if ($storedQ === $prompt || str_contains($storedQ, $prompt) || str_contains($prompt, $storedQ)) {
-                        fclose($handle);
-                        return $data['a'];
-                    }
-                }
-                fclose($handle);
-            }
+        // Query Database directly using NeuralDatabase connection if available
+        $dbAnswer = $this->db->findAnswer($prompt);
+        if ($dbAnswer) {
+            return $dbAnswer;
         }
-        */
 
-        return $this->db->findAnswer($prompt);
+        // Try direct PDO connection as fallback
+        try {
+            global $pdo;
+            if (isset($pdo)) {
+                $stmt = $pdo->prepare("SELECT learned_content FROM ai_knowledge WHERE topic LIKE ? OR ? LIKE CONCAT('%', topic, '%') ORDER BY confidence_score DESC LIMIT 1");
+                $searchPrompt = '%' . $prompt . '%';
+                $stmt->execute([$searchPrompt, $prompt]);
+                $result = $stmt->fetchColumn();
+                if ($result) {
+                    return $result;
+                }
+            }
+        } catch (\Exception $e) {}
+
+        return null;
     }
 
     public function teach(string $prompt, string $answer, string $source = 'autonomous_learning'): void {
