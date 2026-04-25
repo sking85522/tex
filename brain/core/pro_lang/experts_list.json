@@ -1,0 +1,42 @@
+{
+    "experts": [
+        {
+            "id": "php",
+            "name": "PHP Expert",
+            "path": "PHP/PHPSynthesizer.php",
+            "capabilities": ["synthesis", "logic", "classes"]
+        },
+        {
+            "id": "html",
+            "name": "HTML Expert",
+            "path": "Web/HTML/HTMLExpert.php",
+            "capabilities": ["semantic", "seo", "structure"]
+        },
+        {
+            "id": "css",
+            "name": "CSS Expert",
+            "path": "Web/CSS/CSSExpert.php",
+            "capabilities": ["styling", "animations", "glassmorphism"]
+        },
+        {
+            "id": "js",
+            "name": "JS Expert",
+            "path": "Web/JS/JSExpert.php",
+            "capabilities": ["interactivity", "dom", "async"]
+        },
+        {
+            "id": "python",
+            "name": "Python Expert",
+            "path": "Python/PythonExpert.php",
+            "capabilities": ["data_science", "automation", "scripts"]
+        },
+        {
+            "id": "java",
+            "name": "Java Expert",
+            "path": "Java/JavaExpert.php",
+            "capabilities": ["enterprise", "oop", "backend"]
+        }
+    ],
+    "version": "1.2.0",
+    "last_sync": "2026-04-25"
+}

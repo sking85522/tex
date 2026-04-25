@@ -1,0 +1,69 @@
+name: Linux Native Build (with container)
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  linux-x64-build:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Checkout whisper.cpp
+          uses: actions/checkout@v4
+          with:
+            repository: ggerganov/whisper.cpp
+            ref: v1.7.2
+            path: whisper.cpp
+
+        - name: Build Docker Image
+          run: docker build -t linux-x64-build -f linux-Dockerfile .
+
+        - name: Create output directory
+          run: mkdir -p ./artifacts
+
+        - name: Run Build in Docker Container
+          run: |
+            docker run --rm \
+              -v $(pwd):/build \
+              -v $(pwd)/artifacts:/build/runtimes \
+              linux-x64-build
+
+        - name: Upload Build Artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: linux-x64
+            path: ./artifacts
+            retention-days: 7
+
+  linux-aarch64-build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout whisper.cpp
+        uses: actions/checkout@v4
+        with:
+          repository: ggerganov/whisper.cpp
+          ref: v1.7.2
+          path: whisper.cpp
+
+      - name: Install cross-compilation toolchains
+        run: |
+          sudo apt-get update 
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+
+      - name: Build Linux Native Libraries
+        run: make linux_aarch64
+
+      - name: Upload Linux Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-aarch64
+          path: runtimes/linux-*/*
+          retention-days: 7

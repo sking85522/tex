@@ -1,0 +1,29 @@
+name: MacOS CoreML Build
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  macos-coreml-build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout whisper.cpp
+        uses: actions/checkout@v4
+        with:
+          repository: ggerganov/whisper.cpp
+          ref: v1.7.2
+          path: whisper.cpp
+
+      - name: Build MacOS CoreML Libraries
+        run: make macos_coreml
+
+      - name: Upload Mac CoreML Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-coreml-build
+          path: runtimes/macos-*_coreml/*
+          retention-days: 7

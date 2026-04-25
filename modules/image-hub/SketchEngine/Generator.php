@@ -1,0 +1,1 @@
+<?php namespace ImageHub\\SketchEngine; class Generator { public function generate(\) { return 'Generated via SketchEngine Engine'; } }

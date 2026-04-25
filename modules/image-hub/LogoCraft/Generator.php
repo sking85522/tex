@@ -1,0 +1,1 @@
+<?php namespace ImageHub\\LogoCraft; class Generator { public function generate(\) { return 'Generated via LogoCraft Engine'; } }

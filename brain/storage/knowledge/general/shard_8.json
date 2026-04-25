@@ -1,0 +1,402 @@
+[
+    {
+        "q": "Who won Nobel Prize in literature in 1957?",
+        "a": "Albert Camus from France"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1957?",
+        "a": "Lester B. Pearson from Canada"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1957?",
+        "a": "Tsung-Dao Lee from China for discovery of violations of the principle of parity"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1957?",
+        "a": "Chen Ning Yang from China for discovery of violations of the principle of parity"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1957?",
+        "a": "Daniel Bovet from Italy for production of synthetic curare"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1958?",
+        "a": "Frederick Sanger from U.K. for determination of the structure of the insulin molecule"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1958?",
+        "a": "Boris Leonidovich Pasternak (declined) from U.S.S.R."
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1958?",
+        "a": "Dominique Pire from Belgium"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1958?",
+        "a": "Pavel Alekseyevich Cherenkov from U.S.S.R. for discovery and interpretation of the Cherenkov effect"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1958?",
+        "a": "Ilya Mikhaylovich Frank from U.S.S.R. for discovery and interpretation of the Cherenkov effect"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1958?",
+        "a": "Igor Yevgenyevich Tamm from U.S.S.R. for discovery and interpretation of the Cherenkov effect"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1958?",
+        "a": "George Wells Beadle from U.S. for genetic regulation of chemical processes"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1958?",
+        "a": "Joshua Lederberg from U.S. for genetic recombination"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1958?",
+        "a": "Edward L. Tatum from U.S. for genetic regulation of chemical processes"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1959?",
+        "a": "Jaroslav Heyrovsk\u00fd from Czechoslovakia for discovery and development of polarography"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1959?",
+        "a": "Salvatore Quasimodo from Italy"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1959?",
+        "a": "Philip John Noel-Baker, Baron Noel-Baker from U.K."
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1959?",
+        "a": "Owen Chamberlain from U.S. for confirmation of the existence of the antiproton"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1959?",
+        "a": "Emilio Segr\u00e8 from U.S. for confirmation of the existence of the antiproton"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1959?",
+        "a": "Arthur Kornberg from U.S. for work on producing nucleic acids artificially"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1959?",
+        "a": "Severo Ochoa from U.S. for work on producing nucleic acids artificially"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1960?",
+        "a": "Willard Frank Libby from U.S. for development of radiocarbon dating"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1960?",
+        "a": "Saint-John Perse from France"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1960?",
+        "a": "Albert John Luthuli from South Africa"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1960?",
+        "a": "Donald A. Glaser from U.S. for development of the bubble chamber"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1960?",
+        "a": "Sir Macfarlane Burnet from Australia for acquired immunity to tissue transplants"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1960?",
+        "a": "Sir Peter B. Medawar from U.K. for acquired immunity to tissue transplants"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1961?",
+        "a": "Melvin Calvin from U.S. for study of chemical steps that take place during photosynthesis"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1961?",
+        "a": "Ivo Andric from Yugoslavia"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1961?",
+        "a": "Dag Hammarskj\u00f6ld from Sweden"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1961?",
+        "a": "Robert Hofstadter from U.S. for determination of shape and size of atomic nucleons"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1961?",
+        "a": "Rudolf Ludwig M\u00f6ssbauer from West Germany for discovery of the M\u00f6ssbauer effect"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1961?",
+        "a": "Georg von B\u00e9k\u00e9sy from U.S. for functions of the inner ear"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1962?",
+        "a": "Sir John Cowdery Kendrew from U.K. for determination of the structure of hemoproteins"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1962?",
+        "a": "Max Ferdinand Perutz from U.K. for determination of the structure of hemoproteins"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1962?",
+        "a": "John Steinbeck from U.S."
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1962?",
+        "a": "Linus Pauling from U.S."
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1962?",
+        "a": "Lev Davidovich Landau from U.S.S.R. for contributions to the understanding of condensed states of matter"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1962?",
+        "a": "Francis Harry Compton Crick from U.K. for discoveries concerning the molecular structure of DNA"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1962?",
+        "a": "James Dewey Watson from U.S. for discoveries concerning the molecular structure of DNA"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1962?",
+        "a": "Maurice Wilkins from U.K. for discoveries concerning the molecular structure of DNA"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1963?",
+        "a": "Giulio Natta from Italy for structure and synthesis of polymers in the field of plastics"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1963?",
+        "a": "Karl Ziegler from West Germany for structure and synthesis of polymers in the field of plastics"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1963?",
+        "a": "George Seferis from Greece"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1963?",
+        "a": "International Committee of the Red Cross from (founded 1863)"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1963?",
+        "a": "League of Red Cross Societies from "
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1963?",
+        "a": "J. Hans D. Jensen from West Germany for development of shell model theory of the structure of the atomic nuclei"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1963?",
+        "a": "Maria Goeppert Mayer from U.S. for development of shell model theory of the structure of the atomic nuclei"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1963?",
+        "a": "Eugene Paul Wigner from U.S. for principles governing interaction of protons and neutrons in the nucleus"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1963?",
+        "a": "Sir John Carew Eccles from Australia for study of the transmission of impulses along a nerve fibre"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1963?",
+        "a": "Sir Alan Hodgkin from U.K. for study of the transmission of impulses along a nerve fibre"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1963?",
+        "a": "Sir Andrew Fielding Huxley from U.K. for study of the transmission of impulses along a nerve fibre"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1964?",
+        "a": "Dorothy Mary Crowfoot Hodgkin from U.K. for determining the structure of biochemical compounds essential in combating pernicious anemia"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1964?",
+        "a": "Jean-Paul Sartre (declined) from France"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1964?",
+        "a": "Martin Luther King, Jr. from U.S."
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1964?",
+        "a": "Nikolay Gennadiyevich Basov from U.S.S.R. for work in quantum electronics leading to construction of instruments based on maser-laser principles"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1964?",
+        "a": "Aleksandr Mikhaylovich Prokhorov from U.S.S.R. for work in quantum electronics leading to construction of instruments based on maser-laser principles"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1964?",
+        "a": "Charles Hard Townes from U.S. for work in quantum electronics leading to construction of instruments based on maser-laser principles"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1964?",
+        "a": "Konrad Bloch from U.S. for discoveries concerning cholesterol and fatty-acid metabolism"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1964?",
+        "a": "Feodor Lynen from West Germany for discoveries concerning cholesterol and fatty-acid metabolism"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1965?",
+        "a": "R.B. Woodward from U.S. for synthesis of sterols, chlorophyll, and other substances"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1965?",
+        "a": "Mikhail Aleksandrovich Sholokhov from U.S.S.R."
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1965?",
+        "a": "United Nations Children's Fund from (founded 1946)"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1965?",
+        "a": "Richard P. Feynman from U.S. for basic principles of quantum electrodynamics"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1965?",
+        "a": "Julian Seymour Schwinger from U.S. for basic principles of quantum electrodynamics"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1965?",
+        "a": "Tomonaga Shin'ichiro from Japan for basic principles of quantum electrodynamics"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1965?",
+        "a": "Fran\u00e7ois Jacob from France for discoveries concerning regulatory activities of the body cells"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1965?",
+        "a": "Andr\u00e9 Lwoff from France for discoveries concerning regulatory activities of the body cells"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1965?",
+        "a": "Jacques Monod from France for discoveries concerning regulatory activities of the body cells"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1966?",
+        "a": "Robert Sanderson Mulliken from U.S. for work concerning chemical bonds and the electronic structure of molecules"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1966?",
+        "a": "S.Y. Agnon from Israel"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1966?",
+        "a": "Nelly Sachs from Sweden"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1966?",
+        "a": "Alfred Kastler from France for discovery of optical methods for studying Hertzian resonances in atoms"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1966?",
+        "a": "Charles B. Huggins from U.S. for research on causes and treatment of cancer"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1966?",
+        "a": "Peyton Rous from U.S. for research on causes and treatment of cancer"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1967?",
+        "a": "Manfred Eigen from West Germany for studies of extremely fast chemical reactions"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1967?",
+        "a": "Ronald George Wreyford Norrish from U.K. for studies of extremely fast chemical reactions"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1967?",
+        "a": "Sir George Porter from U.K. for studies of extremely fast chemical reactions"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1967?",
+        "a": "Miguel \u00c1ngel Asturias from Guatemala"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1967?",
+        "a": "Hans Bethe from U.S. for discoveries concerning the energy production of stars"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1967?",
+        "a": "Ragnar Arthur Granit from Sweden for discoveries about chemical and physiological visual processes in the eye"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1967?",
+        "a": "Haldan Keffer Hartline from U.S. for discoveries about chemical and physiological visual processes in the eye"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1967?",
+        "a": "George Wald from U.S. for discoveries about chemical and physiological visual processes in the eye"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1968?",
+        "a": "Lars Onsager from U.S. for work on theory of thermodynamics of irreversible processes"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1968?",
+        "a": "Kawabata Yasunari from Japan"
+    },
+    {
+        "q": "Who won Nobel Prize in peace in 1968?",
+        "a": "Ren\u00e9 Cassin from France"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1968?",
+        "a": "Luis W. Alvarez from U.S. for work with elementary particles, discovery of resonance states"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1968?",
+        "a": "Robert William Holley from U.S. for deciphering of the genetic code"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1968?",
+        "a": "Har Gobind Khorana from U.S. for deciphering of the genetic code"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1968?",
+        "a": "Marshall William Nirenberg from U.S. for deciphering of the genetic code"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1969?",
+        "a": "Sir Derek H.R. Barton from U.K. for work in determining actual three-dimensional shape of molecules"
+    },
+    {
+        "q": "Who won Nobel Prize in chemistry in 1969?",
+        "a": "Odd Hassel from Norway for work in determining actual three-dimensional shape of molecules"
+    },
+    {
+        "q": "Who won Nobel Prize in economics in 1969?",
+        "a": "Ragnar Frisch from Norway for work in econometrics"
+    },
+    {
+        "q": "Who won Nobel Prize in economics in 1969?",
+        "a": "Jan Tinbergen from Netherlands for work in econometrics"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1969?",
+        "a": "Samuel Beckett from Ireland"
+    },
+    {
+        "q": "Who won Nobel Prize in literature in 1969?",
+        "a": "peace from International Labour Organisation for (founded 1919)"
+    },
+    {
+        "q": "Who won Nobel Prize in physics in 1969?",
+        "a": "Murray Gell-Mann from U.S. for classification of elementary particles and their interactions"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1969?",
+        "a": "Max Delbr\u00fcck from U.S. for research and discoveries concerning viruses and viral diseases"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1969?",
+        "a": "A.D. Hershey from U.S. for research and discoveries concerning viruses and viral diseases"
+    },
+    {
+        "q": "Who won Nobel Prize in physiology\/medicine in 1969?",
+        "a": "Salvador Luria from U.S. for research and discoveries concerning viruses and viral diseases"
+    }
+]

@@ -1,0 +1,79 @@
+# Codecov Configuration
+# https://docs.codecov.com/docs/codecov-yaml
+
+codecov:
+  require_ci_to_pass: yes
+  notify:
+    wait_for_ci: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "75...100"
+
+  status:
+    # Project coverage (overall codebase)
+    project:
+      default:
+        target: 78%
+        threshold: 3%
+        base: auto
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
+
+    # Patch coverage (new code in PR)
+    patch:
+      default:
+        target: 75%
+        threshold: 5%
+        base: auto
+        if_ci_failed: error
+        informational: true
+        only_pulls: true
+
+# Ignore certain files/directories from coverage
+ignore:
+  - "tests/**/*"
+  - "vendor/**/*"
+  - "resources/**/*"
+  - "coverage-html/**/*"
+  - "*.md"
+  - ".github/**/*"
+  - ".ai/**/*"
+  - "wiki/**/*"
+
+# Comment configuration
+comment:
+  layout: "reach,diff,flags,tree,reach"
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+  branches:
+    - master
+    - develop
+
+# GitHub Checks configuration
+github_checks:
+  annotations: true
+
+# Flags for different parts of the codebase (optional)
+flags:
+  core:
+    paths:
+      - src/
+    carryforward: true
+
+  models:
+    paths:
+      - src/Models/
+    carryforward: true
+
+  storage:
+    paths:
+      - src/Support/Storage/
+    carryforward: true
+
+# Notification settings (optional)
+# comment: false  # Uncomment to disable PR comments

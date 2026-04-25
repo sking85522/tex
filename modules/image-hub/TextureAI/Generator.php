@@ -1,0 +1,1 @@
+<?php namespace ImageHub\\TextureAI; class Generator { public function generate(\) { return 'Generated via TextureAI Engine'; } }
