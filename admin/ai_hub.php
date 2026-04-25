@@ -36,6 +36,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 }
 
+// Handle JSONL file upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'upload_jsonl' && isset($_FILES['jsonl_file'])) {
+    if ($_FILES['jsonl_file']['error'] === UPLOAD_ERR_OK) {
+        $file_tmp = $_FILES['jsonl_file']['tmp_name'];
+        $handle = fopen($file_tmp, "r");
+        if ($handle) {
+            $count = 0;
+            $pdo->beginTransaction();
+            try {
+                $stmt = $pdo->prepare("INSERT INTO ai_knowledge (topic, learned_content, confidence_score) VALUES (?, ?, ?)");
+                while (($line = fgets($handle)) !== false) {
+                    $data = json_decode($line, true);
+                    if ($data) {
+                        $topic = $data['prompt'] ?? $data['question'] ?? $data['topic'] ?? '';
+                        $content = $data['completion'] ?? $data['answer'] ?? $data['learned_content'] ?? $data['response'] ?? '';
+                        if (!empty($topic) && !empty($content)) {
+                            $stmt->execute([$topic, $content, 100]);
+                            $count++;
+                        }
+                    }
+                }
+                $pdo->commit();
+                $msg = "Successfully ingested $count neural pathways from JSONL dataset.";
+            } catch (Exception $e) {
+                $pdo->rollBack();
+                $msg = "Error processing JSONL file: " . $e->getMessage();
+            }
+            fclose($handle);
+        } else {
+            $msg = "Error opening uploaded file.";
+        }
+    } else {
+        $msg = "Error uploading file. Code: " . $_FILES['jsonl_file']['error'];
+    }
+}
+
 $knowledge = [];
 $total_learned = 0;
 $avg_confidence = 0;
@@ -81,7 +117,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
 
         <div class="col-md-6">
-            <div class="card shadow-sm border-0 h-100 p-4">
+            <div class="card shadow-sm border-0 h-100 p-4 mb-3">
                 <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle text-primary me-2"></i> Manually Inject Knowledge</h5>
                 <form action="ai_hub.php" method="POST">
                     <input type="hidden" name="action" value="add_knowledge">
@@ -103,6 +139,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <button type="submit" class="btn btn-primary w-100"><i class="bi bi-upload me-1"></i> Inject</button>
                         </div>
                     </div>
+                </form>
+            </div>
+
+            <div class="card shadow-sm border-0 p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-file-earmark-code text-primary me-2"></i> Mass JSONL Training</h5>
+                <form action="ai_hub.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="upload_jsonl">
+                    <div class="mb-3">
+                        <input type="file" name="jsonl_file" class="form-control" accept=".jsonl" required>
+                    </div>
+                    <p class="text-muted small mb-3">Upload a JSONL file with {"prompt": "...", "completion": "..."} format.</p>
+                    <button type="submit" class="btn btn-dark w-100"><i class="bi bi-cloud-arrow-up me-1"></i> Upload & Train AI</button>
                 </form>
             </div>
         </div>

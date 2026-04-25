@@ -24,7 +24,7 @@ try {
     
 } catch (PDOException $e) {
     class MockPDO {
-        public function query($sql) { return new class { public function fetchAll() { return []; } public function fetchColumn() { return 0; } }; }
+        public function query($sql) { return new class { public function fetchAll() { return []; } public function fetchColumn() { return 0; } public function fetch() { return false; } }; }
         public function prepare($sql) { return new class { public function execute($params = []) { return true; } public function fetchAll() { return []; } public function fetch() { return false; } }; }
         public function exec($sql) { return 0; }
     }
