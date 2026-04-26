@@ -116,6 +116,14 @@ class Engine {
             return ['status' => 'success', 'response' => $response, 'intent' => 'task_mode'];
         }
 
+                // 2b. Sales & Tech Consultant Mode
+        if ($this->get('signalProcessor')->isSalesConsultationPrompt($resolvedPrompt)) {
+            require_once __DIR__ . '/Engine/SalesConsultant.php';
+            $salesConsultant = new \Core\Engine\SalesConsultant();
+            $responseContent = $salesConsultant->handleSalesInquiry($resolvedPrompt);
+            return ['status' => 'success', 'response' => $responseContent, 'intent' => 'sales_deal'];
+        }
+
         // 3. Check for System Commands
         $sysResult = $this->get('commandRouter')->handle($resolvedPrompt, $sessionId);
         if ($sysResult) return $sysResult;
