@@ -116,6 +116,14 @@ class Engine {
             return ['status' => 'success', 'response' => $response, 'intent' => 'task_mode'];
         }
 
+                // 2b. Sales & Tech Consultant Mode
+        if ($this->get('signalProcessor')->isSalesConsultationPrompt($resolvedPrompt)) {
+            require_once __DIR__ . '/Engine/SalesConsultant.php';
+            $salesConsultant = new \Core\Engine\SalesConsultant();
+            $responseContent = $salesConsultant->handleSalesInquiry($resolvedPrompt);
+            return ['status' => 'success', 'response' => $responseContent, 'intent' => 'sales_deal'];
+        }
+
         // 3. Check for System Commands
         $sysResult = $this->get('commandRouter')->handle($resolvedPrompt, $sessionId);
         if ($sysResult) return $sysResult;
@@ -182,7 +190,13 @@ class Engine {
             if (!empty($analysis['nlu_result']['knowledge_match'])) {
                 $responseContent = $analysis['nlu_result']['knowledge_match'];
             } else {
-                $responseContent = $this->get('genAi')->generateThought();
+                // Try LLM Integration
+                $responseContent = $this->callExternalLLM($resolvedPrompt);
+
+                // Fallback to internal generator if LLM fails
+                if (!$responseContent) {
+                    $responseContent = $this->get('genAi')->generateThought();
+                }
             }
             if (empty($responseContent)) $responseContent = "Sir, abhi mujhe is bare mein training nahi mili hai.";
         }
@@ -217,6 +231,45 @@ class Engine {
         if (!$body) $body = "No reliable data gathered.";
 
         return "Neural Task Report\n\nPlan:\n" . implode("\n", $steps) . "\n\nResults:\n" . $body . "\n\nConfidence: " . ($verify['confidence'] * 100) . "%";
+    }
+
+    private function callExternalLLM(string $prompt): ?string {
+        // We will prioritize OpenAI if available.
+        $apiKey = getenv('OPENAI_API_KEY') ?: '';
+        if (empty($apiKey)) return null;
+
+        try {
+            $url = 'https://api.openai.com/v1/chat/completions';
+            $data = [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    ['role' => 'system', 'content' => 'You are HRITIK, an advanced AI assistant for Tech Elevate X.'],
+                    ['role' => 'user', 'content' => $prompt]
+                ]
+            ];
+
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/json\r\n" .
+                                 "Authorization: Bearer $apiKey\r\n",
+                    'method'  => 'POST',
+                    'content' => json_encode($data),
+                    'timeout' => 10,
+                ],
+            ];
+            $context  = stream_context_create($options);
+            $result = @file_get_contents($url, false, $context);
+
+            if ($result) {
+                $json = json_decode($result, true);
+                if (isset($json['choices'][0]['message']['content'])) {
+                    return $json['choices'][0]['message']['content'];
+                }
+            }
+        } catch (\Exception $e) {
+            // Log or ignore
+        }
+        return null;
     }
 
     private function resolveContext(string $prompt, array $recent): string {

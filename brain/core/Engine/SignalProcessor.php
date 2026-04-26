@@ -2,9 +2,9 @@
 namespace Core\Engine;
 
 class SignalProcessor {
-    public function isLikelyCodePrompt(string $input): bool {
+        public function isLikelyCodePrompt(string $input): bool {
         $x = mb_strtolower($input, 'UTF-8');
-        $signals = ['code', 'coding', 'php', 'javascript', 'html', 'css', 'sql', 'api', 'function', 'class', 'bug', 'debug'];
+        $signals = ['code', 'coding', 'php', 'javascript', 'js', 'html', 'css', 'sql', 'api', 'function', 'class', 'bug', 'debug', 'react', 'python', 'script', 'program', 'snippet'];
         foreach ($signals as $signal) {
             if (str_contains($x, $signal)) return true;
         }
@@ -81,4 +81,20 @@ class SignalProcessor {
         $last = end($recent);
         return is_array($last) && (($last['intent'] ?? '') === 'quiz_request' || str_contains((string) ($last['content'] ?? ''), 'Quiz'));
     }
+
+    public function isSalesConsultationPrompt(string $input): bool {
+        $x = mb_strtolower(trim($input), 'UTF-8');
+        $signals = [
+            'website banwana', 'app banwana', 'software banwana', 'develop a website',
+            'create an app', 'cost for app', 'cost for website', 'price for software',
+            'hire a developer', 'need a developer', 'project deal', 'mera project',
+            'mujhe ek app', 'mujhe ek website', 'e-commerce site', 'ecommerce site',
+            'business website', 'tech stack', 'client deal'
+        ];
+        foreach ($signals as $signal) {
+            if (str_contains($x, $signal)) return true;
+        }
+        return false;
+    }
+
 }
