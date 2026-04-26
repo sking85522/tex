@@ -12,25 +12,50 @@ class SalesConsultant {
         if (str_contains($low, 'ecommerce') || str_contains($low, 'e-commerce') || str_contains($low, 'shopping')) {
             $response .= "It sounds like you want to build an E-commerce platform. For a robust and scalable solution, I recommend a MERN stack (MongoDB, Express, React, Node.js) or a customized PHP/Laravel backend. ";
             $response .= "\n\nEstimated Timeline: 4 to 8 weeks.\nEstimated Pricing: Starts from ₹40,000 / $500 depending on features (payment gateways, admin panel, etc.).";
+
+            $response .= "\n\n🌟 **Our Past Success (Portfolio):**\n";
+            $response .= "- ShopElevate: A high-converting MERN e-commerce app.\n";
+            $response .= "- KartTech: Multi-vendor marketplace built on Laravel.\n";
+            $response .= "*(We can show live demos in our meeting!)*";
         }
         // Mobile App
         elseif (str_contains($low, 'app') || str_contains($low, 'mobile')) {
             $response .= "Developing a mobile app is a great move. We specialize in cross-platform development using React Native or Flutter, which means you get an Android and iOS app from a single codebase. ";
             $response .= "\n\nEstimated Timeline: 6 to 12 weeks.\nEstimated Pricing: Starts from ₹60,000 / $750.";
+
+            $response .= "\n\n🌟 **Our Past Success (Portfolio):**\n";
+            $response .= "- FitTrack Pro: Health app with 50K+ downloads (Flutter).\n";
+            $response .= "- DeliveryNow: Hyper-local delivery service app (React Native).\n";
+            $response .= "*(We will provide you the PlayStore links shortly!)*";
         }
         // Landing Page / Portfolio
         elseif (str_contains($low, 'landing') || str_contains($low, 'portfolio') || str_contains($low, 'basic website')) {
             $response .= "A professional landing page or portfolio website is crucial for digital presence. We can build a lightning-fast, SEO-optimized site using React, Vue, or modern HTML/CSS/JS. ";
             $response .= "\n\nEstimated Timeline: 1 to 2 weeks.\nEstimated Pricing: Starts from ₹15,000 / $200.";
+
+            $response .= "\n\n🌟 **Our Past Success (Portfolio):**\n";
+            $response .= "- TechX Agency: A modern corporate landing page.\n";
+            $response .= "- JohnDoe Photography: A minimalist, high-performance portfolio.\n";
+            $response .= "*(All our sites score 90+ on Google PageSpeed!)*";
         }
         // Custom Software / Backend
-        elseif (str_contains($low, 'software') || str_contains($low, 'backend') || str_contains($low, 'dashboard')) {
+        elseif (str_contains($low, 'software') || str_contains($low, 'backend') || str_contains($low, 'dashboard') || str_contains($low, 'crm') || str_contains($low, 'erp')) {
             $response .= "For complex software and custom dashboards, we leverage powerful backends using PHP, Node.js, or Python, coupled with a React or Vue frontend for a smooth UI. ";
             $response .= "\n\nLet's discuss your specific requirements to give you an exact quote. Typically, these start around ₹80,000 / $1000.";
+
+            $response .= "\n\n🌟 **Our Past Success (Portfolio):**\n";
+            $response .= "- HRITIK AI Engine: Yes, the very brain talking to you right now!\n";
+            $response .= "- ManageElevate CRM: A fully automated business management suite.\n";
+            $response .= "*(We build software that automates 80% of human tasks.)*";
         }
         // Generic / Unknown
         else {
             $response .= "Could you please elaborate on what kind of project you have in mind? (e.g., E-commerce site, Mobile App, Landing Page, or Custom Software). We deliver cutting-edge tech solutions.";
+
+            $response .= "\n\n🌟 **Why Choose Tech Elevate X?**\n";
+            $response .= "- 100+ Successful Projects Delivered.\n";
+            $response .= "- In-house AI & Machine Learning Expertise.\n";
+            $response .= "- 24/7 Tech Support and Maintenance.\n";
         }
 
         $response .= "\n\nAre you ready to schedule a deep-dive meeting or finalize the deal? Let me know your email or phone number to proceed.";
