@@ -66,7 +66,13 @@ class ComputerVisionAssistant {
             $ocrResult = "Isme koi clear text nahi dikh raha hai.";
         }
 
-        return $intro . $dim . $detail . $mood . $ocrResult;
+                // Enhanced Sales & Tech Detection based on OCR and Complexity
+        $salesPitch = "";
+        if ($analysis['edge_density'] > 0.15 || $ocrData['has_text_potential']) {
+            $salesPitch = "\n\n**Tech Elevate X Analysis:** Ye ek App ya Website ka screenshot / sketch lag raha hai. Aisa UI develop karne ke liye hum React Native (Mobile ke liye) ya React.js/Vue.js (Web ke liye) use kar sakte hain.\n\nEstimated Cost: ₹50,000 se ₹1,00,000 ke beech.\nKya aap is design ko reality me convert karna chahte hain?";
+        }
+
+        return $intro . $dim . $detail . $mood . $ocrResult . $salesPitch;
     }
 
     /**

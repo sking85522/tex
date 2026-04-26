@@ -41,6 +41,11 @@ logMessage("Download complete.");
 
 // 2. Extract ZIP
 logMessage("Extracting ZIP file...");
+
+if (!extension_loaded('zip')) {
+    die(logMessage("Error: PHP zip extension is not enabled on this server. Cannot extract updates."));
+}
+
 $zip = new ZipArchive;
 if ($zip->open($zipFile) === TRUE) {
     if (!is_dir($EXTRACT_DIR)) {
@@ -173,6 +178,22 @@ try {
 
 } catch (PDOException $e) {
     logMessage("Database Error during migrations: " . $e->getMessage());
+}
+
+
+// 6. Neural Network / Knowledge DB Sync
+logMessage("Triggering AI Knowledge DB synchronization...");
+try {
+    require_once $ROOT_DIR . 'brain/core/Autoloader.php';
+    if (class_exists('Core\Engine\DataSyncManager')) {
+        $dataSync = new \Core\Engine\DataSyncManager($pdo);
+        $syncResult = $dataSync->syncNeuralKnowledge();
+        logMessage("AI Knowledge Sync: " . ($syncResult['status'] ?? 'Unknown') . ". Records Synced: " . ($syncResult['records_synced'] ?? 0));
+    } else {
+        logMessage("DataSyncManager not found, skipping knowledge sync.");
+    }
+} catch (Exception $e) {
+    logMessage("Warning: AI Knowledge sync failed: " . $e->getMessage());
 }
 
 logMessage("<b>✅ Auto-Update Process Finished Successfully!</b>");

@@ -100,7 +100,7 @@ class Engine {
         return null;
     }
 
-    public function processPrompt(string $prompt, string $sessionId = 'default_session', ?string $datasetFile = null, ?string $originalName = null, ?callable $onToken = null): array {
+            public function processPrompt(string $prompt, string $sessionId = 'default_session', ?string $datasetFile = null, ?string $originalName = null, ?callable $onToken = null, $pdo = null): array {
         $this->stateManager->initializeSession($sessionId, $prompt);
         if ($onToken) $onToken("[NEURAL_INIT]");
 
@@ -116,7 +116,17 @@ class Engine {
             return ['status' => 'success', 'response' => $response, 'intent' => 'task_mode'];
         }
 
-                // 2b. Sales & Tech Consultant Mode
+                                // 2a. Lead Capture (Checks if user is providing contact details during a sales talk)
+        require_once __DIR__ . '/Engine/LeadCapture.php';
+        if ($pdo !== null) {
+            $leadCapture = new \Core\Engine\LeadCapture($pdo);
+            $leadResponse = $leadCapture->extractAndSaveLead($resolvedPrompt, "Client Session: " . $sessionId);
+            if ($leadResponse) {
+                return ['status' => 'success', 'response' => $leadResponse, 'intent' => 'lead_captured'];
+            }
+        }
+
+        // 2b. Sales & Tech Consultant Mode
         if ($this->get('signalProcessor')->isSalesConsultationPrompt($resolvedPrompt)) {
             require_once __DIR__ . '/Engine/SalesConsultant.php';
             $salesConsultant = new \Core\Engine\SalesConsultant();

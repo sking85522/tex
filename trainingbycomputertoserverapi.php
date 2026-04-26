@@ -9,15 +9,19 @@ require_once __DIR__ . '/includes/db.php';
 
 $response = ['success' => false, 'message' => 'Invalid Request'];
 
-// Simple API Key Authentication
-$expectedApiKey = 'HRITIK_SECRET_TRAINING_KEY_2026';
+
+
+// Simple API Key Authentication (Config-driven)
+require_once __DIR__ . '/includes/site_settings.php'; // Or wherever settings are stored
+$expectedApiKey = getenv('TRAINING_API_KEY');
 $providedApiKey = $_SERVER['HTTP_X_API_KEY'] ?? $_GET['api_key'] ?? $_POST['api_key'] ?? '';
 
-if ($providedApiKey !== $expectedApiKey) {
+if (empty($expectedApiKey) || $providedApiKey !== $expectedApiKey) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized. Invalid API Key.']);
+    echo json_encode(['success' => false, 'message' => 'Unauthorized. Invalid or missing API Key.']);
     die();
 }
+
 
 
 // Check if a file was uploaded
