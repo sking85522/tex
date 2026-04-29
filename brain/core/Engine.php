@@ -134,8 +134,15 @@ class Engine {
             return ['status' => 'success', 'response' => $responseContent, 'intent' => 'sales_deal'];
         }
 
-                // 2c. Admin System Commands
+                        // 2c. Admin System Commands (Requires admin authentication to execute safely)
         if ($this->get('signalProcessor')->isAdminCommand($resolvedPrompt)) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (!isset($_SESSION['admin_id'])) {
+                return ['status' => 'error', 'response' => 'Unauthorized. Admin session required.', 'intent' => 'unauthorized'];
+            }
+
             $cmd = str_replace('ADMIN COMMAND:', '', $resolvedPrompt);
             $lowCmd = strtolower(trim($cmd));
 
