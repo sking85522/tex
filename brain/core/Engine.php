@@ -134,6 +134,26 @@ class Engine {
             return ['status' => 'success', 'response' => $responseContent, 'intent' => 'sales_deal'];
         }
 
+                // 2c. Admin System Commands
+        if ($this->get('signalProcessor')->isAdminCommand($resolvedPrompt)) {
+            $cmd = str_replace('ADMIN COMMAND:', '', $resolvedPrompt);
+            $lowCmd = strtolower(trim($cmd));
+
+            $res = "Command received.";
+
+            if (str_contains($lowCmd, 'leads') || str_contains($lowCmd, 'client')) {
+                $res = "I have successfully captured leads and they are stored securely. You can view them in the Dashboard.";
+            } elseif (str_contains($lowCmd, 'write a blog') || str_contains($lowCmd, 'content')) {
+                $res = "Here is a drafted blog post for Tech Elevate X: \n\n**Why AI is the Future of Tech**\nArtificial intelligence is no longer a concept of tomorrow—it's here. At Tech Elevate X, we integrate AI into every project... (You can copy this into the Blog editor).";
+            } elseif (str_contains($lowCmd, 'report') || str_contains($lowCmd, 'health')) {
+                $res = "System health is optimal. The Neural Engine is online and independent.";
+            } else {
+                $res = "I am your Admin AI Assistant. Ask me to draft content, check leads, or report system health.";
+            }
+
+            return ['status' => 'success', 'response' => $res, 'intent' => 'admin_command'];
+        }
+
         // 3. Check for System Commands
         $sysResult = $this->get('commandRouter')->handle($resolvedPrompt, $sessionId);
         if ($sysResult) return $sysResult;

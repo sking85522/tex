@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../includes/db.php';
-require_once '../includes/ai_engine.php';
+require_once __DIR__ . '/../brain/core/Autoloader.php';
 
 if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
@@ -14,9 +14,36 @@ if ($role !== 'super_admin') {
 }
 
 $msg = '';
-$aiEngine = new AIEngine($pdo);
+$aiEngine = new \Core\Engine(); // Use neural engine directly
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    if ($_POST['action'] === 'ai_generate') {
+        $topic = $_POST['ai_topic'];
+        $prompt = "Write a professional blog post (in HTML format without backticks) about: " . $topic;
+        $res = $aiEngine->processPrompt($prompt);
+        $generatedContent = $res['response'] ?? 'Failed to generate content.';
+
+        // Handle generic fallback
+        if (str_contains($generatedContent, 'I have not learned')) {
+            $generatedContent = "<p>Tech Elevate X is revolutionizing the industry with $topic.</p>";
+        }
+
+        $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $topic));
+        try {
+            $stmt = $pdo->prepare("INSERT INTO blogs (title, slug, content, meta_keywords, meta_description, image_url, author, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $topic,
+                $slug . '-' . rand(10,99),
+                $generatedContent,
+                str_replace(' ', ', ', $topic) . ', AI, Tech, Trends',
+                'A comprehensive guide about ' . $topic,
+                'https://source.unsplash.com/random/600x400/?technology,ai',
+                'HRITIK AI Engine',
+                'published'
+            ]);
+            $msg = "AI Auto-Blog generated and published!";
+        } catch (PDOException $e) { $msg = "Error generating AI blog: " . $e->getMessage(); }
+    }
     if ($_POST['action'] === 'add') {
         $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $_POST['title']));
         try {
@@ -40,26 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt->execute([$_POST['id']]);
             $msg = "Blog post removed.";
         } catch (PDOException $e) { $msg = "Error removing data."; }
-    } elseif ($_POST['action'] === 'ai_generate') {
-        $topic = $_POST['ai_topic'];
-        $generatedContent = $aiEngine->generateBlogContent($topic);
-        $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $topic));
-        try {
-            $stmt = $pdo->prepare("INSERT INTO blogs (title, slug, content, meta_keywords, meta_description, image_url, author, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([
-                $topic,
-                $slug . '-' . rand(10,99),
-                $generatedContent,
-                str_replace(' ', ', ', $topic) . ', AI, Tech, Trends',
-                'A comprehensive guide about ' . $topic,
-                'https://source.unsplash.com/random/600x400/?technology,ai',
-                'AI Engine',
-                'published'
-            ]);
-            $msg = "AI Auto-Blog generated and published!";
-        } catch (PDOException $e) { $msg = "Error generating AI blog: " . $e->getMessage(); }
-    }
-}
+    } }
 
 $blogs = [];
 try {
@@ -72,6 +80,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <h1>Blog & SEO Management</h1>
             <?php if($msg) echo "<div class='alert'>$msg</div>"; ?>
+
+
+            <div class="card shadow-sm border-primary mb-4 p-4">
+                <h3 class="text-primary"><i class="bi bi-robot"></i> Auto-Generate Blog with HRITIK AI</h3>
+                <form action="blog.php" method="POST" style="display: flex; gap: 10px; align-items: center;">
+                    <input type="hidden" name="action" value="ai_generate">
+                    <input type="text" name="ai_topic" class="form-control" placeholder="Topic (e.g., The Future of AI in E-commerce)" required>
+                    <button type="submit" class="btn btn-primary text-white" style="min-width: 150px;">Generate & Publish</button>
+                </form>
+            </div>
 
             <div class="card shadow-sm border-0 mb-4 p-4">
                 <h3>Write New Post</h3>

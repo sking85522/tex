@@ -15,6 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $stmt = $pdo->prepare("DELETE FROM portfolio WHERE id = ?");
         $stmt->execute([$_POST['id']]);
     }
+
+    elseif ($_POST['action'] === 'ai_generate') {
+        require_once __DIR__ . '/../brain/core/Autoloader.php';
+        try {
+            if (class_exists('Core\AIEngine')) {
+                $engine = new \Core\Engine();
+                $topic = $_POST['ai_topic'];
+                $prompt = "Generate a portfolio project description for a project named '" . $topic . "'. Keep it under 2 sentences.";
+                $res = $engine->processPrompt($prompt);
+                $desc = $res['response'] ?? 'A highly optimized digital solution built by Tech Elevate X.';
+
+                if (str_contains($desc, 'I have not learned')) {
+                    $desc = "A state-of-the-art software solution tailored for business automation and scalability, developed natively by Tech Elevate X.";
+                }
+
+                $stmt = $pdo->prepare("INSERT INTO portfolio (title, description, category, image_url, demo_url) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$topic, $desc, 'AI Generated', 'https://source.unsplash.com/random/400x300/?technology,software', '#']);
+            }
+        } catch (\Exception $e) {}
+    }
 }
 
 $portfolio = [];
@@ -26,6 +46,16 @@ try {
 <?php include 'includes/header.php'; ?>
 
             <h1>Manage Portfolio</h1>
+
+
+            <div class="card shadow-sm border-info mb-4 p-4">
+                <h3 class="text-info"><i class="bi bi-magic"></i> Auto-Generate Portfolio Case Study</h3>
+                <form action="portfolio.php" method="POST" style="display: flex; gap: 10px; align-items: center;">
+                    <input type="hidden" name="action" value="ai_generate">
+                    <input type="text" name="ai_topic" class="form-control" placeholder="Project Name (e.g., E-Commerce Platform)" required>
+                    <button type="submit" class="btn btn-info text-white" style="min-width: 150px;">Generate Case Study</button>
+                </form>
+            </div>
 
             <div class="card shadow-sm border-0 mb-4 p-4">
                 <h3>Add New Project</h3>

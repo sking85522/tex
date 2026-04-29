@@ -11,9 +11,13 @@ $response = ['success' => false, 'message' => 'Invalid Request'];
 
 
 
+
 // Simple API Key Authentication (Config-driven)
-require_once __DIR__ . '/includes/site_settings.php'; // Or wherever settings are stored
+if (file_exists(__DIR__ . '/includes/site_settings.php')) {
+    require_once __DIR__ . '/includes/site_settings.php';
+}
 $expectedApiKey = getenv('TRAINING_API_KEY');
+
 $providedApiKey = $_SERVER['HTTP_X_API_KEY'] ?? $_GET['api_key'] ?? $_POST['api_key'] ?? '';
 
 if (empty($expectedApiKey) || $providedApiKey !== $expectedApiKey) {

@@ -97,4 +97,9 @@ class SignalProcessor {
         return false;
     }
 
+
+    public function isAdminCommand(string $input): bool {
+        return str_starts_with(trim($input), 'ADMIN COMMAND:');
+    }
+
 }
