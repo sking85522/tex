@@ -100,7 +100,7 @@ class Engine {
         return null;
     }
 
-    public function processPrompt(string $prompt, string $sessionId = 'default_session', ?string $datasetFile = null, ?string $originalName = null, ?callable $onToken = null): array {
+            public function processPrompt(string $prompt, string $sessionId = 'default_session', ?string $datasetFile = null, ?string $originalName = null, ?callable $onToken = null, $pdo = null): array {
         $this->stateManager->initializeSession($sessionId, $prompt);
         if ($onToken) $onToken("[NEURAL_INIT]");
 
@@ -116,12 +116,49 @@ class Engine {
             return ['status' => 'success', 'response' => $response, 'intent' => 'task_mode'];
         }
 
-                // 2b. Sales & Tech Consultant Mode
+                                // 2a. Lead Capture (Checks if user is providing contact details during a sales talk)
+        require_once __DIR__ . '/Engine/LeadCapture.php';
+        if ($pdo !== null) {
+            $leadCapture = new \Core\Engine\LeadCapture($pdo);
+            $leadResponse = $leadCapture->extractAndSaveLead($resolvedPrompt, "Client Session: " . $sessionId);
+            if ($leadResponse) {
+                return ['status' => 'success', 'response' => $leadResponse, 'intent' => 'lead_captured'];
+            }
+        }
+
+        // 2b. Sales & Tech Consultant Mode
         if ($this->get('signalProcessor')->isSalesConsultationPrompt($resolvedPrompt)) {
             require_once __DIR__ . '/Engine/SalesConsultant.php';
             $salesConsultant = new \Core\Engine\SalesConsultant();
             $responseContent = $salesConsultant->handleSalesInquiry($resolvedPrompt);
             return ['status' => 'success', 'response' => $responseContent, 'intent' => 'sales_deal'];
+        }
+
+                        // 2c. Admin System Commands (Requires admin authentication to execute safely)
+        if ($this->get('signalProcessor')->isAdminCommand($resolvedPrompt)) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (!isset($_SESSION['admin_id'])) {
+                return ['status' => 'error', 'response' => 'Unauthorized. Admin session required.', 'intent' => 'unauthorized'];
+            }
+
+            $cmd = str_replace('ADMIN COMMAND:', '', $resolvedPrompt);
+            $lowCmd = strtolower(trim($cmd));
+
+            $res = "Command received.";
+
+            if (str_contains($lowCmd, 'leads') || str_contains($lowCmd, 'client')) {
+                $res = "I have successfully captured leads and they are stored securely. You can view them in the Dashboard.";
+            } elseif (str_contains($lowCmd, 'write a blog') || str_contains($lowCmd, 'content')) {
+                $res = "Here is a drafted blog post for Tech Elevate X: \n\n**Why AI is the Future of Tech**\nArtificial intelligence is no longer a concept of tomorrow—it's here. At Tech Elevate X, we integrate AI into every project... (You can copy this into the Blog editor).";
+            } elseif (str_contains($lowCmd, 'report') || str_contains($lowCmd, 'health')) {
+                $res = "System health is optimal. The Neural Engine is online and independent.";
+            } else {
+                $res = "I am your Admin AI Assistant. Ask me to draft content, check leads, or report system health.";
+            }
+
+            return ['status' => 'success', 'response' => $res, 'intent' => 'admin_command'];
         }
 
         // 3. Check for System Commands

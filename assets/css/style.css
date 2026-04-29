@@ -358,3 +358,28 @@ h1, h2, h3, h4, .outfit { font-family: 'Outfit', sans-serif; }
 .chatbot-window {
     background: #0f172a !important;
 }
+
+
+/* MOBILE RESPONSIVE FIXES FOR CHATBOT */
+@media screen and (max-width: 768px) {
+    .chatbot-container {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        border-radius: 0 !important;
+        position: fixed !important;
+    }
+
+    .chat-messages {
+        height: calc(100vh - 120px) !important;
+    }
+
+    nav, .navbar {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px !important;
+    }
+}

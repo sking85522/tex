@@ -62,7 +62,7 @@ class AIEngine {
                     return "Sir, is project ki estimated pricing ₹" . $pricing->calculate($userMessage) . " se shuru hogi. Ye HRITIK logic par based hai.";
                 }
 
-                $result = $this->brain->processPrompt($userMessage);
+                                $result = $this->brain->processPrompt($userMessage, 'default_session', null, null, null, $this->pdo);
                 
                 if (($result['intent'] ?? '') === 'autonomous_learning') {
                     $this->learnAndSave($userMessage, $result['response']);

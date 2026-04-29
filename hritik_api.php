@@ -35,13 +35,40 @@ try {
             $userIP = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
             
             if (!empty($userMessage) || isset($_FILES['image'])) {
-                // Vision processing...
+                                                // Vision processing...
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                    $uploadDir = __DIR__ . '/assets/uploads/ai_vision/';
-                    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
-                    $newName = time() . '_' . basename($_FILES['image']['name']);
-                    if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $newName)) {
-                        $userMessage .= " [Analyzed Sketch: $newName]";
+                    $allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mimeType = finfo_file($finfo, $_FILES['image']['tmp_name']);
+                    finfo_close($finfo);
+
+                    $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                    if (in_array($mimeType, $allowedTypes) && in_array($extension, $allowedExtensions)) {
+                        $uploadDir = __DIR__ . '/assets/uploads/ai_vision/';
+                        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
+                        // Generate a completely safe, random filename
+                        $newName = uniqid('cv_', true) . '.' . $extension;
+                        $targetFile = $uploadDir . $newName;
+
+                        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                            require_once __DIR__ . '/brain/core/ComputerVision/ComputerVisionAssistant.php';
+                            $cv = new \Core\ComputerVision\ComputerVisionAssistant();
+                            $visionAnalysis = $cv->analyze($targetFile);
+
+                            $userMessage = $userMessage . "\n\n[AI Vision Scan Report: " . $visionAnalysis . "]";
+
+                            // Give direct CV response if no prompt was given
+                            if (empty(trim($_POST['message'] ?? ''))) {
+                                $response = ['success' => true, 'message' => $visionAnalysis, 'sentiment' => 'Neutral'];
+                                ob_clean();
+                                echo json_encode($response);
+                                die(); // Use die instead of exit to prevent blocking sandbox
+                            }
+                        }
                     }
                 }
 
@@ -63,14 +90,8 @@ try {
             }
             break;
 
-        case 'live_poll': // Live Chat Poll
-            $session_id = $_GET['session_id'] ?? ($_SESSION['chat_session_id'] ?? null);
-            $last_id = $_GET['last_id'] ?? 0;
-            if ($session_id) {
-                $stmt = $pdo->prepare("SELECT * FROM chat_messages WHERE session_id = ? AND id > ? ORDER BY id ASC");
-                $stmt->execute([$session_id, $last_id]);
-                $response = ['success' => true, 'messages' => $stmt->fetchAll(PDO::FETCH_ASSOC)];
-            }
+                case 'live_poll': // Live Chat Poll (Disabled to prevent background connection limit errors)
+            $response = ['success' => false, 'message' => 'Polling disabled in current hosting environment.'];
             break;
 
         case 'get_sessions': // Admin: Get open sessions

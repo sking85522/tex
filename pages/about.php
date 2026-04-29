@@ -1,3 +1,18 @@
+
+<?php
+require_once '../includes/db.php';
+$about_desc = "Welcome to Tech Elevate X, a premier software development agency.";
+if (class_exists('Core\Engine')) {
+    try {
+        $engine = new \Core\Engine();
+        $res = $engine->processPrompt("Write a 2 paragraph 'About Us' section for Tech Elevate X, an agency building enterprise software and independent AI systems. Do not use markdown backticks.");
+        if (!str_contains($res['response'], 'I have not learned')) {
+            $about_desc = $res['response'];
+        }
+    } catch (\Exception $e) {}
+}
+?>
+
 <?php include '../includes/header.php'; ?>
 
 <section class="page-header" style="background-color: var(--primary-color); color: white; text-align: center; padding: 100px 0;">
@@ -12,7 +27,7 @@
         <div class="about-content" style="display: flex; gap: 40px; align-items: center; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 300px;">
                 <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--dark-color);">Who We Are</h2>
-                <p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8;"></p>
+                <p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8;"><?php echo htmlspecialchars($about_desc); ?></p>
                 <p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8;">Our team consists of passionate developers, creative designers, and strategic thinkers who collaborate to deliver exceptional results. We don't just build software; we build solutions that elevate your brand and streamline your operations.</p>
 
                 <h3 style="margin-top: 30px; margin-bottom: 10px; color: var(--primary-color);">Our Mission</h3>

@@ -103,4 +103,40 @@ class DataSyncManager {
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
+
+    /**
+     * Backup Local Data to Central Remote DB
+     */
+    public function backupToCentralDB(string $localTable): array {
+        try {
+            require_once __DIR__ . '/RemoteDB.php';
+            $remoteDB = new \Core\Engine\RemoteDB();
+
+            // Get all local data
+            $rows = $this->pdo->query("SELECT * FROM `$localTable`")->fetchAll(\PDO::FETCH_ASSOC);
+            if (empty($rows)) return ['status' => 'success', 'message' => 'No data to backup'];
+
+            // Prepare chunked insert
+            $columns = array_keys($rows[0]);
+            $colString = "`" . implode("`, `", $columns) . "`";
+
+            $valuesArr = [];
+            foreach ($rows as $row) {
+                // Escape strings for remote SQL
+                $escapedVals = array_map(function($v) {
+                    if ($v === null) return 'NULL';
+                    return "'" . str_replace("'", "''", $v) . "'";
+                }, array_values($row));
+                $valuesArr[] = "(" . implode(", ", $escapedVals) . ")";
+            }
+
+            $sql = "INSERT IGNORE INTO `$localTable` ($colString) VALUES " . implode(", ", $valuesArr);
+
+            $result = $remoteDB->query($sql);
+            return ['status' => 'success', 'remote_response' => $result, 'records_sent' => count($rows)];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
+
 }

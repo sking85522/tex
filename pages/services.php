@@ -8,6 +8,18 @@ if (class_exists('Core\AIEngine')) {
 $detected_currency = 'INR';
 $currency_symbol = '₹';
 
+$hero_desc = "Tech Elevate X builds self-evolving software ecosystems and local-first AI models that automate business scaling without external API dependencies.";
+if (class_exists('Core\Engine')) {
+    try {
+        $engine = new \Core\Engine();
+        $res = $engine->processPrompt("Write a 1 sentence punchy subtitle for an IT services page that offers AI development and web development.");
+        if (!str_contains($res['response'], 'I have not learned')) {
+            $hero_desc = $res['response'];
+        }
+    } catch (\Exception $e) {}
+}
+
+
 // AI Intelligence: Pre-sort services by 'Hot' interest
 $services = [];
 try {
@@ -24,7 +36,7 @@ try {
 <section class="services-hero" style="padding: 140px 0 60px 0; text-align: center; background: radial-gradient(circle at top, rgba(99, 102, 241, 0.1) 0%, transparent 70%);">
     <div class="container" data-aos="fade-up">
         <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 20px;">Enterprise <span class="text-gradient">Capabilities</span></h1>
-        <p class="text-muted" style="max-width: 700px; margin: 0 auto; font-size: 1.2rem;">Custom solutions powered by HRITIK—the high-performance independent neural core.</p>
+        <p class="text-muted" style="max-width: 700px; margin: 0 auto; font-size: 1.2rem;"><?php echo htmlspecialchars($hero_desc); ?></p>
     </div>
 </section>
 
