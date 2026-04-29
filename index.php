@@ -5,6 +5,21 @@ if (class_exists('Core\AIEngine')) {
     $ai = new \Core\AIEngine($pdo);
 }
 ?>
+<?php
+// Let AI write the Hero Section
+$hero_desc = "Tech Elevate X builds self-evolving software ecosystems and local-first AI models that automate business scaling without external API dependencies.";
+
+if (isset($ai)) {
+    try {
+        $engine = new \Core\Engine();
+        $res = $engine->processPrompt("Write a 1 sentence catchy hero description for a software agency named Tech Elevate X that builds Web Apps and independent AI systems. Do not use quotes or backticks.");
+        if (!str_contains($res['response'], 'I have not learned')) {
+            $hero_desc = $res['response'];
+        }
+    } catch (\Exception $e) {}
+}
+?>
+
 
 <!-- Premium Hero Section -->
 <main id="ai-dynamic-root">
@@ -21,7 +36,7 @@ if (class_exists('Core\AIEngine')) {
                         <span class="text-gradient">Driven by Intelligence</span>
                     </h1>
                     <p class="hero-desc">
-                        Tech Elevate X builds self-evolving software ecosystems and local-first AI models that automate business scaling without external API dependencies.
+                        <?php echo htmlspecialchars($hero_desc); ?>
                     </p>
                     <div class="hero-actions">
                         <a href="javascript:void(0)" onclick="toggleConfigurator()" class="btn btn-primary">Start Project</a>
