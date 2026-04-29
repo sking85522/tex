@@ -217,8 +217,11 @@ class Engine {
             return ['status' => 'success', 'response' => "Neural Network Test: XOR [1,0] result is ~" . round($pred[0] ?? 0, 4), 'intent' => 'neural_test'];
         }
 
-        // 9. Knowledge Retrieval
-        $responseContent = $this->get('supervised')->getTaughtAnswer($resolvedPrompt);
+                // 9. Knowledge Retrieval (Semantic Synthesis)
+        $responseContent = $this->get('supervised')->getSemanticAnswer($resolvedPrompt);
+        if (!$responseContent) {
+            $responseContent = $this->get('supervised')->getTaughtAnswer($resolvedPrompt);
+        }
         $intent = 'knowledge_match';
 
         if (!$responseContent) {
@@ -270,44 +273,7 @@ class Engine {
         return "Neural Task Report\n\nPlan:\n" . implode("\n", $steps) . "\n\nResults:\n" . $body . "\n\nConfidence: " . ($verify['confidence'] * 100) . "%";
     }
 
-    private function callExternalLLM(string $prompt): ?string {
-        // We will prioritize OpenAI if available.
-        $apiKey = getenv('OPENAI_API_KEY') ?: '';
-        if (empty($apiKey)) return null;
 
-        try {
-            $url = 'https://api.openai.com/v1/chat/completions';
-            $data = [
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'You are HRITIK, an advanced AI assistant for Tech Elevate X.'],
-                    ['role' => 'user', 'content' => $prompt]
-                ]
-            ];
-
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/json\r\n" .
-                                 "Authorization: Bearer $apiKey\r\n",
-                    'method'  => 'POST',
-                    'content' => json_encode($data),
-                    'timeout' => 10,
-                ],
-            ];
-            $context  = stream_context_create($options);
-            $result = @file_get_contents($url, false, $context);
-
-            if ($result) {
-                $json = json_decode($result, true);
-                if (isset($json['choices'][0]['message']['content'])) {
-                    return $json['choices'][0]['message']['content'];
-                }
-            }
-        } catch (\Exception $e) {
-            // Log or ignore
-        }
-        return null;
-    }
 
     private function resolveContext(string $prompt, array $recent): string {
         if (empty($recent)) return $prompt;

@@ -116,16 +116,18 @@ class DataSyncManager {
             $rows = $this->pdo->query("SELECT * FROM `$localTable`")->fetchAll(\PDO::FETCH_ASSOC);
             if (empty($rows)) return ['status' => 'success', 'message' => 'No data to backup'];
 
-            // Prepare chunked insert
+            // The remote API expects base64 encoded raw SQL. We must ensure it's perfectly escaped.
+            // Using PDO::quote() from the local database connection is the safest way to escape strings for MySQL before sending over the wire.
+
             $columns = array_keys($rows[0]);
             $colString = "`" . implode("`, `", $columns) . "`";
 
             $valuesArr = [];
             foreach ($rows as $row) {
-                // Escape strings for remote SQL
                 $escapedVals = array_map(function($v) {
                     if ($v === null) return 'NULL';
-                    return "'" . str_replace("'", "''", $v) . "'";
+                    // Use local PDO to safely quote the string
+                    return $this->pdo->quote($v);
                 }, array_values($row));
                 $valuesArr[] = "(" . implode(", ", $escapedVals) . ")";
             }
@@ -138,5 +140,4 @@ class DataSyncManager {
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
-
 }

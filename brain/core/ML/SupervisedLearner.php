@@ -68,4 +68,61 @@ class SupervisedLearner {
         $this->coreKnowledge[] = ['question' => $prompt, 'answer' => $answer];
         file_put_contents($this->jsonPath, json_encode($this->coreKnowledge, JSON_PRETTY_PRINT));
     }
+
+
+    public function getSemanticAnswer(string $prompt): ?string {
+        $cleanPrompt = preg_replace('/[^a-zA-Z0-9\s]/', '', strtolower(trim($prompt)));
+        if (empty($cleanPrompt)) return null;
+
+        $tokens = explode(' ', $cleanPrompt);
+        $importantTokens = array_filter($tokens, function($word) {
+            return strlen($word) > 3 && !in_array($word, ['what', 'when', 'where', 'how', 'who', 'this', 'that', 'with']);
+        });
+
+        if (empty($importantTokens)) return null;
+
+        try {
+            global $pdo;
+            if (isset($pdo)) {
+                // Build semantic search: We match ANY of the keywords and rank by how many matched.
+                $conditions = [];
+                $params = [];
+                foreach ($importantTokens as $token) {
+                    $conditions[] = "topic LIKE ? OR learned_content LIKE ?";
+                    $params[] = '%' . $token . '%';
+                    $params[] = '%' . $token . '%';
+                }
+
+                $sql = "SELECT topic, learned_content, confidence_score FROM ai_knowledge WHERE " . implode(' OR ', $conditions) . " LIMIT 5";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+                $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                if ($results) {
+                    // Combine multiple fragments into a cohesive answer
+                    $finalAnswer = "";
+                    $contextGained = false;
+                    foreach ($results as $row) {
+                        // Skip noisy short answers if we already have something
+                        if ($contextGained && strlen($row['learned_content']) < 20) continue;
+
+                        // Avoid duplicates
+                        if (!str_contains($finalAnswer, substr($row['learned_content'], 0, 30))) {
+                            $finalAnswer .= ucfirst(trim($row['learned_content'])) . ". ";
+                            $contextGained = true;
+                        }
+                    }
+
+                    if ($finalAnswer) {
+                        // Clean up multiple dots
+                        $finalAnswer = preg_replace('/\.(\s*\.)+/', '.', $finalAnswer);
+                        return trim($finalAnswer);
+                    }
+                }
+            }
+        } catch (\Exception $e) {}
+
+        return null;
+    }
+
 }

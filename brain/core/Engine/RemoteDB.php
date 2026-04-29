@@ -13,8 +13,14 @@ class RemoteDB {
     public $chunk_limit = 5242880;
     private $test_cookie = null;
 
-    public function __construct() {
-        $this->api_key = getenv('REMOTE_DB_API_KEY') ?: 'SACHIN_SECURE_V1_2026';
+        public function __construct() {
+        if (file_exists(__DIR__ . '/../../includes/site_settings.php')) {
+            require_once __DIR__ . '/../../includes/site_settings.php';
+        }
+        $this->api_key = getenv('REMOTE_DB_API_KEY');
+        if (empty($this->api_key)) {
+            // Log warning or throw, but do not hardcode
+        }
     }
 
     private function getBypassCookie() {
