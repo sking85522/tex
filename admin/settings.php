@@ -8,14 +8,26 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $allowed_settings = [
+        'home_hero_title',
+        'home_hero_subtitle',
+        'about_heading',
+        'about_content',
+        'contact_email',
+        'contact_phone',
+        'contact_address'
+    ];
+
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'setting_') === 0) {
             $setting_key = substr($key, 8);
-            try {
-                $stmt = $pdo->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
-                $stmt->execute([$value, $setting_key]);
-            } catch (PDOException $e) {
-                // Handle error
+            if (in_array($setting_key, $allowed_settings, true)) {
+                try {
+                    $stmt = $pdo->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
+                    $stmt->execute([$value, $setting_key]);
+                } catch (PDOException $e) {
+                    // Handle error
+                }
             }
         }
     }
