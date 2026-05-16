@@ -17,10 +17,15 @@ if (file_exists(__DIR__ . '/../brain/core/Engine.php')) {
     require_once __DIR__ . '/../brain/core/Engine.php';
 }
 
-$host = 'localhost';
-$dbname = 'tech_elevate_x';
-$username = 'root';
-$password = '';
+// Load environment variables
+if (file_exists(__DIR__ . '/env_loader.php')) {
+    require_once __DIR__ . '/env_loader.php';
+}
+
+$host = $_ENV['DB_HOST'] ?? '127.0.0.1';
+$dbname = $_ENV['DB_DATABASE'] ?? 'tech_elevate_x';
+$username = $_ENV['DB_USERNAME'] ?? 'root';
+$password = $_ENV['DB_PASSWORD'] ?? '';
 
 
 try {
