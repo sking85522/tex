@@ -194,6 +194,7 @@ use NumPHP\Statistics\Nancumsum;
 use NumPHP\String\Ljust;
 use NumPHP\String\Rjust;
 use NumPHP\String\Title;
+use NumPHP\String\Rfind;
 use NumPHP\Indexing\Select;
 use NumPHP\Math\Hyperbolic\Arcsinh;
 use NumPHP\Math\Hyperbolic\Arccosh;
@@ -2421,6 +2422,19 @@ class NumPHP
     public static function replace(NDArray $a, string $old, string $new): NDArray
     {
         return Replace::replace($a, $old, $new);
+    }
+
+    /**
+     * For each element in a, return the highest index in the string where substring sub is found.
+     *
+     * @param NDArray $a
+     * @param string $sub
+     * @param int $offset
+     * @return NDArray
+     */
+    public static function rfind(NDArray $a, string $sub, int $offset = 0): NDArray
+    {
+        return Rfind::rfind($a, $sub, $offset);
     }
 
     /**
