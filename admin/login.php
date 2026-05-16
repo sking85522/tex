@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$username]);
             $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // In our mock, admin password is 'admin123'
             if ($admin && password_verify($password, $admin['password'])) {
                 $_SESSION['admin_id'] = $admin['id'];
                 $_SESSION['admin_username'] = $admin['username'];
@@ -58,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
             <button type="submit" class="btn-login">Login</button>
         </form>
-        <p style="margin-top: 20px; font-size: 0.9rem; color: #666;">Mock credentials:<br>username: <b>admin</b><br>password: <b>admin123</b></p>
     </div>
 </body>
 </html>
