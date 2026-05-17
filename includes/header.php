@@ -38,27 +38,14 @@ if ($current_page == 'services.php') {
     } catch (Exception $e) {}
 }
 
-// System Health Check
-$system_health = 'Active';
-if (isset($pdo) && get_class($pdo) == 'MockPDO') {
-    $system_health = 'Classic Mode';
-}
-
-// AI "Auto-Design" Engine (UI Adaptations)
-if (class_exists('Core\NeuralEngine')) {
-    $neural = new \Core\NeuralEngine();
-    $adaptations = $neural->getUIAdaptations();
-} else {
-    $adaptations = ['theme' => 'dark', 'neural_mesh' => true];
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HRITIK Neural Portal | Tech Elevate X</title>
-    <meta name="description" content="Premium Software & AI Enterprise Portal. Fully independent local neural processing.">
+    <title>Premium Digital Agency | Tech Elevate X</title>
+    <meta name="description" content="Premium Software & Enterprise Portal.">
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6366f1">
@@ -94,10 +81,10 @@ if (class_exists('Core\NeuralEngine')) {
         }
     </script>
 
-    <!-- AI Theme Engine Initialization -->
+    <!-- Default Theme Logic will go to script tag or handled locally -->
     <script>
-        const ai_theme = "<?php echo $adaptations['theme_mode'] ?? 'light'; ?>";
-        document.documentElement.setAttribute('data-theme', ai_theme);
+        const savedTheme = localStorage.getItem('theme_preference') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
 
     <!-- Navigation -->
@@ -115,11 +102,6 @@ if (class_exists('Core\NeuralEngine')) {
                     <li><a href="<?php echo $root_prefix; ?>pages/pricing.php">Pricing</a></li>
                     <li><a href="<?php echo $root_prefix; ?>pages/careers.php">Careers</a></li>
                     <li><a href="<?php echo $root_prefix; ?>pages/contact.php">Contact</a></li>
-                    <?php if($system_health == 'Active'): ?>
-                        <li title="AI Self-Heal Core Online"><span class="badge" style="background: rgba(0, 255, 0, 0.1); color: #00ff00; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; border: 1px solid #00ff00;"><i class="fas fa-shield-virus"></i> AI Secure</span></li>
-                    <?php else: ?>
-                        <li title="System currently running in optimized fail-safe mode"><span class="badge" style="background: rgba(255, 165, 0, 0.1); color: orange; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; border: 1px solid orange;"><i class="fas fa-tools"></i> Optimized</span></li>
-                    <?php endif; ?>
                     <li><a href="<?php echo $root_prefix; ?>user/login.php" class="btn btn-outline" style="padding: 8px 15px; border-radius: 5px;">Login</a></li>
                 </ul>
             </nav>
