@@ -1,6 +1,6 @@
 /**
- * Tech Elevate X - HRITIK AI Frontend Kernel
- * Handles: UI Interactions, Chat Logic, and Neural Flow
+ * Tech Elevate X -   Frontend Kernel
+ * Handles: UI Interactions, Chat Logic, and  Flow
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('action', 'chat');
             formData.append('message', message);
 
-            const apiPath = (window.rootPrefix || '') + 'hritik_api.php';
+            const apiPath = (window.rootPrefix || '') + '_api.php';
             const response = await fetch(apiPath, {
                 method: 'POST',
                 body: formData
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 appendMessage('bot', "Maaf kijiye, main abhi respond nahi kar paa raha hoon.");
             }
         } catch (error) {
-            console.error('AI Error:', error);
+            console.error(' Error:', error);
             appendMessage('bot', "System Error: Connectivity lost.");
         }
     };

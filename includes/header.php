@@ -8,20 +8,20 @@ $root_prefix = $is_in_subfolder ? '../' : '';
 
 // Dynamic SEO Engine (Self-Ranking & Contextual)
 $current_page = basename($_SERVER['PHP_SELF']);
-$seo_title = get_setting('home_hero_title', 'Tech Elevate X | AI & IT Services');
-$seo_desc = get_setting('home_hero_subtitle', 'We provide world-class web development, AI solutions, and IT services.');
-$seo_keywords = "IT Agency, AI Development, Software Solutions, Tech Elevate X, Web Development";
+$seo_title = get_setting('home_hero_title', 'Tech Elevate X | IT Services');
+$seo_desc = get_setting('home_hero_subtitle', 'We provide world-class web development solutions and IT services.');
+$seo_keywords = "IT Agency, Development, Software Solutions, Tech Elevate X, Web Development";
 $seo_url = "https://techelevatex.in/" . $current_page;
 $schema_type = "Organization";
 
 // Contextual adjustments based on URL
 if ($current_page == 'services.php') {
-    $seo_title = "Our IT & AI Services | Tech Elevate X";
-    $seo_desc = "Explore our top-tier web, app, and AI development services designed to scale your business.";
+    $seo_title = "Our IT Services | Tech Elevate X";
+    $seo_desc = "Explore our top-tier web, app development services designed to scale your business.";
     $seo_keywords .= ", IT Services, App Development, Custom Software";
 } elseif ($current_page == 'portfolio.php') {
     $seo_title = "100+ Successful Projects | Tech Elevate X Portfolio";
-    $seo_desc = "View our live portfolio of high-performance e-commerce, CRM, and AI platforms built for global clients.";
+    $seo_desc = "View our live portfolio of high-performance e-commerce, CRM, and CRM platforms built for global clients.";
     $schema_type = "CollectionPage";
 } elseif ($current_page == 'blog.php' && isset($_GET['slug'])) {
     // Dynamic Blog SEO fetching
@@ -100,6 +100,7 @@ if ($current_page == 'services.php') {
                     <li><a href="<?php echo $root_prefix; ?>pages/services.php">Services</a></li>
                     <li><a href="<?php echo $root_prefix; ?>pages/portfolio.php">Portfolio</a></li>
                     <li><a href="<?php echo $root_prefix; ?>pages/pricing.php">Pricing</a></li>
+                    <li><a href="<?php echo $root_prefix; ?>pages/blog.php">Blog</a></li>
                     <li><a href="<?php echo $root_prefix; ?>pages/careers.php">Careers</a></li>
                     <li><a href="<?php echo $root_prefix; ?>pages/contact.php">Contact</a></li>
                     <li><a href="<?php echo $root_prefix; ?>user/login.php" class="btn btn-outline" style="padding: 8px 15px; border-radius: 5px;">Login</a></li>

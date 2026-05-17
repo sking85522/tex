@@ -1,38 +1,116 @@
-<?php include '../includes/header.php'; ?>
+<?php
+require_once '../includes/header.php';
+
+// Fetch JSON Data
+$jsonFile = __DIR__ . '/../data/site_data.json';
+$siteData = file_exists($jsonFile) ? json_decode(file_get_contents($jsonFile), true) : [];
+$pricing = $siteData['pricing'] ?? [];
+
+// Simple Geolocation Mock based on timezone/header for currency
+// For real prod, you might use IP Geolocation API.
+$is_india = true; // Default India
+if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'en-US') !== false) {
+    // A very loose mock.
+    $is_india = false;
+}
+$currency_symbol = $is_india ? '₹' : '$';
+$currency_key = $is_india ? 'inr' : 'usd';
+?>
 
 <section class="page-header" style="background: var(--bg-deep); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid var(--glass-border);">
     <div class="container">
-        <h1 class="text-gradient" style="font-size: 3.5rem;">Scalable Investment</h1>
-        <p class="text-muted" style="max-width: 700px; margin: 20px auto; font-size: 1.1rem;">Transparent pricing for enterprise-grade AI and custom software solutions.</p>
+        <h1 class="text-gradient" style="font-size: 3.5rem;">Transparent Pricing</h1>
+        <p class="text-muted" style="max-width: 700px; margin: 20px auto; font-size: 1.1rem;">High-quality development at affordable prices. We build for the future.</p>
+
+        <?php if(!empty($pricing['special_rate'])): ?>
+        <div style="display: inline-block; background: var(--primary-glow); border: 1px solid var(--primary); padding: 10px 20px; border-radius: 50px; margin-top: 20px; color: var(--text-main); font-weight: bold;">
+            <i class="fas fa-star" style="color: gold;"></i>
+            Special Hourly Rate: <?= $currency_symbol . $pricing['special_rate'][$currency_key] ?>/hr
+            <span style="font-weight: normal; font-size: 0.9rem;"> - <?= $pricing['special_rate']['description'] ?></span>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
 
-<section style="padding: 80px 0;">
+<section style="padding: 60px 0; background: var(--bg-main);">
     <div class="container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
-            <div class="glass-card" data-aos="fade-up">
-                <h2 style="margin-bottom: 10px;">Startup Core</h2>
-                <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;">₹14,999 <small style="font-size: 1rem; color: var(--text-muted);">/ Est.</small></div>
-                <ul class="text-muted" style="list-style: none; padding: 0; margin-bottom: 30px; line-height: 2;">
-                    <li><i class="fas fa-check" style="color: var(--secondary);"></i> Basic AI Integration</li>
-                    <li><i class="fas fa-check" style="color: var(--secondary);"></i> 5 Pages Responsive Website</li>
-                    <li><i class="fas fa-check" style="color: var(--secondary);"></i> Local SEO Setup</li>
-                </ul>
-                <a href="contact.php?plan=startup" class="btn btn-outline" style="width: 100%;">Get Started</a>
-            </div>
 
-            <div class="glass-card" data-aos="fade-up" data-aos-delay="100" style="border: 2px solid var(--primary); transform: scale(1.05);">
-                <div style="position: absolute; top: -15px; right: 20px; background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">MOST POPULAR</div>
-                <h2 style="margin-bottom: 10px;">Enterprise Plus</h2>
-                <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;">₹49,999 <small style="font-size: 1rem; color: var(--text-muted);">/ Est.</small></div>
-                <ul class="text-muted" style="list-style: none; padding: 0; margin-bottom: 30px; line-height: 2;">
-                    <li><i class="fas fa-check" style="color: var(--secondary);"></i> Full HRITIK AI Integration</li>
-                    <li><i class="fas fa-check" style="color: var(--secondary);"></i> Custom ERP/CRM Modules</li>
-                    <li><i class="fas fa-check" style="color: var(--secondary);"></i> Priority Neural Training</li>
+        <!-- Web Development -->
+        <h2 class="font-heading" style="margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px;">Web Development</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            <?php foreach($pricing['web_development'] ?? [] as $plan): ?>
+            <div class="glass-card" data-aos="fade-up" style="padding: 30px;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: var(--text-main);"><?= htmlspecialchars($plan['name']) ?></h3>
+                <div style="font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: var(--primary);">
+                    <?= $currency_symbol . number_format($plan[$currency_key]) ?>
+                </div>
+                <ul style="list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-muted);">
+                    <?php foreach($plan['features'] as $feature): ?>
+                        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 8px;"></i> <?= htmlspecialchars($feature) ?></li>
+                    <?php endforeach; ?>
                 </ul>
-                <a href="contact.php?plan=enterprise" class="btn btn-primary" style="width: 100%;">Get Started</a>
+                <a href="contact.php?plan=<?= urlencode($plan['name']) ?>" class="btn btn-outline" style="width: 100%; text-align: center;">Get Started</a>
             </div>
+            <?php endforeach; ?>
         </div>
+
+        <!-- Static Sites -->
+        <h2 class="font-heading" style="margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px;">Static Websites</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            <?php foreach($pricing['static_sites'] ?? [] as $plan): ?>
+            <div class="glass-card" data-aos="fade-up" style="padding: 30px;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: var(--text-main);"><?= htmlspecialchars($plan['name']) ?></h3>
+                <div style="font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: var(--primary);">
+                    <?= $currency_symbol . number_format($plan[$currency_key]) ?>
+                </div>
+                <ul style="list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-muted);">
+                    <?php foreach($plan['features'] as $feature): ?>
+                        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 8px;"></i> <?= htmlspecialchars($feature) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <a href="contact.php?plan=<?= urlencode($plan['name']) ?>" class="btn btn-outline" style="width: 100%; text-align: center;">Get Started</a>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- App Development -->
+        <h2 class="font-heading" style="margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px;">Mobile Apps</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            <?php foreach($pricing['app_development'] ?? [] as $plan): ?>
+            <div class="glass-card" data-aos="fade-up" style="padding: 30px;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: var(--text-main);"><?= htmlspecialchars($plan['name']) ?></h3>
+                <div style="font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: var(--primary);">
+                    <?= $currency_symbol . number_format($plan[$currency_key]) ?>
+                </div>
+                <ul style="list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-muted);">
+                    <?php foreach($plan['features'] as $feature): ?>
+                        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 8px;"></i> <?= htmlspecialchars($feature) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <a href="contact.php?plan=<?= urlencode($plan['name']) ?>" class="btn btn-outline" style="width: 100%; text-align: center;">Get Started</a>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Maintenance -->
+        <h2 class="font-heading" style="margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px;">Maintenance & Support</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            <?php foreach($pricing['maintenance'] ?? [] as $plan): ?>
+            <div class="glass-card" data-aos="fade-up" style="padding: 30px;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: var(--text-main);"><?= htmlspecialchars($plan['name']) ?></h3>
+                <div style="font-size: 2rem; font-weight: 800; margin-bottom: 20px; color: var(--primary);">
+                    <?= $currency_symbol . number_format($plan[$currency_key]) ?> <small style="font-size:1rem; color:var(--text-muted);">/ mo</small>
+                </div>
+                <ul style="list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-muted);">
+                    <?php foreach($plan['features'] as $feature): ?>
+                        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 8px;"></i> <?= htmlspecialchars($feature) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <a href="contact.php?plan=<?= urlencode($plan['name']) ?>" class="btn btn-outline" style="width: 100%; text-align: center;">Get Started</a>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
     </div>
 </section>
 

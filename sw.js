@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hritik-portal-v1';
+const CACHE_NAME = '-portal-v1';
 const urlsToCache = [
   'index.php',
   'assets/css/style.css',

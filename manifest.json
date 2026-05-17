@@ -1,7 +1,7 @@
 {
-  "name": "Tech Elevate X | HRITIK Neural Portal",
-  "short_name": "HRITIK Portal",
-  "description": "Premium Software & AI Enterprise Portal powered by HRITIK Neural Engine.",
+  "name": "Tech Elevate X |   Portal",
+  "short_name": " Portal",
+  "description": "Premium Software &  Enterprise Portal powered by   Engine.",
   "start_url": "index.php",
   "display": "standalone",
   "background_color": "#0f172a",
