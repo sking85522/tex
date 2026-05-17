@@ -162,7 +162,7 @@ try {
         ?>
             <div class="glass project-card" data-aos="fade-up">
                 <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
-                    <div class=.project-progress" style="--p: <?php echo $progress; ?>%; borderColor: <?php echo $color; ?>; color: <?php echo $color; ?>;">
+                    <div class="project-progress" style="--p: <?php echo $progress; ?>%; borderColor: <?php echo $color; ?>; color: <?php echo $color; ?>;">
                         <?php echo $progress; ?>%
                     </div>
                     

@@ -5,6 +5,10 @@ Auth::requireLogin();
 $dataFile = BASE_PATH . '/../data/site_data.json';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!Csrf::validateToken($_POST['csrf_token'] ?? '')) {
+        die("CSRF token validation failed.");
+    }
+
     $jsonData = $_POST['site_data'] ?? '{}';
     // Validate JSON
     json_decode($jsonData);
@@ -29,6 +33,7 @@ $currentData = json_encode(json_decode($currentData), JSON_PRETTY_PRINT);
     </div>
 
     <form method="POST" action="<?= APP_URL ?>/site_data">
+        <?= Csrf::getTokenField() ?>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="site_data">
                 JSON Content

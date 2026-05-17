@@ -123,24 +123,24 @@
                     document.documentElement.style.setProperty('--primary-glow', `hsla(${hue}, 80%, 50%, 0.5)`);
                     localStorage.setItem('theme_color_primary', color);
                     localStorage.setItem('theme_color_glow', `hsla(${hue}, 80%, 50%, 0.5)`);
+                    sessionStorage.setItem('manual_theme_active', 'true');
                 });
 
                 swatchesContainer.appendChild(swatch);
             }
 
-            // Load saved color or apply random color
-            const savedColor = localStorage.getItem('theme_color_primary');
-            const savedGlow = localStorage.getItem('theme_color_glow');
-            if (savedColor && savedGlow) {
-                document.documentElement.style.setProperty('--primary', savedColor);
-                document.documentElement.style.setProperty('--primary-glow', savedGlow);
+            // Dynamic flow: apply a random theme on EVERY load
+            const randomHue = Math.floor(Math.random() * 360);
+            const randomColor = `hsl(${randomHue}, 80%, 50%)`;
+            const randomGlow = `hsla(${randomHue}, 80%, 50%, 0.5)`;
+
+            // Allow manual override via theme panel, but if not set just now, use random
+            if(sessionStorage.getItem('manual_theme_active') === 'true') {
+                 document.documentElement.style.setProperty('--primary', localStorage.getItem('theme_color_primary'));
+                 document.documentElement.style.setProperty('--primary-glow', localStorage.getItem('theme_color_glow'));
             } else {
-                // Dynamic flow: apply a random theme on first load if none saved
-                const randomHue = Math.floor(Math.random() * 360);
-                const randomColor = `hsl(${randomHue}, 80%, 50%)`;
-                const randomGlow = `hsla(${randomHue}, 80%, 50%, 0.5)`;
-                document.documentElement.style.setProperty('--primary', randomColor);
-                document.documentElement.style.setProperty('--primary-glow', randomGlow);
+                 document.documentElement.style.setProperty('--primary', randomColor);
+                 document.documentElement.style.setProperty('--primary-glow', randomGlow);
             }
 
             // Chatbot Logic
