@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
             $stmt = $pdo->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
             $stmt->execute([$name, $email, $subject, $message]);
             echo json_encode(['success' => true, 'message' => 'Your message has been sent successfully!']);
-        } catch(PDOException $e) {
             echo json_encode(['success' => false, 'message' => 'Failed to send message. Database error.']);
         }
     } else {
@@ -132,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
                         msgBox.style.color = "#ef4444";
                         msgBox.style.border = "1px solid rgba(239, 68, 68, 0.3)";
                     }
-                } catch(error) {
                     msgBox.style.display = "block";
                     msgBox.style.background = "rgba(239, 68, 68, 0.2)";
                     msgBox.style.color = "#ef4444";

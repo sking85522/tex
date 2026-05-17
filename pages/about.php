@@ -1,19 +1,7 @@
-
 <?php
-require_once '../includes/db.php';
+require_once '../includes/header.php';
 $about_desc = "Welcome to Tech Elevate X, a premier software development agency.";
-if (class_exists('Core\Engine')) {
-    try {
-        $engine = new \Core\Engine();
-        $res = $engine->processPrompt("Write a 2 paragraph 'About Us' section for Tech Elevate X, an agency building enterprise software and independent AI systems. Do not use markdown backticks.");
-        if (!str_contains($res['response'], 'I have not learned')) {
-            $about_desc = $res['response'];
-        }
-    } catch (\Exception $e) {}
-}
 ?>
-
-<?php include '../includes/header.php'; ?>
 
 <section class="page-header" style="background-color: var(--primary-color); color: white; text-align: center; padding: 100px 0;">
     <div class="container">

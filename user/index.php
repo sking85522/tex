@@ -17,14 +17,13 @@ try {
     $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch(PDOException $e) {}
 
-$ai = new AIEngine($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Workspace | Tech Elevate X</title>
+    <title> Workspace | Tech Elevate X</title>
     
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -83,7 +82,7 @@ $ai = new AIEngine($pdo);
 
         .project-card:hover { borderColor: var(--primary-color); }
 
-        .neural-progress {
+        .project-progress {
             width: 100px;
             height: 100px;
             border-radius: 50%;
@@ -96,7 +95,7 @@ $ai = new AIEngine($pdo);
             background: rgba(0,0,0,0.2);
         }
 
-        .neural-progress::after {
+        .project-progress::after {
             content: '';
             position: absolute;
             inset: -5px;
@@ -115,7 +114,7 @@ $ai = new AIEngine($pdo);
 
     <div class="workspace-sidebar">
         <div style="margin-bottom: 50px; padding: 0 20px;">
-            <h1 style="font-size: 1.4rem; color: white;">NEURAL<span style="color: var(--primary-color);">WORKSPACE</span></h1>
+            <h1 style="font-size: 1.4rem; color: white;"><span style="color: var(--primary-color);">WORKSPACE</span></h1>
         </div>
 
         <nav>
@@ -138,10 +137,10 @@ $ai = new AIEngine($pdo);
         <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px;">
             <div>
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 8px;">Uplink Established, <?php echo htmlspecialchars($_SESSION['username']); ?>.</h2>
-                <p style="color: var(--text-muted);">Monitoring active deployment clusters and neural progress.</p>
+                <p style="color: var(--text-muted);">Monitoring active deployment clusters and progress.</p>
             </div>
             <div class="glass" style="padding: 10px 20px; display: flex; align-items: center; gap: 15px;">
-                <img src="../assets/img/bot_avatar.png" style="width: 40px; border-radius: 50%;" alt="AI">
+                <img src="../assets/img/bot_avatar.png" style="width: 40px; border-radius: 50%;" alt="">
                 <div style="font-size: 0.8rem;">
                     <span style="color: var(--secondary-color); font-weight: 700;">● System Active</span><br>
                     <span style="color: var(--text-muted);">ALEX Intel: Stable</span>
@@ -153,7 +152,7 @@ $ai = new AIEngine($pdo);
             <div class="glass" style="padding: 80px; text-align: center;">
                 <i class="fas fa-folder-open fa-4x" style="color: var(--text-muted); margin-bottom: 30px;"></i>
                 <h2>No Active Deployments</h2>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">Launch your next-gen software solution through our AI Configurator.</p>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Launch your next-gen software solution through our  Configurator.</p>
                 <a href="../services.php" class="btn btn-primary" style="padding: 15px 40px; border-radius: 12px; text-decoration: none; color: white;">Explore Capabilities</a>
             </div>
         <?php else: foreach($projects as $p): 
@@ -163,7 +162,7 @@ $ai = new AIEngine($pdo);
         ?>
             <div class="glass project-card" data-aos="fade-up">
                 <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
-                    <div class="neural-progress" style="--p: <?php echo $progress; ?>%; borderColor: <?php echo $color; ?>; color: <?php echo $color; ?>;">
+                    <div class=.project-progress" style="--p: <?php echo $progress; ?>%; borderColor: <?php echo $color; ?>; color: <?php echo $color; ?>;">
                         <?php echo $progress; ?>%
                     </div>
                     

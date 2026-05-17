@@ -1,62 +1,77 @@
 <?php
-session_start();
-include '../includes/db.php';
+// admin/login.php
 
-$error = '';
+require_once 'config.php';
+require_once 'core/app.php';
+
+App::init();
+
+if (Auth::check()) {
+    redirect(APP_URL . '/');
+}
+
+$error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    if (!empty($username) && !empty($password)) {
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
-            $stmt->execute([$username]);
-            $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($admin && password_verify($password, $admin['password'])) {
-                $_SESSION['admin_id'] = $admin['id'];
-                $_SESSION['admin_username'] = $admin['username'];
-                $_SESSION['admin_role'] = $admin['role'] ?? 'super_admin'; // Storing Role
-                header("Location: index.php");
-                exit();
-            } else {
-                $error = 'Invalid username or password.';
-            }
-        } catch(PDOException $e) {
-            $error = 'Database connection error.';
-        }
+    if (!Csrf::verifyToken($_POST['csrf_token'] ?? '')) {
+        $error = "Invalid CSRF token.";
     } else {
-        $error = 'Please enter both username and password.';
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        if (Auth::login($username, $password)) {
+            Logger::log("User '$username' logged in successfully.");
+            redirect(APP_URL . '/');
+        } else {
+            Logger::log("Failed login attempt for user '$username'.", 'WARNING');
+            $error = "Invalid username or password.";
+        }
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Login - Tech Elevate X</title>
-    <style>
-        body { background-color: #4e73df; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
-        .login-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; max-width: 400px; text-align: center; }
-        .login-box h2 { margin-top: 0; color: #333; margin-bottom: 20px; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn-login { background-color: #4e73df; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; font-size: 1rem; cursor: pointer; }
-        .btn-login:hover { background-color: #2e59d9; }
-        .error { color: #e74a3b; margin-bottom: 15px; }
-    </style>
-</head>
-<body>
-    <div class="login-box">
-        <h2>Admin Portal</h2>
-        <?php if($error): ?><div class="error"><?php echo $error; ?></div><?php endif; ?>
-        <form action="login.php" method="POST">
-            <div class="form-group"><label>Username</label><input type="text" name="username" required></div>
-            <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
-            <button type="submit" class="btn-login">Login</button>
+
+<?php include THEMES_PATH . '/header.php'; ?>
+
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 w-full absolute top-0 left-0 bg-gray-100 z-50">
+    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">
+        <div>
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white">
+                <i class="fas fa-lock fa-lg"></i>
+            </div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Sign in to your account
+            </h2>
+        </div>
+
+        <?php if ($error): ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline"><?= h($error) ?></span>
+            </div>
+        <?php endif; ?>
+
+        <form class="mt-8 space-y-6" action="login.php" method="POST">
+            <?= Csrf::getTokenField() ?>
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="username" class="sr-only">Username</label>
+                    <input id="username" name="username" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder="Username">
+                </div>
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input id="password" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" placeholder="Password">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <i class="fas fa-sign-in-alt text-blue-300 group-hover:text-blue-200"></i>
+                    </span>
+                    Sign in
+                </button>
+            </div>
         </form>
     </div>
-</body>
-</html>
+</div>
+
+<?php include THEMES_PATH . '/footer.php'; ?>
