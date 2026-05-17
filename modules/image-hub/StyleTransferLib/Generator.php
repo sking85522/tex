@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\StyleTransferLib; class Generator { public function generate(\) { return 'Generated via StyleTransferLib Engine'; } }

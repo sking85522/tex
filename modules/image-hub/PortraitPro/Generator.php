@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\PortraitPro; class Generator { public function generate(\) { return 'Generated via PortraitPro Engine'; } }

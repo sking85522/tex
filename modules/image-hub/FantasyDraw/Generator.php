@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\FantasyDraw; class Generator { public function generate(\) { return 'Generated via FantasyDraw Engine'; } }

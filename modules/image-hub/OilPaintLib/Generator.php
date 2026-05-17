@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\OilPaintLib; class Generator { public function generate(\) { return 'Generated via OilPaintLib Engine'; } }

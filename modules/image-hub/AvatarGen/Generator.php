@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\AvatarGen; class Generator { public function generate(\) { return 'Generated via AvatarGen Engine'; } }

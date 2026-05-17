@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\BlueprintAI; class Generator { public function generate(\) { return 'Generated via BlueprintAI Engine'; } }

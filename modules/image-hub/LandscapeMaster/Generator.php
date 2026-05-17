@@ -1,1 +1,0 @@
-<?php namespace ImageHub\\LandscapeMaster; class Generator { public function generate(\) { return 'Generated via LandscapeMaster Engine'; } }
