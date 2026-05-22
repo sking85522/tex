@@ -244,3 +244,13 @@ h1, h2, h3, h4, .outfit { font-family: 'Outfit', sans-serif; color: var(--text-m
 .footer-col a:hover {
     color: var(--primary);
 }
+
+
+/* --- FORM STYLES --- */
+.form-group { margin-bottom: 20px; text-align: left; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
+.form-group input { width: 100%; padding: 12px; border: 1px solid var(--glass-border); border-radius: 4px; box-sizing: border-box; background: var(--bg-main); color: var(--text-main); outline: none; transition: 0.3s; }
+.form-group input:focus { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+.btn-login { background-color: var(--primary); color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background 0.3s; }
+.btn-login:hover { background-color: var(--accent); }
+.error-msg { color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem; }

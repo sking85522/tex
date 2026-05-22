@@ -69,7 +69,7 @@ try {
 
         .sidebar-link:hover, .sidebar-link.active {
             background: rgba(99, 102, 241, 0.1);
-            color: var(--primary-color);
+            color: var(--primary);
             border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
@@ -80,7 +80,7 @@ try {
             margin-bottom: 30px;
         }
 
-        .project-card:hover { borderColor: var(--primary-color); }
+        .project-card:hover { borderColor: var(--primary); }
 
         .project-progress {
             width: 100px;
@@ -100,7 +100,7 @@ try {
             position: absolute;
             inset: -5px;
             border-radius: 50%;
-            border: 4px solid var(--primary-color);
+            border: 4px solid var(--primary);
             mask-image: linear-gradient(0deg, black var(--p), transparent 0);
         }
 
@@ -114,7 +114,7 @@ try {
 
     <div class="workspace-sidebar">
         <div style="margin-bottom: 50px; padding: 0 20px;">
-            <h1 style="font-size: 1.4rem; color: white;"><span style="color: var(--primary-color);">WORKSPACE</span></h1>
+            <h1 style="font-size: 1.4rem; color: white;"><span style="color: var(--primary);">WORKSPACE</span></h1>
         </div>
 
         <nav>

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
 }
 ?>
 
-<section class="page-header" style="background-color: var(--primary-color); color: white; text-align: center; padding: 100px 0;">
+<section class="page-header" style="background-color: var(--primary); color: white; text-align: center; padding: 100px 0;">
     <div class="container">
         <h1 style="font-size: 3rem; margin-bottom: 20px;">Contact Us</h1>
         <p style="font-size: 1.2rem;">Have a project in mind? We'd love to hear from you.</p>
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
                 <p style="margin-bottom: 30px; font-size: 1.1rem; color: var(--text-muted);">Fill out the form and our team will get back to you within 24 hours.</p>
 
                 <div style="margin-bottom: 20px; display: flex; align-items: center;">
-                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary-color); font-size: 1.2rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary); font-size: 1.2rem;">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div>
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
                 </div>
 
                 <div style="margin-bottom: 20px; display: flex; align-items: center;">
-                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary-color); font-size: 1.2rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary); font-size: 1.2rem;">
                         <i class="fas fa-phone"></i>
                     </div>
                     <div>
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
                 </div>
 
                 <div style="margin-bottom: 20px; display: flex; align-items: center;">
-                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary-color); font-size: 1.2rem;">
+                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary); font-size: 1.2rem;">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div>
