@@ -196,15 +196,17 @@
     </script>
 
     <!-- AOS - Animate On Scroll -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
+    <script defer src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
         });
     </script>
     
-    <script src="<?php echo $root_prefix; ?>assets/js/main.js"></script>
+    <script defer src="<?php echo $root_prefix; ?>assets/js/main.js"></script>
 </body>
 </html>

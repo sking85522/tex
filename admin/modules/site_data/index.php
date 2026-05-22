@@ -5,7 +5,7 @@ Auth::requireLogin();
 $dataFile = BASE_PATH . '/../data/site_data.json';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!Csrf::validateToken($_POST['csrf_token'] ?? '')) {
+    if (!Csrf::verifyToken($_POST['csrf_token'] ?? '')) {
         die("CSRF token validation failed.");
     }
 

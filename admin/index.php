@@ -34,20 +34,21 @@ $actionFile = $modulePath . '/' . $action . '.php';
 
 if (is_dir($modulePath)) {
     if (file_exists($actionFile)) {
-        // Module file found, load it
-        // We include header and footer around the module content
-        require_once THEMES_PATH . '/header.php';
+        // Ob_start captures output so redirects in actionFile still work
+        ob_start();
         require_once $actionFile;
+        $content = ob_get_clean();
+
+        require_once THEMES_PATH . '/header.php';
+        echo $content;
         require_once THEMES_PATH . '/footer.php';
     } else {
-        // Action not found within module
         http_response_code(404);
         require_once THEMES_PATH . '/header.php';
         echo "<div class='bg-white p-6 rounded shadow'><h2>404 - Action '$action' not found in module '$module'</h2></div>";
         require_once THEMES_PATH . '/footer.php';
     }
 } else {
-    // Module not found
     http_response_code(404);
     require_once THEMES_PATH . '/header.php';
     echo "<div class='bg-white p-6 rounded shadow'><h2>404 - Module '$module' not found</h2></div>";

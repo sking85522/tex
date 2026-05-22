@@ -27,7 +27,7 @@ require_once 'includes/header.php';
                 </div>
                 
                 <div class="hero-visual" data-aos="zoom-in" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600" alt="Hero Image" style="width: 100%; border-radius: 20px; box-shadow: var(--glass-shadow); object-fit: cover;">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600" alt="Hero Image" fetchpriority="high" style="width: 100%; border-radius: 20px; box-shadow: var(--glass-shadow); object-fit: cover;">
                 </div>
             </div>
         </div>
