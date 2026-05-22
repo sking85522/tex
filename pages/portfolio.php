@@ -18,7 +18,7 @@
             ];
             foreach($projects as $p): ?>
             <div class="glass-card" data-aos="fade-up">
-                <img src="<?php echo $p['img']; ?>" alt="<?php echo $p['title']; ?>" style="border-radius: 12px; margin-bottom: 24px;">
+                <img src="<?php echo $p['img']; ?>" alt="<?php echo $p['title']; ?>" loading="lazy" style="border-radius: 12px; margin-bottom: 24px;">
                 <h3 style="margin-bottom: 12px;"><?php echo $p['title']; ?></h3>
                 <p class="text-muted"><?php echo $p['desc']; ?></p>
             </div>

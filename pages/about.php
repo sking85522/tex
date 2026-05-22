@@ -22,7 +22,7 @@ $about_desc = "Welcome to Tech Elevate X, a premier software development agency.
                 <p style="font-size: 1.1rem;">To empower organizations globally with scalable, secure, and intuitive technological solutions that drive growth and efficiency.</p>
             </div>
             <div style="flex: 1; min-width: 300px;">
-                <img src="https://via.placeholder.com/600x400" alt="Our Team" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <img src="https://via.placeholder.com/600x400" alt="Our Team" loading="lazy" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
             </div>
         </div>
     </div>

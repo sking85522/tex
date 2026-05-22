@@ -6,21 +6,30 @@ $jsonFile = __DIR__ . '/../data/site_data.json';
 $siteData = file_exists($jsonFile) ? json_decode(file_get_contents($jsonFile), true) : [];
 $pricing = $siteData['pricing'] ?? [];
 
-// Simple Geolocation Mock based on timezone/header for currency
-// For real prod, you might use IP Geolocation API.
-$is_india = true; // Default India
-if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strpos($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'en-US') !== false) {
-    // A very loose mock.
-    $is_india = false;
+// Manage Currency Toggle Preference via Query Param & Session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-$currency_symbol = $is_india ? '₹' : '$';
-$currency_key = $is_india ? 'inr' : 'usd';
+
+if (isset($_GET['currency']) && in_array(strtolower($_GET['currency']), ['inr', 'usd'])) {
+    $_SESSION['preferred_currency'] = strtolower($_GET['currency']);
+}
+
+// Default to INR if no preference is set, since owner is in India
+$currency_key = $_SESSION['preferred_currency'] ?? 'inr';
+$currency_symbol = ($currency_key === 'inr') ? '₹' : '$';
 ?>
 
 <section class="page-header" style="background: var(--bg-deep); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid var(--glass-border);">
     <div class="container">
         <h1 class="text-gradient" style="font-size: 3.5rem;">Transparent Pricing</h1>
         <p class="text-muted" style="max-width: 700px; margin: 20px auto; font-size: 1.1rem;">High-quality development at affordable prices. We build for the future.</p>
+
+        <!-- Currency Toggle -->
+        <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px;">
+            <a href="?currency=inr" class="btn <?= $currency_key === 'inr' ? 'btn-primary' : 'btn-outline' ?>" style="padding: 8px 20px; border-radius: 20px;">INR (₹)</a>
+            <a href="?currency=usd" class="btn <?= $currency_key === 'usd' ? 'btn-primary' : 'btn-outline' ?>" style="padding: 8px 20px; border-radius: 20px;">USD ($)</a>
+        </div>
 
         <?php if(!empty($pricing['special_rate'])): ?>
         <div style="display: inline-block; background: var(--primary-glow); border: 1px solid var(--primary); padding: 10px 20px; border-radius: 50px; margin-top: 20px; color: var(--text-main); font-weight: bold;">
