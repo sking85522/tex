@@ -11,26 +11,32 @@ if (isset($_SESSION['register_success'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if (!empty($username) && !empty($password)) {
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $clientsFile = __DIR__ . '/../data/clients.json';
+        $clients = file_exists($clientsFile) ? json_decode(file_get_contents($clientsFile), true) : [];
+        if (!is_array($clients)) $clients = [];
 
-            // In our DB seed, 'user' has password 'password'
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                header("Location: index.php");
-                exit();
-            } else {
-                $error = 'Invalid username or password.';
+        $userFound = false;
+        foreach ($clients as $client) {
+            if ($client['username'] === $username) {
+                if (password_verify($password, $client['password'])) {
+                    $_SESSION['user_id'] = $client['id'];
+                    $_SESSION['username'] = $client['username'];
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    $error = 'Invalid username or password.';
+                }
+                $userFound = true;
+                break;
             }
-        } catch(PDOException $e) {
-            $error = 'Database error. Please try again later.';
+        }
+
+        if (!$userFound && !$error) {
+            $error = 'Invalid username or password.';
         }
     } else {
         $error = 'Please enter both username and password.';

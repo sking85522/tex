@@ -24,6 +24,7 @@
                 <?php if (Auth::hasPermission('manage_files')): ?>
                     <li><a href="<?= APP_URL ?>/filemanager" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-colors"><i class="fas fa-image w-6 text-gray-400"></i> <?= __('Media') ?></a></li>
                 <?php endif; ?>
+                <li><a href="<?= APP_URL ?>/messages" class="flex items-center px-6 py-3 hover:bg-gray-700 transition-colors"><i class="fas fa-envelope w-6 text-gray-400"></i> Messages</a></li>
 
                 <li class="px-6 py-2 text-xs uppercase text-gray-500 font-semibold mt-4 border-b border-gray-700 pb-2 mb-2">System</li>
                 <?php if (Auth::hasPermission('manage_users')): ?>

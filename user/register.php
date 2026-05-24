@@ -15,28 +15,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($password !== $confirm_password) {
             $error = 'Passwords do not match.';
         } else {
-            // Check if username or email already exists
-            try {
-                $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
-                $stmt->execute([$username, $email]);
+            $clientsFile = __DIR__ . '/../data/clients.json';
+            $clients = file_exists($clientsFile) ? json_decode(file_get_contents($clientsFile), true) : [];
+            if (!is_array($clients)) $clients = [];
 
-                if ($stmt->fetch()) {
-                    $error = 'Username or Email already exists.';
-                } else {
-                    // Create new user
-                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-
-                    if ($stmt->execute([$username, $email, $hashed_password])) {
-                        $_SESSION['register_success'] = "Account created successfully! You can now log in.";
-                        header("Location: login.php");
-                        exit();
-                    } else {
-                        $error = 'Failed to create account. Please try again.';
-                    }
+            $exists = false;
+            foreach ($clients as $client) {
+                if ($client['username'] === $username || $client['email'] === $email) {
+                    $exists = true;
+                    break;
                 }
-            } catch(PDOException $e) {
-                $error = 'Database error. Please try again later.';
+            }
+
+            if ($exists) {
+                $error = 'Username or Email already exists.';
+            } else {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $clients[] = [
+                    'id' => uniqid(),
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => $hashed_password,
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+
+                if (file_put_contents($clientsFile, json_encode($clients, JSON_PRETTY_PRINT))) {
+                    $_SESSION['register_success'] = "Account created successfully! You can now log in.";
+                    header("Location: login.php");
+                    exit();
+                } else {
+                    $error = 'Failed to create account. Please try again.';
+                }
             }
         }
     } else {

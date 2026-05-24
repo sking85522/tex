@@ -1,5 +1,4 @@
 <?php include '../includes/header.php';
-require_once '../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
     header('Content-Type: application/json');
@@ -9,12 +8,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
     $message = trim($_POST['message'] ?? '');
 
     if (!empty($name) && !empty($email) && !empty($subject) && !empty($message)) {
-        try {
-            $stmt = $pdo->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name, $email, $subject, $message]);
-            echo json_encode(['success' => true, 'message' => 'Your message has been sent successfully!']);
-            echo json_encode(['success' => false, 'message' => 'Failed to send message. Database error.']);
-        }
+        $messagesFile = __DIR__ . '/../data/messages.json';
+        $messages = file_exists($messagesFile) ? json_decode(file_get_contents($messagesFile), true) : [];
+        if (!is_array($messages)) $messages = [];
+
+        $messages[] = [
+            'date' => date('Y-m-d H:i:s'),
+            'name' => $name,
+            'email' => $email,
+            'subject' => $subject,
+            'message' => $message
+        ];
+
+        file_put_contents($messagesFile, json_encode($messages, JSON_PRETTY_PRINT));
+        echo json_encode(['success' => true, 'message' => 'Your message has been sent successfully!']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Please fill out all required fields.']);
     }

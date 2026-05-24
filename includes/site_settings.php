@@ -13,12 +13,12 @@ if (file_exists($configPath)) {
 }
 
 // 2. Override with DB Settings (Dynamic overrides)
-try {
-    $stmt = $pdo->query("SELECT setting_key, setting_value FROM site_settings");
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $settings[$row['setting_key']] = $row['setting_value'];
-    }
-} catch(Exception $e) {}
+// try {
+//     $stmt = $pdo->query("SELECT setting_key, setting_value FROM site_settings");
+//     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//         $settings[$row['setting_key']] = $row['setting_value'];
+//     }
+// } catch(Exception $e) {}
 
 function get_setting($key, $default = '') {
     global $settings;

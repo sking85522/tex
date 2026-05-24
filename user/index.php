@@ -1,7 +1,5 @@
 <?php
 session_start();
-include '../includes/db.php';
-require_once '../site_ai/core_engine.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -9,14 +7,20 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+
+$projectsFile = __DIR__ . '/../data/client_projects.json';
+$all_projects = file_exists($projectsFile) ? json_decode(file_get_contents($projectsFile), true) : [];
+if (!is_array($all_projects)) $all_projects = [];
+
 $projects = [];
-
-try {
-    $stmt = $pdo->prepare("SELECT * FROM client_projects WHERE user_id = ? ORDER BY id DESC");
-    $stmt->execute([$user_id]);
-    $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch(PDOException $e) {}
-
+foreach ($all_projects as $p) {
+    if (isset($p['user_id']) && $p['user_id'] === $user_id) {
+        $projects[] = $p;
+    }
+}
+usort($projects, function($a, $b) {
+    return strtotime($b['created_at'] ?? '0') - strtotime($a['created_at'] ?? '0');
+});
 ?>
 <!DOCTYPE html>
 <html lang="en">
