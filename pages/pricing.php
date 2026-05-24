@@ -20,10 +20,10 @@ $currency_key = $_SESSION['preferred_currency'] ?? 'inr';
 $currency_symbol = ($currency_key === 'inr') ? '₹' : '$';
 ?>
 
-<section class="page-header" style="background: var(--bg-deep); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid var(--glass-border);">
-    <div class="container">
-        <h1 class="text-gradient" style="font-size: 3.5rem;">Transparent Pricing</h1>
-        <p class="text-muted" style="max-width: 700px; margin: 20px auto; font-size: 1.1rem;">High-quality development at affordable prices. We build for the future.</p>
+<section class="page-header hero" style="padding: 160px 0 80px; text-align: center; border-bottom: 1px solid var(--glass-border);">
+    <div class="container hero-content">
+        <h1 class="hero-title">Transparent <span class="text-gradient-primary">Investment</span></h1>
+        <p class="hero-desc">Deploy scalable architectures at transparent rates. Engineer your next venture with confidence.</p>
 
         <!-- Currency Toggle -->
         <div style="margin: 20px 0; display: flex; justify-content: center; gap: 10px;">

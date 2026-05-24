@@ -2,8 +2,8 @@
         </main>
 
         <?php if (Auth::check()): ?>
-            <footer class="bg-white text-center text-sm p-4 shadow mt-auto">
-                &copy; <?= date('Y') ?> <?= h(APP_NAME) ?>. All rights reserved.
+            <footer class="bg-transparent border-t border-gray-200 dark:border-gray-800 text-center text-sm p-4 mt-auto text-gray-500">
+                &copy; <?= date('Y') ?> <?= h(APP_NAME) ?>. Powered by Intelligence.
             </footer>
         <?php endif; ?>
     </div>

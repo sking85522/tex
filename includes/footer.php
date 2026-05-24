@@ -44,23 +44,6 @@
         </div>
     </footer>
 
-    <!-- Theme Switcher UI -->
-    <div id="theme-switcher-panel" style="position: fixed; bottom: 80px; right: 20px; background: var(--bg-card); border: 1px solid var(--glass-border); padding: 20px; border-radius: 12px; box-shadow: var(--glass-shadow); z-index: 2000; display: none; width: 300px;">
-        <h4 style="margin-top: 0; color: var(--text-main);">Theme Settings</h4>
-
-        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: var(--text-muted); font-size: 0.9rem;">Mode</span>
-            <button id="toggle-dark-mode" style="background: var(--bg-deep); border: 1px solid var(--glass-border); padding: 5px 10px; border-radius: 6px; cursor: pointer; color: var(--text-main);">Toggle Light/Dark</button>
-        </div>
-
-        <span style="color: var(--text-muted); font-size: 0.9rem; display: block; margin-bottom: 10px;">Select Color Theme (100+)</span>
-        <div id="color-swatches" style="display: flex; flex-wrap: wrap; gap: 5px; max-height: 200px; overflow-y: auto;">
-            <!-- Generated via JS -->
-        </div>
-    </div>
-    <button id="theme-switcher-toggle" style="position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: #fff; border: none; cursor: pointer; box-shadow: var(--glass-shadow); z-index: 2001; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
-        <i class="fas fa-palette"></i>
-    </button>
 
     <!-- Support Chatbot -->
     <button id="chatbot-toggle" style="position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--text-main); color: var(--bg-main); border: none; cursor: pointer; box-shadow: var(--glass-shadow); z-index: 2001; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
@@ -87,62 +70,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Theme Switcher Logic
-            const panel = document.getElementById('theme-switcher-panel');
-            const toggleBtn = document.getElementById('theme-switcher-toggle');
-            const darkModeBtn = document.getElementById('toggle-dark-mode');
-            const swatchesContainer = document.getElementById('color-swatches');
-
-            // Toggle Panel
-            toggleBtn.addEventListener('click', () => {
-                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            });
-
-            // Dark Mode Toggle
-            darkModeBtn.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme_preference', newTheme);
-            });
-
-            // Generate 100 Themes (Hues)
-            for (let i = 0; i < 100; i++) {
-                const hue = Math.floor((i / 100) * 360);
-                const color = `hsl(${hue}, 80%, 50%)`;
-                const swatch = document.createElement('div');
-                swatch.style.width = '20px';
-                swatch.style.height = '20px';
-                swatch.style.background = color;
-                swatch.style.borderRadius = '4px';
-                swatch.style.cursor = 'pointer';
-                swatch.title = `Theme ${i+1}`;
-
-                swatch.addEventListener('click', () => {
-                    document.documentElement.style.setProperty('--primary', color);
-                    document.documentElement.style.setProperty('--primary-glow', `hsla(${hue}, 80%, 50%, 0.5)`);
-                    localStorage.setItem('theme_color_primary', color);
-                    localStorage.setItem('theme_color_glow', `hsla(${hue}, 80%, 50%, 0.5)`);
-                    sessionStorage.setItem('manual_theme_active', 'true');
-                });
-
-                swatchesContainer.appendChild(swatch);
-            }
-
-            // Dynamic flow: apply a random theme on EVERY load
-            const randomHue = Math.floor(Math.random() * 360);
-            const randomColor = `hsl(${randomHue}, 80%, 50%)`;
-            const randomGlow = `hsla(${randomHue}, 80%, 50%, 0.5)`;
-
-            // Allow manual override via theme panel, but if not set just now, use random
-            if(sessionStorage.getItem('manual_theme_active') === 'true') {
-                 document.documentElement.style.setProperty('--primary', localStorage.getItem('theme_color_primary'));
-                 document.documentElement.style.setProperty('--primary-glow', localStorage.getItem('theme_color_glow'));
-            } else {
-                 document.documentElement.style.setProperty('--primary', randomColor);
-                 document.documentElement.style.setProperty('--primary-glow', randomGlow);
-            }
-
             // Chatbot Logic
             const chatToggle = document.getElementById('chatbot-toggle');
             const chatPanel = document.getElementById('chatbot-panel');

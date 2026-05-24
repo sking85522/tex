@@ -29,76 +29,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_submit'])) {
 }
 ?>
 
-<section class="page-header" style="background-color: var(--primary); color: white; text-align: center; padding: 100px 0;">
-    <div class="container">
-        <h1 style="font-size: 3rem; margin-bottom: 20px;">Contact Us</h1>
-        <p style="font-size: 1.2rem;">Have a project in mind? We'd love to hear from you.</p>
+<section class="page-header hero" style="padding: 160px 0 80px; text-align: center; border-bottom: 1px solid var(--glass-border);">
+    <div class="container hero-content">
+        <h1 class="hero-title">Establish <span class="text-gradient-primary">Connection</span></h1>
+        <p class="hero-desc">Initialize a secure channel with our engineering team to architect your next venture.</p>
     </div>
 </section>
 
-<section class="contact-page" style="padding: 80px 0;">
+<section class="contact-page" style="padding: 100px 0;">
     <div class="container">
-        <div class="contact-wrapper" style="display: flex; gap: 50px; flex-wrap: wrap;">
+        <div class="contact-wrapper" style="display: flex; gap: 60px; flex-wrap: wrap;">
 
-            <div class="contact-info" style="flex: 1; min-width: 300px;">
-                <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--text-pure);">Get In Touch</h2>
-                <p style="margin-bottom: 30px; font-size: 1.1rem; color: var(--text-muted);">Fill out the form and our team will get back to you within 24 hours.</p>
+            <div class="contact-info" style="flex: 1; min-width: 300px;" data-aos="fade-right">
+                <h2 class="font-heading" style="font-size: 2.5rem; margin-bottom: 24px; color: var(--text-main);">Communication Portal</h2>
+                <p style="margin-bottom: 40px; font-size: 1.1rem; color: var(--text-muted);">Transmit your requirements and our technical architects will respond within 24 hours.</p>
 
-                <div style="margin-bottom: 20px; display: flex; align-items: center;">
-                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary); font-size: 1.2rem;">
+                <div class="glass-card" style="margin-bottom: 24px; display: flex; align-items: center; padding: 20px;">
+                    <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px; color: var(--primary); font-size: 1.2rem;">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div>
-                        <h4 style="margin-bottom: 5px; color: var(--text-pure);">Location</h4>
-                        <p style="color: var(--text-muted);"><?php echo htmlspecialchars(get_setting("contact_address", "123 Tech Street, IT Park, City")); ?></p>
+                        <h4 style="margin-bottom: 4px; color: var(--text-main); font-weight: 600;">Headquarters</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;"><?php echo htmlspecialchars(get_setting("contact_address", "123 Tech Street, IT Park, City")); ?></p>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 20px; display: flex; align-items: center;">
-                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary); font-size: 1.2rem;">
-                        <i class="fas fa-phone"></i>
+                <div class="glass-card" style="margin-bottom: 24px; display: flex; align-items: center; padding: 20px;">
+                    <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px; color: var(--primary); font-size: 1.2rem;">
+                        <i class="fas fa-phone-alt"></i>
                     </div>
                     <div>
-                        <h4 style="margin-bottom: 5px; color: var(--text-pure);">Phone</h4>
-                        <p style="color: var(--text-muted);"><?php echo htmlspecialchars(get_setting("contact_phone", "+1 234 567 8900")); ?></p>
+                        <h4 style="margin-bottom: 4px; color: var(--text-main); font-weight: 600;">Voice Channel</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;"><?php echo htmlspecialchars(get_setting("contact_phone", "+1 234 567 8900")); ?></p>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 20px; display: flex; align-items: center;">
-                    <div style="width: 50px; height: 50px; background: rgba(13, 110, 253, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--primary); font-size: 1.2rem;">
+                <div class="glass-card" style="margin-bottom: 24px; display: flex; align-items: center; padding: 20px;">
+                    <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 20px; color: var(--primary); font-size: 1.2rem;">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div>
-                        <h4 style="margin-bottom: 5px; color: var(--text-pure);">Email</h4>
-                        <p style="color: var(--text-muted);"><?php echo htmlspecialchars(get_setting("contact_email", "info@techelevatex.com")); ?></p>
+                        <h4 style="margin-bottom: 4px; color: var(--text-main); font-weight: 600;">Data Channel</h4>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;"><?php echo htmlspecialchars(get_setting("contact_email", "info@techelevatex.com")); ?></p>
                     </div>
                 </div>
             </div>
 
 
-            <div class="contact-form-container glass-card" style="flex: 1.5; min-width: 300px; padding: 40px;">
-                <div id="form-msg-box" style="display:none; padding: 15px; margin-bottom: 20px; border-radius: 5px;"></div>
+            <div class="contact-form-container glass-card" style="flex: 1.5; min-width: 300px; padding: 40px;" data-aos="fade-left">
+                <div id="form-msg-box" style="display:none; padding: 16px; margin-bottom: 24px; border-radius: 8px;"></div>
                 <form id="contactForm" onsubmit="submitContactForm(event)">
                     <input type="hidden" name="ajax_submit" value="1">
-                    <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Name</label>
-                            <input type="text" name="name" id="c_name" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
+                    <div style="display: flex; gap: 24px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <div class="form-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                            <label for="c_name">Identifier</label>
+                            <input type="text" name="name" id="c_name" required>
                         </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Email</label>
-                            <input type="email" name="email" id="c_email" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
+                        <div class="form-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+                            <label for="c_email">Return Address</label>
+                            <input type="email" name="email" id="c_email" required>
                         </div>
                     </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Subject</label>
-                        <input type="text" name="subject" id="c_subject" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
+                    <div class="form-group">
+                        <label for="c_subject">Transmission Subject</label>
+                        <input type="text" name="subject" id="c_subject" required>
                     </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Message</label>
-                        <textarea name="message" id="c_message" rows="5" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: white; resize: vertical;"></textarea>
+                    <div class="form-group">
+                        <label for="c_message">Payload Data</label>
+                        <textarea name="message" id="c_message" rows="5" required></textarea>
                     </div>
-                    <button type="submit" id="c_submit_btn" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    <button type="submit" id="c_submit_btn" class="btn btn-primary" style="width: 100%;"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Transmit Data</button>
                 </form>
             </div>
 
