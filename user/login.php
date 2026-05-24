@@ -11,55 +11,43 @@ if (isset($_SESSION['register_success'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if (!empty($username) && !empty($password)) {
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $clientsFile = __DIR__ . '/../data/clients.json';
+        $clients = file_exists($clientsFile) ? json_decode(file_get_contents($clientsFile), true) : [];
+        if (!is_array($clients)) $clients = [];
 
-            // In our DB seed, 'user' has password 'password'
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                header("Location: index.php");
-                exit();
-            } else {
-                $error = 'Invalid username or password.';
+        $userFound = false;
+        foreach ($clients as $client) {
+            if ($client['username'] === $username) {
+                if (password_verify($password, $client['password'])) {
+                    $_SESSION['user_id'] = $client['id'];
+                    $_SESSION['username'] = $client['username'];
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    $error = 'Invalid username or password.';
+                }
+                $userFound = true;
+                break;
             }
-        } catch(PDOException $e) {
-            $error = 'Database error. Please try again later.';
+        }
+
+        if (!$userFound && !$error) {
+            $error = 'Invalid username or password.';
         }
     } else {
         $error = 'Please enter both username and password.';
     }
 }
+
+require_once '../includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login - Tech Elevate X</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <style>
-        body { background-color: #f4f7f6; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .login-container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .login-container h2 { margin-top: 0; color: var(--dark-color); margin-bottom: 20px; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn-login { background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background 0.3s; }
-        .btn-login:hover { background-color: #0b5ed7; }
-        .error-msg { color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem; }
-        .back-link { display: inline-block; margin-top: 20px; color: #666; text-decoration: none; font-size: 0.9rem; }
-        .back-link:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="login-container">
+
+<section style="padding: 180px 0 100px; background: var(--bg-deep); min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+    <div class="glass-card login-container" style="max-width: 400px; width: 100%; padding: 40px; margin: 0 auto; text-align: center;">
         <h2>User Login</h2>
         <?php if($success): ?>
             <div style="color: #155724; background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem;"><?php echo htmlspecialchars($success); ?></div>
@@ -78,42 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="btn-login">Login</button>
         </form>
-        <p style="margin-top: 20px; font-size: 0.9rem;">Don't have an account? <a href="register.php" style="color: var(--primary-color); text-decoration: none;">Sign up here</a>.</p>
-        <a href="../index.php" class="back-link">&larr; Back to Website</a>
+        <p style="margin-top: 20px; font-size: 0.9rem;">Don't have an account? <a href="register.php" style="color: var(--primary); text-decoration: none;">Sign up here</a>.</p>
+        <a href="../index.php" class="back-link" style="display: inline-block; margin-top: 20px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">&larr; Back to Website</a>
     </div>
+</section>
 
-    <!-- Voice Logic Bridge (Project ALEX) -->
-    <script src="../assets/js/modules/voice_kernel.js"></script>
-    <script>
-        // Override Voice Execution for Login Page
-        Alex.executeCommand = function(command) {
-            console.log("Login Alex Command:", command);
-            const userInp = document.getElementById('username');
-            const passInp = document.getElementById('password');
-            const form = document.getElementById('login-form');
-
-            if (command.includes("id") || command.includes("user") || command.includes("name")) {
-                const words = command.split(' ');
-                const val = words[words.length - 1];
-                if (userInp) {
-                    userInp.value = val;
-                    userInp.style.boxShadow = "0 0 10px var(--primary-color)";
-                    Alex.showHubStatus("Username set to: " + val);
-                }
-            } else if (command.includes("password") || command.includes("pass")) {
-                const words = command.split(' ');
-                const val = words[words.length - 1];
-                if (passInp) {
-                    passInp.value = val;
-                    passInp.style.boxShadow = "0 0 10px var(--primary-color)";
-                }
-            } else if (command.includes("submit") || command.includes("login") || command.includes("entry")) {
-                if (form) form.submit();
-            } else {
-                // Fallback to general navigation
-                if (command.includes("home") || command.includes("back")) window.location.href = '../index.php';
-            }
-        };
-    </script>
-</body>
-</html>
+<?php require_once '../includes/footer.php'; ?>

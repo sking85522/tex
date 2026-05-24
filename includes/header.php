@@ -25,19 +25,22 @@ if ($current_page == 'services.php') {
     $schema_type = "CollectionPage";
 } elseif ($current_page == 'blog.php' && isset($_GET['slug'])) {
     // Dynamic Blog SEO fetching
-    try {
-        $stmt = $pdo->prepare("SELECT title, meta_description, meta_keywords, image_url FROM blogs WHERE slug = ?");
-        $stmt->execute([$_GET['slug']]);
-        $blog = $stmt->fetch();
-        if ($blog) {
-            $seo_title = $blog['title'] . " | Tech Elevate X Blog";
-            $seo_desc = $blog['meta_description'];
-            $seo_keywords = $blog['meta_keywords'];
-            $schema_type = "Article";
+    $postsFile = __DIR__ . '/../admin/storage/content/posts.json';
+    if (file_exists($postsFile)) {
+        $postsData = json_decode(file_get_contents($postsFile), true);
+        if (is_array($postsData)) {
+            foreach ($postsData as $p) {
+                if ($p['slug'] === $_GET['slug']) {
+                    $seo_title = $p['title'] . " | Tech Elevate X Blog";
+                    $seo_desc = isset($p['meta_description']) ? $p['meta_description'] : "Read our latest blog post on Tech Elevate X.";
+                    $seo_keywords = isset($p['meta_keywords']) ? $p['meta_keywords'] : "Tech, Blog, Software";
+                    $schema_type = "Article";
+                    break;
+                }
+            }
         }
-    } catch (Exception $e) {}
+    }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,31 +1,23 @@
 <?php
 require_once '../includes/header.php';
 
-// Basic mock blog data since we don't have a full DB blog system setup yet.
-// In a real scenario, this would load from $pdo or a JSON file.
-$posts = [
-    [
-        'title' => 'Why Static Websites are Making a Comeback',
-        'slug' => 'static-websites-comeback',
-        'excerpt' => 'Discover how modern tooling and performance demands are bringing static sites back to the forefront of web development.',
-        'date' => '2023-10-15',
-        'author' => 'Tech Elevate X Team'
-    ],
-    [
-        'title' => 'The Future of Mobile App Development with Flutter',
-        'slug' => 'future-mobile-app-flutter',
-        'excerpt' => 'Analyze the cross-platform advantages and performance metrics of using Flutter for enterprise mobile applications.',
-        'date' => '2023-11-02',
-        'author' => 'Tech Elevate X Team'
-    ],
-    [
-        'title' => 'Optimizing Enterprise Cloud Architecture',
-        'slug' => 'optimizing-cloud-architecture',
-        'excerpt' => 'Learn the best practices for scaling your server infrastructure while keeping costs low and uptime high.',
-        'date' => '2023-11-20',
-        'author' => 'Tech Elevate X Team'
-    ]
-];
+// Fetch blog posts from the JSON admin storage
+$postsFile = __DIR__ . '/../admin/storage/content/posts.json';
+$posts = [];
+if (file_exists($postsFile)) {
+    $postsData = json_decode(file_get_contents($postsFile), true);
+    if (is_array($postsData)) {
+        // Filter only published posts and sort by newest first
+        foreach ($postsData as $p) {
+            if (isset($p['status']) && $p['status'] === 'published') {
+                $posts[] = $p;
+            }
+        }
+        usort($posts, function($a, $b) {
+            return strtotime($b['created_at']) - strtotime($a['created_at']);
+        });
+    }
+}
 ?>
 
 <section class="page-header" style="background: var(--bg-deep); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid var(--glass-border);">
@@ -38,16 +30,39 @@ $posts = [
 <section style="padding: 80px 0; background: var(--bg-main);">
     <div class="container">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
-            <?php foreach($posts as $post): ?>
-            <div class="glass-card" data-aos="fade-up" style="padding: 30px; display: flex; flex-direction: column;">
-                <div style="font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; font-weight: 600;">
-                    <?= $post['date'] ?> • By <?= $post['author'] ?>
+            <?php if (empty($posts)): ?>
+                <div class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                    <h3 style="color: var(--text-main);">More insights coming soon.</h3>
+                    <p class="text-muted">We are currently writing new articles. Check back later!</p>
                 </div>
-                <h3 style="margin-bottom: 15px; color: var(--text-main); font-size: 1.4rem;"><?= htmlspecialchars($post['title']) ?></h3>
-                <p class="text-muted" style="margin-bottom: 24px; flex-grow: 1;"><?= htmlspecialchars($post['excerpt']) ?></p>
-                <a href="#" class="btn btn-outline" style="align-self: flex-start;">Read Article</a>
-            </div>
-            <?php endforeach; ?>
+            <?php else: ?>
+                <?php
+                if (!function_exists('wp_trim_words')) {
+                    function wp_trim_words( $text, $num_words = 55, $more = '...' ) {
+                        $words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
+                        if ( count( $words_array ) > $num_words ) {
+                            array_pop( $words_array );
+                            $text = implode( ' ', $words_array );
+                            $text = $text . $more;
+                        }
+                        return $text;
+                    }
+                }
+                foreach($posts as $post):
+                    // Generate a brief excerpt if one isn't explicitly provided
+                    $excerpt = $post['excerpt'] ?? wp_trim_words(strip_tags($post['content'] ?? ''), 20, '...');
+                    $date = date('M d, Y', strtotime($post['created_at'] ?? 'now'));
+                ?>
+                <div class="glass-card" data-aos="fade-up" style="padding: 30px; display: flex; flex-direction: column;">
+                    <div style="font-size: 0.85rem; color: var(--primary); margin-bottom: 10px; font-weight: 600;">
+                        <?= $date ?> • By Tech Elevate X
+                    </div>
+                    <h3 style="margin-bottom: 15px; color: var(--text-main); font-size: 1.4rem;"><?= htmlspecialchars($post['title']) ?></h3>
+                    <p class="text-muted" style="margin-bottom: 24px; flex-grow: 1;"><?= htmlspecialchars($excerpt) ?></p>
+                    <a href="?slug=<?= urlencode($post['slug']) ?>" class="btn btn-outline" style="align-self: flex-start;">Read Article</a>
+                </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </section>

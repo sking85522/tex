@@ -1,7 +1,5 @@
 <?php
 session_start();
-include '../includes/db.php';
-require_once '../site_ai/core_engine.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -9,14 +7,20 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+
+$projectsFile = __DIR__ . '/../data/client_projects.json';
+$all_projects = file_exists($projectsFile) ? json_decode(file_get_contents($projectsFile), true) : [];
+if (!is_array($all_projects)) $all_projects = [];
+
 $projects = [];
-
-try {
-    $stmt = $pdo->prepare("SELECT * FROM client_projects WHERE user_id = ? ORDER BY id DESC");
-    $stmt->execute([$user_id]);
-    $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch(PDOException $e) {}
-
+foreach ($all_projects as $p) {
+    if (isset($p['user_id']) && $p['user_id'] === $user_id) {
+        $projects[] = $p;
+    }
+}
+usort($projects, function($a, $b) {
+    return strtotime($b['created_at'] ?? '0') - strtotime($a['created_at'] ?? '0');
+});
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +73,7 @@ try {
 
         .sidebar-link:hover, .sidebar-link.active {
             background: rgba(99, 102, 241, 0.1);
-            color: var(--primary-color);
+            color: var(--primary);
             border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
@@ -80,7 +84,7 @@ try {
             margin-bottom: 30px;
         }
 
-        .project-card:hover { borderColor: var(--primary-color); }
+        .project-card:hover { borderColor: var(--primary); }
 
         .project-progress {
             width: 100px;
@@ -100,7 +104,7 @@ try {
             position: absolute;
             inset: -5px;
             border-radius: 50%;
-            border: 4px solid var(--primary-color);
+            border: 4px solid var(--primary);
             mask-image: linear-gradient(0deg, black var(--p), transparent 0);
         }
 
@@ -114,7 +118,7 @@ try {
 
     <div class="workspace-sidebar">
         <div style="margin-bottom: 50px; padding: 0 20px;">
-            <h1 style="font-size: 1.4rem; color: white;"><span style="color: var(--primary-color);">WORKSPACE</span></h1>
+            <h1 style="font-size: 1.4rem; color: white;"><span style="color: var(--primary);">WORKSPACE</span></h1>
         </div>
 
         <nav>
