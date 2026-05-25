@@ -20,16 +20,16 @@ if (file_exists($postsFile)) {
 }
 ?>
 
-<section class="page-header" style="background: var(--bg-deep); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid var(--glass-border);">
-    <div class="container">
-        <h1 class="text-gradient" style="font-size: 3.5rem;">Insights & Engineering</h1>
-        <p class="text-muted" style="max-width: 700px; margin: 20px auto; font-size: 1.1rem;">Read our latest thoughts on software engineering, web development, and digital transformation.</p>
+<section class="page-header hero" style="padding: 160px 0 80px; text-align: center; border-bottom: 1px solid var(--glass-border);">
+    <div class="container hero-content">
+        <h1 class="hero-title">Insights & <span class="text-gradient-primary">Engineering</span></h1>
+        <p class="hero-desc">Explore our technical deep dives, architectural decisions, and thoughts on scaling intelligent systems.</p>
     </div>
 </section>
 
-<section style="padding: 80px 0; background: var(--bg-main);">
+<section style="padding: 100px 0; background: var(--bg-main);">
     <div class="container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px;">
             <?php if (empty($posts)): ?>
                 <div class="glass-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
                     <h3 style="color: var(--text-main);">More insights coming soon.</h3>

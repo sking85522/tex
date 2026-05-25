@@ -1,4 +1,4 @@
-<header class="bg-white shadow">
+<header class="navbar-glass shadow-sm z-40 sticky top-0">
     <div class="flex items-center justify-between px-6 py-4">
         <div class="flex items-center flex-1">
             <button id="sidebarToggle" class="text-gray-500 focus:outline-none md:hidden mr-4">

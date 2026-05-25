@@ -18,20 +18,28 @@
         }
     </script>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal flex transition-colors duration-300" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" :class="{ 'dark bg-gray-900': darkMode }">
+<!-- Defaulting to Dark Mode for SaaS AI Vibe -->
+<body class="bg-gray-900 font-sans leading-normal tracking-normal flex transition-colors duration-300 dark" x-data="{ darkMode: localStorage.getItem('darkMode') !== 'false' }" :class="{ 'dark': darkMode }">
     <style>
-        /* Basic dark mode overrides */
-        .dark .bg-white { background-color: #1f2937 !important; border-color: #374151; color: #f3f4f6; }
-        .dark .bg-gray-100 { background-color: #111827 !important; }
-        .dark .bg-gray-200 { background-color: #374151 !important; }
-        .dark .text-gray-900 { color: #f9fafb !important; }
-        .dark .text-gray-700 { color: #e5e7eb !important; }
-        .dark .text-gray-600 { color: #d1d5db !important; }
-        .dark .text-gray-500 { color: #9ca3af !important; }
-        .dark input, .dark textarea, .dark select { background-color: #374151; border-color: #4b5563; color: white; }
-        .dark table td, .dark table th { border-color: #374151; }
-        .dark .bg-gray-50 { background-color: #1f2937 !important; }
-        .dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+        /* Modern SaaS Dark Mode Overrides */
+        body { background-color: #000000 !important; color: #f3f4f6; }
+        .dark .bg-white { background-color: rgba(15, 15, 15, 0.7) !important; backdrop-filter: blur(12px); border-color: rgba(255,255,255,0.1); color: #f3f4f6; box-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .dark .bg-gray-100 { background-color: #0a0a0a !important; }
+        .dark .bg-gray-200 { background-color: #0a0a0a !important; }
+        .dark .text-gray-900 { color: #ffffff !important; }
+        .dark .text-gray-700 { color: #d1d5db !important; }
+        .dark .text-gray-600 { color: #9ca3af !important; }
+        .dark .text-gray-500 { color: #6b7280 !important; }
+        .dark input, .dark textarea, .dark select { background-color: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: white; border-radius: 8px;}
+        .dark input:focus, .dark textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 1px #3b82f6; }
+        .dark table td, .dark table th { border-color: rgba(255,255,255,0.05); }
+        .dark .bg-gray-50 { background-color: rgba(255,255,255,0.02) !important; }
+        .dark .divide-gray-200 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(255,255,255,0.05); }
+        .dark .shadow { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.8); }
+
+        /* Glassmorphism Sidebar & Navbar */
+        .dark #sidebar { background-color: rgba(0,0,0,0.9) !important; border-right: 1px solid rgba(255,255,255,0.1); }
+        .dark .navbar-glass { background-color: rgba(0,0,0,0.8) !important; border-bottom: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(16px); }
     </style>
 
     <?php if (Auth::check()): ?>

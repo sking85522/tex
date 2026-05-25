@@ -1,8 +1,9 @@
 User-agent: *
+Allow: /
 Disallow: /admin/
 Disallow: /user/
 Disallow: /includes/
 Disallow: /api/
-Allow: /
+Disallow: /data/
 
 Sitemap: https://techelevatex.in/sitemap.xml

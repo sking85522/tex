@@ -6,11 +6,11 @@ require_once __DIR__ . '/site_settings.php';
 $is_in_subfolder = (basename(dirname($_SERVER['PHP_SELF'])) === 'pages' || basename(dirname($_SERVER['PHP_SELF'])) === 'user' || basename(dirname($_SERVER['PHP_SELF'])) === 'admin');
 $root_prefix = $is_in_subfolder ? '../' : '';
 
-// Dynamic SEO Engine (Self-Ranking & Contextual)
-$current_page = basename($_SERVER['PHP_SELF']);
-$seo_title = get_setting('home_hero_title', 'Tech Elevate X | IT Services');
-$seo_desc = get_setting('home_hero_subtitle', 'We provide world-class web development solutions and IT services.');
-$seo_keywords = "IT Agency, Development, Software Solutions, Tech Elevate X, Web Development";
+// Dynamic SEO Engine (Self-Ranking & Contextual) - Ensuring safe defaults
+$current_page = basename($_SERVER['PHP_SELF'] ?? 'index.php');
+$seo_title = get_setting('home_hero_title', 'Tech Elevate X | Intelligent Enterprise Systems');
+$seo_desc = get_setting('home_hero_subtitle', 'Deploy scalable, high-performance web ecosystems and enterprise software engineered for the AI-driven era.');
+$seo_keywords = "AI Startup, Enterprise Software, Tech Elevate X, Systems Architecture, Intelligent Solutions";
 $seo_url = "https://techelevatex.in/" . $current_page;
 $schema_type = "Organization";
 
@@ -42,16 +42,62 @@ if ($current_page == 'services.php') {
     }
 }
 ?>
+<?php
+// Security Headers (HSTS, CSP, X-Frame-Options, X-XSS-Protection)
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
+header("Content-Security-Policy: default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data: https:;");
+header("X-Frame-Options: SAMEORIGIN");
+header("X-XSS-Protection: 0");
+header("X-Content-Type-Options: nosniff");
+header("Referrer-Policy: no-referrer-when-downgrade");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Digital Agency | Tech Elevate X</title>
-    <meta name="description" content="Premium Software & Enterprise Portal.">
+    <title><?php echo htmlspecialchars($seo_title); ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars($seo_desc); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($seo_keywords); ?>">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($seo_title); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($seo_desc); ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($seo_url); ?>">
+    <meta property="og:type" content="<?php echo $schema_type === 'Article' ? 'article' : 'website'; ?>">
     
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#6366f1">
+    <link rel="canonical" href="<?php echo htmlspecialchars($seo_url); ?>">
+
+    <link rel="manifest" href="<?php echo $root_prefix; ?>manifest.json">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Structured Data (JSON-LD) -->
+    <?php if ($current_page == 'index.php'): ?>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Tech Elevate X",
+      "url": "https://techelevatex.in",
+      "logo": "https://techelevatex.in/assets/images/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-234-567-8900",
+        "contactType": "customer service"
+      }
+    }
+    </script>
+    <?php endif; ?>
+    <?php if ($schema_type == 'Article'): ?>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "<?php echo htmlspecialchars($seo_title); ?>",
+      "description": "<?php echo htmlspecialchars($seo_desc); ?>"
+    }
+    </script>
+    <?php endif; ?>
     
     <!-- Resource Hints for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,11 +146,6 @@ if ($current_page == 'services.php') {
         }
     </script>
 
-    <!-- Default Theme Logic will go to script tag or handled locally -->
-    <script>
-        const savedTheme = localStorage.getItem('theme_preference') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    </script>
 
     <!-- Navigation -->
     <header class="navbar">

@@ -17,38 +17,41 @@ $pageCount = count($pagesDb->getAll());
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white rounded-lg shadow p-6 border-t-4 border-blue-500">
+    <div class="bg-white rounded-xl shadow p-6 border border-gray-100 relative overflow-hidden group hover:border-blue-500 transition-colors">
+        <div class="absolute right-0 top-0 w-24 h-24 bg-blue-500 opacity-5 rounded-bl-full"></div>
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-500 mr-4">
-                <i class="fas fa-users fa-2x"></i>
+            <div class="p-3 rounded-lg bg-blue-50 text-blue-500 mr-4 group-hover:bg-blue-100 transition-colors">
+                <i class="fas fa-users fa-lg"></i>
             </div>
             <div>
                 <p class="text-sm font-medium text-gray-500 truncate">Total Users</p>
-                <p class="text-2xl font-semibold text-gray-900"><?= $userCount ?></p>
+                <p class="text-3xl font-bold text-gray-900"><?= $userCount ?></p>
             </div>
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 border-t-4 border-green-500">
+    <div class="bg-white rounded-xl shadow p-6 border border-gray-100 relative overflow-hidden group hover:border-green-500 transition-colors">
+        <div class="absolute right-0 top-0 w-24 h-24 bg-green-500 opacity-5 rounded-bl-full"></div>
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-green-100 text-green-500 mr-4">
-                <i class="fas fa-file-alt fa-2x"></i>
+            <div class="p-3 rounded-lg bg-green-50 text-green-500 mr-4 group-hover:bg-green-100 transition-colors">
+                <i class="fas fa-file-alt fa-lg"></i>
             </div>
             <div>
-                <p class="text-sm font-medium text-gray-500 truncate">Total Posts</p>
-                <p class="text-2xl font-semibold text-gray-900"><?= $postCount ?></p>
+                <p class="text-sm font-medium text-gray-500 truncate">Total Content Nodes</p>
+                <p class="text-3xl font-bold text-gray-900"><?= $postCount ?></p>
             </div>
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 border-t-4 border-purple-500">
+    <div class="bg-white rounded-xl shadow p-6 border border-gray-100 relative overflow-hidden group hover:border-purple-500 transition-colors">
+        <div class="absolute right-0 top-0 w-24 h-24 bg-purple-500 opacity-5 rounded-bl-full"></div>
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-purple-100 text-purple-500 mr-4">
-                <i class="fas fa-copy fa-2x"></i>
+            <div class="p-3 rounded-lg bg-purple-50 text-purple-500 mr-4 group-hover:bg-purple-100 transition-colors">
+                <i class="fas fa-layer-group fa-lg"></i>
             </div>
             <div>
-                <p class="text-sm font-medium text-gray-500 truncate">Total Pages</p>
-                <p class="text-2xl font-semibold text-gray-900"><?= $pageCount ?></p>
+                <p class="text-sm font-medium text-gray-500 truncate">System Pages</p>
+                <p class="text-3xl font-bold text-gray-900"><?= $pageCount ?></p>
             </div>
         </div>
     </div>
