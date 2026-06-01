@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /user/
+Disallow: /includes/
+Disallow: /api/
+Disallow: /data/
+
+Sitemap: https://techelevatex.in/sitemap.xml

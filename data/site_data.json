@@ -1,0 +1,55 @@
+{
+  "pricing": {
+    "special_rate": {
+      "inr": 170,
+      "usd": 3,
+      "description": "Special Hourly Working Rate for Dedicated Resources"
+    },
+    "static_sites": [
+      { "name": "Basic Landing Page", "inr": 299, "usd": 5, "features": ["1 Page", "Basic SEO", "Mobile Responsive", "Contact Form"] },
+      { "name": "Standard Portfolio", "inr": 499, "usd": 8, "features": ["3 Pages", "Basic SEO", "Mobile Responsive", "Contact Form"] },
+      { "name": "Premium Static Site", "inr": 999, "usd": 15, "features": ["5 Pages", "Advanced SEO", "Custom Design", "Analytics Setup"] },
+      { "name": "Corporate Static Profile", "inr": 1499, "usd": 20, "features": ["10 Pages", "Advanced SEO", "Custom Design", "Analytics Setup"] },
+      { "name": "Event Landing Page", "inr": 399, "usd": 6, "features": ["1 Page", "Countdown Timer", "Registration Form"] },
+      { "name": "Product Showcase", "inr": 799, "usd": 12, "features": ["Custom UI", "Animation Effects", "Image Gallery"] },
+      { "name": "Resume/CV Website", "inr": 349, "usd": 5, "features": ["1 Page", "Download PDF", "Skill Bars"] },
+      { "name": "Restaurant Menu Site", "inr": 899, "usd": 14, "features": ["Menu Display", "Google Maps", "Click to Call"] },
+      { "name": "Real Estate Listing", "inr": 1299, "usd": 18, "features": ["Property Grid", "Image Sliders", "Contact Forms"] },
+      { "name": "NGO/Charity Site", "inr": 699, "usd": 10, "features": ["Donation Link", "Mission Statement", "Gallery"] }
+    ],
+    "web_development": [
+      { "name": "Basic E-commerce", "inr": 4999, "usd": 70, "features": ["Up to 50 Products", "Payment Gateway", "Basic Admin Panel"] },
+      { "name": "Advanced E-commerce", "inr": 9999, "usd": 140, "features": ["Unlimited Products", "Advanced Filters", "Custom Admin Panel"] },
+      { "name": "Custom Web App", "inr": 14999, "usd": 200, "features": ["Custom Logic", "API Integration", "User Roles"] },
+      { "name": "B2B Portal", "inr": 19999, "usd": 280, "features": ["Vendor Management", "Order Tracking", "Analytics"] },
+      { "name": "SaaS Platform MVP", "inr": 24999, "usd": 350, "features": ["Subscription Billing", "Multi-tenant", "Dashboard"] },
+      { "name": "Booking System", "inr": 8999, "usd": 120, "features": ["Calendar Sync", "Payments", "Email Alerts"] },
+      { "name": "LMS (Learning Mgt)", "inr": 12999, "usd": 180, "features": ["Video Hosting", "Quizzes", "Certificates"] },
+      { "name": "Job Portal", "inr": 11999, "usd": 160, "features": ["Resume Upload", "Company Profiles", "Job Alerts"] },
+      { "name": "Dating/Matrimony", "inr": 15999, "usd": 220, "features": ["Matchmaking Logic", "Chat System", "Privacy Controls"] },
+      { "name": "Real-time Dashboard", "inr": 7999, "usd": 110, "features": ["Live Data", "Charts/Graphs", "Export Options"] }
+    ],
+    "app_development": [
+      { "name": "Basic Android App", "inr": 7999, "usd": 110, "features": ["Native Android", "API Consumption", "Play Store Submit"] },
+      { "name": "Basic iOS App", "inr": 9999, "usd": 140, "features": ["Native iOS", "API Consumption", "App Store Submit"] },
+      { "name": "Cross-Platform App", "inr": 14999, "usd": 200, "features": ["React Native/Flutter", "Both Platforms", "Shared Logic"] },
+      { "name": "E-commerce App", "inr": 19999, "usd": 280, "features": ["Cart System", "Push Notifications", "Payment Gateway"] },
+      { "name": "Delivery/Tracking App", "inr": 24999, "usd": 350, "features": ["GPS Tracking", "Driver/User Apps", "Live Updates"] }
+    ],
+    "maintenance": [
+      { "name": "Basic Maintenance", "inr": 499, "usd": 8, "features": ["Monthly Backups", "Security Scans", "Uptime Monitoring"] },
+      { "name": "Standard Maintenance", "inr": 999, "usd": 15, "features": ["Weekly Backups", "Bug Fixes (2hrs)", "Content Updates"] },
+      { "name": "Premium Support", "inr": 2499, "usd": 35, "features": ["Daily Backups", "Priority Support", "Bug Fixes (10hrs)"] },
+      { "name": "Server Management", "inr": 1999, "usd": 28, "features": ["AWS/VPS Setup", "Performance Tuning", "SSL Renewal"] },
+      { "name": "App Maintenance", "inr": 1499, "usd": 20, "features": ["OS Updates", "Bug Fixes", "Store Policy Compliance"] }
+    ]
+  },
+  "services": [
+    { "title": "Web Ecosystems", "description": "High-performance websites and web applications.", "icon_class": "fas fa-laptop-code" },
+    { "title": "Mobile Applications", "description": "Native and cross-platform mobile experiences.", "icon_class": "fas fa-mobile-alt" },
+    { "title": "Enterprise Solutions", "description": "Custom ERPs, CRMs, and internal tools.", "icon_class": "fas fa-building" },
+    { "title": "Cloud Architecture", "description": "Scalable server deployments and DevOps.", "icon_class": "fas fa-cloud" },
+    { "title": "UI/UX Design", "description": "Premium glassmorphic and modern interfaces.", "icon_class": "fas fa-paint-brush" },
+    { "title": "Maintenance & Support", "description": "24/7 reliability and code health.", "icon_class": "fas fa-tools" }
+  ]
+}
