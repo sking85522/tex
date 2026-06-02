@@ -1,0 +1,71 @@
+
+   INFO  Server running on [http://127.0.0.1:8000].
+
+  Press Ctrl+C to stop the server
+
+  2026-05-31 21:02:07 / ................................................ ~ 1s
+  2026-05-31 21:02:08 /build/assets/app-C__Yy4zv.css ............... ~ 0.04ms
+  2026-05-31 21:02:08 /build/assets/app-FQXrfn4l.js ................ ~ 0.04ms
+  2026-05-31 21:02:08 /build/assets/Welcome-D4W4Smkd.js ............ ~ 0.19ms
+  2026-05-31 21:02:08 /build/assets/ConfirmPassword-CidS7-qo.js .... ~ 0.18ms
+  2026-05-31 21:02:08 /build/assets/ForgotPassword-CCVaBJ6m.js ..... ~ 0.29ms
+  2026-05-31 21:02:08 /build/assets/Login-Db1M6zyF.js .............. ~ 0.37ms
+  2026-05-31 21:02:08 /build/assets/Register-DHQyxwMg.js ........... ~ 0.05ms
+  2026-05-31 21:02:08 /build/assets/ResetPassword-CUcZp8u4.js ...... ~ 0.16ms
+  2026-05-31 21:02:08 /build/assets/VerifyEmail-D7PX4ogE.js ........ ~ 0.25ms
+  2026-05-31 21:02:08 /build/assets/Dashboard-60i9lM1t.js .......... ~ 0.03ms
+  2026-05-31 21:02:08 /build/assets/AuthenticatedLayout-tRT1iofR.js  ~ 0.09ms
+  2026-05-31 21:02:08 /build/assets/transition-bR5ogLSF.js ......... ~ 0.12ms
+  2026-05-31 21:02:09 /build/assets/Edit-CnEUusNw.js ............... ~ 0.13ms
+  2026-05-31 21:02:09 /build/assets/DeleteUserForm-BxUF1PuN.js ..... ~ 0.36ms
+  2026-05-31 21:02:09 /build/assets/UpdatePasswordForm-CMI0IrXV.js . ~ 0.46ms
+  2026-05-31 21:02:09 /build/assets/UpdateProfileInformationForm-DnS6zc52.js  ~ 0.03ms
+  2026-05-31 21:02:09 /build/assets/TextInput-fP16mJ7g.js .......... ~ 0.05ms
+  2026-05-31 21:02:09 /build/assets/InputLabel-DmY8o6sj.js ......... ~ 0.16ms
+  2026-05-31 21:02:09 /build/assets/PrimaryButton-Dt5sgrA_.js ...... ~ 0.28ms
+  2026-05-31 21:02:09 /build/assets/GuestLayout-Dd9NHTh_.js ........ ~ 0.04ms
+  2026-05-31 21:02:09 /build/assets/ApplicationLogo-9eopUnjo.js .... ~ 0.13ms
+  2026-05-31 21:14:27 / ............................................ ~ 0.12ms
+  2026-05-31 21:14:27 /build/assets/app-C__Yy4zv.css ............... ~ 0.04ms
+  2026-05-31 21:14:27 /build/assets/Welcome-D4W4Smkd.js ............ ~ 0.04ms
+  2026-05-31 21:14:27 /build/assets/app-FQXrfn4l.js ................ ~ 0.20ms
+  2026-05-31 21:14:27 /build/assets/ConfirmPassword-CidS7-qo.js .... ~ 0.05ms
+  2026-05-31 21:14:27 /build/assets/ForgotPassword-CCVaBJ6m.js ..... ~ 0.12ms
+  2026-05-31 21:14:27 /build/assets/Login-Db1M6zyF.js .............. ~ 0.50ms
+  2026-05-31 21:14:27 /build/assets/Register-DHQyxwMg.js ........... ~ 0.05ms
+  2026-05-31 21:14:27 /build/assets/ResetPassword-CUcZp8u4.js ...... ~ 0.17ms
+  2026-05-31 21:14:27 /build/assets/VerifyEmail-D7PX4ogE.js ........ ~ 0.26ms
+  2026-05-31 21:14:27 /build/assets/Dashboard-60i9lM1t.js ........ ~ 500.42ms
+  2026-05-31 21:14:27 /build/assets/AuthenticatedLayout-tRT1iofR.js  ~ 0.05ms
+  2026-05-31 21:14:27 /build/assets/transition-bR5ogLSF.js ......... ~ 0.10ms
+  2026-05-31 21:14:27 /build/assets/Edit-CnEUusNw.js ............... ~ 0.03ms
+  2026-05-31 21:14:27 /build/assets/DeleteUserForm-BxUF1PuN.js ..... ~ 0.05ms
+  2026-05-31 21:14:27 /build/assets/UpdatePasswordForm-CMI0IrXV.js . ~ 0.22ms
+  2026-05-31 21:14:27 /build/assets/UpdateProfileInformationForm-DnS6zc52.js  ~ 0.29ms
+  2026-05-31 21:14:27 /build/assets/TextInput-fP16mJ7g.js .......... ~ 0.06ms
+  2026-05-31 21:14:27 /build/assets/InputLabel-DmY8o6sj.js ......... ~ 0.19ms
+  2026-05-31 21:14:27 /build/assets/PrimaryButton-Dt5sgrA_.js ...... ~ 0.30ms
+  2026-05-31 21:14:27 /build/assets/GuestLayout-Dd9NHTh_.js ........ ~ 0.04ms
+  2026-05-31 21:14:27 /build/assets/ApplicationLogo-9eopUnjo.js .... ~ 0.14ms
+  2026-05-31 21:33:13 / ............................................ ~ 0.16ms
+  2026-05-31 21:33:13 /build/assets/app-C__Yy4zv.css ............... ~ 0.04ms
+  2026-05-31 21:33:13 /build/assets/Welcome-D4W4Smkd.js ............ ~ 0.03ms
+  2026-05-31 21:33:13 /build/assets/app-FQXrfn4l.js ................ ~ 0.17ms
+  2026-05-31 21:33:13 /build/assets/ConfirmPassword-CidS7-qo.js .... ~ 0.06ms
+  2026-05-31 21:33:13 /build/assets/ForgotPassword-CCVaBJ6m.js ..... ~ 0.14ms
+  2026-05-31 21:33:13 /build/assets/Login-Db1M6zyF.js .............. ~ 0.21ms
+  2026-05-31 21:33:13 /build/assets/Register-DHQyxwMg.js ........... ~ 0.06ms
+  2026-05-31 21:33:13 /build/assets/ResetPassword-CUcZp8u4.js ...... ~ 0.19ms
+  2026-05-31 21:33:13 /build/assets/VerifyEmail-D7PX4ogE.js ........ ~ 0.26ms
+  2026-05-31 21:33:13 /build/assets/Dashboard-60i9lM1t.js .......... ~ 0.04ms
+  2026-05-31 21:33:13 /build/assets/AuthenticatedLayout-tRT1iofR.js  ~ 0.13ms
+  2026-05-31 21:33:13 /build/assets/transition-bR5ogLSF.js ......... ~ 0.17ms
+  2026-05-31 21:33:13 /build/assets/Edit-CnEUusNw.js ............... ~ 0.05ms
+  2026-05-31 21:33:13 /build/assets/DeleteUserForm-BxUF1PuN.js ..... ~ 0.17ms
+  2026-05-31 21:33:13 /build/assets/UpdatePasswordForm-CMI0IrXV.js . ~ 0.23ms
+  2026-05-31 21:33:13 /build/assets/UpdateProfileInformationForm-DnS6zc52.js  ~ 0.06ms
+  2026-05-31 21:33:13 /build/assets/TextInput-fP16mJ7g.js .......... ~ 0.04ms
+  2026-05-31 21:33:13 /build/assets/InputLabel-DmY8o6sj.js ......... ~ 0.14ms
+  2026-05-31 21:33:13 /build/assets/PrimaryButton-Dt5sgrA_.js ...... ~ 0.02ms
+  2026-05-31 21:33:13 /build/assets/GuestLayout-Dd9NHTh_.js ........ ~ 0.03ms
+  2026-05-31 21:33:13 /build/assets/ApplicationLogo-9eopUnjo.js .... ~ 0.16ms
